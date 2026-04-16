@@ -1,4 +1,4 @@
-import { Gloria_Hallelujah, Caveat, Inter } from "next/font/google"
+import { Gloria_Hallelujah, Caveat, Patrick_Hand } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -15,7 +15,8 @@ const caveat = Caveat({
   variable: '--font-handwritten',
 });
 
-const fontSans = Inter({
+const fontSans = Patrick_Hand({
+  weight: "400",
   subsets: ["latin"],
   variable: "--font-sans",
 })
