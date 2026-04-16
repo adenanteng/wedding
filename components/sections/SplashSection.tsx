@@ -3,9 +3,10 @@ import Image from "next/image"
 interface SplashSectionProps {
   isOpen: boolean
   onOpen: () => void
+  guestName?: string
 }
 
-export default function SplashSection({ isOpen, onOpen }: SplashSectionProps) {
+export default function SplashSection({ isOpen, onOpen, guestName = "" }: SplashSectionProps) {
   return (
     <div
       className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-white transition-all duration-700 ${
@@ -58,7 +59,7 @@ export default function SplashSection({ isOpen, onOpen }: SplashSectionProps) {
         {/* Couple Photo */}
         <div className="relative mt-16">
           {/* Photo with hand-drawn frame */}
-          <div className="relative">
+          <div className="relative ml-8">
             <Image
               src="/img/1.png"
               alt="Hand-drawn frame"
@@ -103,7 +104,7 @@ export default function SplashSection({ isOpen, onOpen }: SplashSectionProps) {
           className="mt-6 text-center text-2xl tracking-wide"
           style={{ fontFamily: "var(--font-heading)" }}
         >
-          Aden & Rahma
+          {guestName}
         </h2>
 
         {/* Date */}

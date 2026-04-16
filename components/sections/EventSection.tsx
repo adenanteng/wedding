@@ -21,17 +21,29 @@ interface RouteData {
   distance: number;
 }
 
+const TRAFFIC_MULTIPLIER = 1.4;
+
 function formatDuration(seconds: number): string {
-  const mins = Math.round(seconds / 60);
-  if (mins < 60) return `${mins} min`;
+  // OSRM provides ideal time, multiply to account for real-world traffic/lights
+  const realSeconds = seconds * TRAFFIC_MULTIPLIER;
+  const mins = Math.round(realSeconds / 60);
+  
+  if (mins < 60) {
+    return `${mins} mnt`;
+  }
+  
   const hours = Math.floor(mins / 60);
   const remainingMins = mins % 60;
-  return `${hours}h ${remainingMins}m`;
+  
+  return remainingMins > 0 ? `${hours} jam ${remainingMins} mnt` : `${hours} jam`;
 }
 
 function formatDistance(meters: number): string {
-  if (meters < 1000) return `${Math.round(meters)} m`;
-  return `${(meters / 1000).toFixed(1)} km`;
+  if (meters < 1000) {
+    return `${Math.round(meters)} m`;
+  }
+  const km = meters / 1000;
+  return `${km.toFixed(1).replace(".", ",")} km`;
 }
 
 function RouteBoundsUpdater({ start, end }: { start: { lng: number, lat: number } | null, end: { lng: number, lat: number } }) {
@@ -182,7 +194,7 @@ function EventRouteMap({ destination }: { destination: { lng: number, lat: numbe
       </Map>
 
       {routes.length > 0 && (
-        <div className="absolute top-2 left-2 flex flex-col gap-1 pointer-events-none">
+        <div className="absolute top-2 left-2 flex flex-col gap-1 pointer-events-none" style={{ fontFamily: "var(--font-sans)" }}>
           <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-xl shadow-sm border border-gray-100 flex flex-col gap-0.5">
             <div className="flex items-center gap-1.5 text-[11px] font-bold text-gray-900">
               <Clock className="size-3 text-primary" />
@@ -349,7 +361,7 @@ export default function EventSection() {
       <Drawer>
         <DrawerTrigger asChild>
           <button
-            className="mt-8 rounded-lg border-2 border-primary bg-primary text-white px-6 py-3 text-sm tracking-wider transition-all hover:bg-white hover:text-primary flex items-center gap-2 group"
+            className="mt-6 rounded-lg border-2 border-primary bg-primary text-white px-6 py-3 text-sm tracking-wider transition-all hover:bg-white hover:text-primary flex items-center gap-2 group"
             style={{ fontFamily: "var(--font-heading)" }}
           >
             <Navigation className="size-4 group-hover:animate-bounce" />
