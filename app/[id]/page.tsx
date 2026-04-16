@@ -16,7 +16,7 @@ import ClosingSection from "@/components/sections/ClosingSection"
 
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false)
-  const [guestName, setGuestName] = useState("Nama tamu")
+  const [guestName, setGuestName] = useState("Tamu Undangan")
   const params = useParams()
   const guestId = params?.id as string
 

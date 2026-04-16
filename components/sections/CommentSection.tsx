@@ -115,7 +115,7 @@ export default function CommentSection() {
   }
 
   return (
-    <div className="flex w-full flex-col items-center px-2 pt-10 pb-5 bg-[#f5f0ea] rounded-3xl border-2 border-primary">
+    <div className="flex w-full flex-col items-center px-2 pt-10 pb-5 bg-[#f5f0ea] shadow-lg rounded-3xl border-2 border-primary">
       {/* Heading */}
       <h2
         className="text-center text-4xl leading-tight tracking-wide text-primary font-bold"
@@ -167,7 +167,7 @@ export default function CommentSection() {
             {comments.map((comment) => (
               <div
                 key={comment.id}
-                className="relative flex flex-col rounded-xl border-2 border-dashed border-primary/30 bg-white p-5 shadow-sm"
+                className="relative flex flex-col rounded-xl border-2 border-dashed border-primary/30 bg-white p-5 shadow-lg"
               >
                 {/* Decorative Pin/Dot */}
                 <div className="absolute top-4 right-4 h-2 w-2 rounded-full bg-primary/30" />
@@ -226,7 +226,7 @@ export default function CommentSection() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Tulis pesan atau harapan baik Anda..."
-              className="min-h-[120px] w-full resize-none rounded-xl border-2 border-dashed border-primary bg-white p-4 text-sm placeholder-slate-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="min-h-[120px] w-full resize-none rounded-xl border-2 border-dashed border-primary p-4 text-sm focus:border-primary focus:outline-none"
               style={{ fontFamily: "var(--font-heading)" }}
               disabled={isSubmitting}
               autoFocus

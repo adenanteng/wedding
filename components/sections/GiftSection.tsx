@@ -94,7 +94,7 @@ export default function GiftSection() {
             style={{ transform: `translate(${card.translateX}px, ${card.translateY}px) rotate(${card.rotate}deg)` }}
           >
             <DraggableCardBody
-              className="pointer-events-auto m-0! min-h-0! w-full! max-w-[260px]! bg-transparent! p-0! shadow-none! rounded-none!"
+              className="pointer-events-auto m-0! min-h-0! w-full! max-w-[260px]! bg-transparent! p-0! rounded-none!"
             >
               {/* Ticket shape with dashed border */}
               <div className="relative overflow-hidden rounded-lg border-2 border-dashed border-primary/30 bg-[#f5f0ea] px-5 py-5 shadow-lg transition-transform cursor-grab active:cursor-grabbing">

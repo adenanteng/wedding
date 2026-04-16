@@ -1,10 +1,8 @@
-export default function UnauthorizedPage() {
-    return (
-        <div className="flex items-center justify-center min-h-screen bg-black text-white font-playfair text-xl">
-            <div className="z-10 flex flex-col items-center justify-center text-center relative h-full">
-                <p>Undangan tidak ditemukan</p>
-                <p>Silahkan cek kembali link undangan</p>
-            </div>
-        </div>
-    );
+import { redirect } from 'next/navigation'
+
+export default function Page() {
+  // If someone hits the root, we redirect them to unauthorized or a specific landing.
+  // Given the context of a wedding invitation, we'll send them to unauthorized
+  // since they reached the site without a valid guest ID.
+  redirect('/unauthorized')
 }
