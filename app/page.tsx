@@ -36,12 +36,23 @@ export default function Page() {
   const [isOpen, setIsOpen] = useState(false)
   const { days, hours, minutes, seconds } = useCountdown(WEDDING_TIMESTAMP)
 
+  // Lock body scroll while splash/cover modal is visible
+  useEffect(() => {
+    if (!isOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isOpen])
+
   return (
     <>
       {/* ===== SPLASH / COVER MODAL ===== */}
       <div
-        className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-white transition-all duration-700 ${isOpen ? "pointer-events-none -translate-y-full opacity-0" : "translate-y-0 opacity-100"
-          }`}
+        className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-white transition-all duration-700 ${isOpen ? "pointer-events-none -translate-y-full opacity-0" : "translate-y-0 opacity-100"}`}
       >
         <div className="relative flex w-full max-w-md flex-col items-center px-6">
           {/* Ring decoration - top left */}
@@ -100,7 +111,7 @@ export default function Page() {
 
               <div className="absolute top-1 left-6">
                 <Image
-                  src="/img/kid-aden.jpeg"
+                  src="/img/kid-square-aden.jpeg"
                   alt="Tie"
                   width={75}
                   height={75}
@@ -110,7 +121,7 @@ export default function Page() {
 
               <div className="absolute top-1 right-10">
                 <Image
-                  src="/img/kid-rahma.jpeg"
+                  src="/img/kid-square-rahma.jpeg"
                   alt="Tie"
                   width={75}
                   height={75}
@@ -134,7 +145,7 @@ export default function Page() {
             className="mt-6 text-center text-2xl tracking-wide"
             style={{ fontFamily: "var(--font-heading)" }}
           >
-            Aden + Rahma
+            Aden & Rahma
           </h2>
 
           {/* Date */}
@@ -190,7 +201,7 @@ export default function Page() {
             className="text-3xl tracking-wide text-primary font-bold"
             style={{ fontFamily: "var(--font-handwritten)" }}
           >
-            Aden + Rahma
+            Aden & Rahma
           </h2>
         </div>
 
@@ -220,7 +231,7 @@ export default function Page() {
             <div className="relative flex items-center gap-3 p-3">
               <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-[#2a2a2a]">
                 <Image
-                  src="/img/kid-rahma.jpeg"
+                  src="/img/kid-square-rahma.jpeg"
                   alt="Couple photo"
                   width={64}
                   height={64}
@@ -327,13 +338,13 @@ export default function Page() {
             />
             {/* Couple Photo inside frame */}
             <div className="absolute inset-0 z-0 flex items-center justify-center">
-              <div className="mt-2 p-5 overflow-hidden rounded-sm">
+              <div className="mt-2 p-3 overflow-hidden">
                 <Image
-                  src="/img/adenrahma1.jpeg"
+                  src="/img/couple.jpeg"
                   alt="Couple photo"
                   width={380}
                   height={520}
-                  className="h-full w-full object-cover rounded-4xl"
+                  className="h-full w-full object-cover rounded-4xl border"
                 />
               </div>
             </div>
@@ -484,9 +495,7 @@ export default function Page() {
             className="mt-10 text-center text-3xl tracking-wide text-primary"
             style={{ fontFamily: "var(--font-heading)" }}
           >
-            Wedding
-            <br />
-            Intimate Party
+            Wedding Party
           </h3>
 
           {/* Event Details */}
@@ -494,11 +503,11 @@ export default function Page() {
             className="mt-5 text-center text-sm leading-relaxed0"
             style={{ fontFamily: "var(--font-heading)" }}
           >
-            <p>Sunday, 8 August 2026</p>
-            <p>16.00 WIB</p>
-            <p className="mt-2">at Kopi Kina Kemang</p>
+            <p>Sunday, 15 Juni 2026</p>
+            <p>09.00 WIB</p>
+            <p className="mt-2">di Mana mana</p>
             <p>Jl. Kemang Timur No.89, Bangka, Kec.</p>
-            <p>Mampang Prpt., Kota Jakarta Selatan</p>
+            <p>Mampang Prpt., Kota Metro</p>
           </div>
 
           {/* See Location Button */}
@@ -531,7 +540,7 @@ export default function Page() {
                   className="w-[90px] text-right text-sm"
                   style={{ fontFamily: "var(--font-heading)" }}
                 >
-                  16:00 PM
+                  09:00
                 </span>
                 <span
                   className="text-base"
@@ -549,7 +558,7 @@ export default function Page() {
                   className="w-[90px] text-right text-sm"
                   style={{ fontFamily: "var(--font-heading)" }}
                 >
-                  17:00 PM
+                  10:00
                 </span>
                 <span
                   className="text-base"
@@ -567,7 +576,7 @@ export default function Page() {
                   className="w-[90px] text-right text-sm"
                   style={{ fontFamily: "var(--font-heading)" }}
                 >
-                  18:00 PM
+                  18:00
                 </span>
                 <span
                   className="text-base"
@@ -585,7 +594,7 @@ export default function Page() {
                   className="w-[90px] text-right text-sm"
                   style={{ fontFamily: "var(--font-heading)" }}
                 >
-                  19:00 PM
+                  19:00
                 </span>
                 <span
                   className="text-base"
@@ -645,12 +654,12 @@ export default function Page() {
               <div className="absolute top-1/2 -right-3 h-6 w-6 -translate-y-1/2 rounded-full bg-[#f5f0ea] ring-2 ring-dashed ring-[#9e0e00]/30" />
 
               {/* BCA Logo */}
-              <div className="mb-3 flex">
+              <div className=" flex">
                 <Image
                   src="/img/logo-jago.png"
-                  alt="BCA"
-                  width={20}
-                  height={20}
+                  alt="bank"
+                  width={200}
+                  height={200}
                   className="h-[20px] w-auto object-contain"
                 />
               </div>
@@ -816,10 +825,10 @@ export default function Page() {
 
             <div className="relative">
               {/* Right side: Photo booth strip */}
-              <div className="absolute right-0 -bottom-105 -rotate-10 flex w-[100px] flex-col gap-1 border-4 border-primary bg-primary shadow-lg">
+              <div className="absolute right-0 -bottom-106 -rotate-10 flex w-[120px] flex-col gap-1 border-4 border-primary bg-primary shadow-lg">
                 <div className="h-[120px] w-full overflow-hidden p-1">
                   <Image
-                    src="/img/adenrahma1.jpeg"
+                    src="/img/couple1.jpeg"
                     alt="Couple photo 1"
                     width={200}
                     height={160}
@@ -828,7 +837,7 @@ export default function Page() {
                 </div>
                 <div className="h-[120px] w-full overflow-hidden p-1">
                   <Image
-                    src="/img/adenrahma2.jpeg"
+                    src="/img/couple2.jpeg"
                     alt="Couple photo 2"
                     width={200}
                     height={160}
@@ -837,7 +846,7 @@ export default function Page() {
                 </div>
                 <div className="h-[120px] w-full overflow-hidden p-1">
                   <Image
-                    src="/img/adenrahma1.jpeg"
+                    src="/img/couple3.jpeg"
                     alt="Couple photo 3"
                     width={200}
                     height={160}
@@ -864,7 +873,7 @@ export default function Page() {
             className="mt-4 text-2xl tracking-wide text-primary"
             style={{ fontFamily: "var(--font-heading)" }}
           >
-            Aden + Rahma
+            Aden & Rahma
           </p>
         </div>
       </div>
