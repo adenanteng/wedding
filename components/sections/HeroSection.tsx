@@ -45,16 +45,16 @@ export default function HeroSection() {
           className="text-sm leading-relaxed"
           style={{ fontFamily: "var(--font-heading)" }}
         >
-          And one of His signs is that He created for you spouses from among
-          yourselves so that you may find comfort in them. And He has placed
-          between you compassion and mercy. Surely in this are signs for people
-          who reflect.
+          "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan
+          pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung
+          dan merasa tenteram kepadanya, dan Dia menjadikan di 
+          antaramu rasa kasih dan sayang."
         </p>
         <p
           className="mt-4 text-xs tracking-wider"
           style={{ fontFamily: "var(--font-heading)" }}
         >
-          Surah Ar-Rum 21
+          QS. Ar-Rum: 21
         </p>
       </div>
     </div>

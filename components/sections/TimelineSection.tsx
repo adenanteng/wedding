@@ -89,13 +89,13 @@ export default function TimelineSection() {
 
       {/* Shoes/Heels Illustration - bottom right */}
       <div className="relative w-full">
-        <div className="absolute -top-15 right-0">
+        <div className="absolute -top-15 left-0">
           <Image
-            src="/img/6.svg"
+            src="/img/7.svg"
             alt="Shoes"
-            width={80}
-            height={80}
-            className="h-[80px] w-[80px] object-contain"
+            width={90}
+            height={90}
+            className="h-[90px] w-[90px] object-contain"
           />
         </div>
       </div>

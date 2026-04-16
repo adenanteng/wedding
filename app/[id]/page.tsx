@@ -71,7 +71,7 @@ export default function Page() {
           className="mt-6 mb-10 text-center text-xs"
           style={{ fontFamily: "var(--font-heading)" }}
         >
-          Click play button to listen our song..
+          Klik tombol play untuk mendengarkan lagu kami..
         </p>
 
         <BrideGroomSection />
@@ -80,7 +80,7 @@ export default function Page() {
         <RsvpSection />
         <GiftSection />
         <div className="bg-white px-6 py-10 w-full">
-        <CommentSection />
+          <CommentSection />
         </div>
         <ClosingSection />
       </div>

@@ -12,6 +12,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
+import Image from "next/image"
 
 export default function CommentSection() {
   const params = useParams()
@@ -122,6 +123,33 @@ export default function CommentSection() {
       >
         Buku Tamu
       </h2>
+      <span 
+        className="text-primary/60 text-xs" 
+        style={{fontFamily: "var(--font-heading)"}}
+      >
+        {comments.length} Komentar
+      </span>
+
+      <div className="relative w-full">
+        <div className="absolute -top-20 left-10 -rotate-20">
+          <Image
+            src="/img/ring.png"
+            alt="ornament"
+            width={30}
+            height={30}
+            className="object-contain"
+          />
+        </div>
+        <div className="absolute bottom-0 right-10 rotate-20">
+          <Image
+            src="/img/sparkles.png"
+            alt="ornament"
+            width={20}
+            height={20}
+            className="object-contain"
+          />
+        </div>
+      </div>
 
       {/* Comments List */}
       <div className="mt-10 w-full max-w-sm">
@@ -139,7 +167,7 @@ export default function CommentSection() {
             {comments.map((comment) => (
               <div
                 key={comment.id}
-                className="relative flex flex-col rounded-xl border-2 border-dashed border-primary bg-white p-5 shadow-sm"
+                className="relative flex flex-col rounded-xl border-2 border-dashed border-primary/30 bg-white p-5 shadow-sm"
               >
                 {/* Decorative Pin/Dot */}
                 <div className="absolute top-4 right-4 h-2 w-2 rounded-full bg-primary/30" />

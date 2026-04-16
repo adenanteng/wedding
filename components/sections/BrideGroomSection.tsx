@@ -8,9 +8,9 @@ export default function BrideGroomSection() {
         className="max-w-xs text-center text-sm leading-relaxed"
         style={{ fontFamily: "var(--font-heading)" }}
       >
-        Together with our family, we invite you
+        Kami mengundang Anda untuk
         <br />
-        to join us in our wedding vows.
+        menghadiri acara pernikahan kami.
       </p>
 
       {/* Bride & Groom Heading */}
@@ -56,11 +56,11 @@ export default function BrideGroomSection() {
         className="mt-3 max-w-xs text-center text-sm leading-relaxed"
         style={{ fontFamily: "var(--font-heading)" }}
       >
-        The beloved first son of
+        Putra pertama dari
         <br />
-        Mr. Enyang Suandi and
+        Bapak Enyang Suandi &
         <br />
-        Mrs. Kakai
+        (Alm.) Ibu Kakai
       </p>
 
       {/* Separator */}
@@ -82,11 +82,11 @@ export default function BrideGroomSection() {
         className="mt-3 max-w-xs text-center text-sm leading-relaxed"
         style={{ fontFamily: "var(--font-heading)" }}
       >
-        The beloved first daughter of
+        Putri pertama dari
         <br />
-        Mr. Ahmad Ansori and
+        Bapak Ahmad Ansori &
         <br />
-        Mrs. Rinawati
+        Ibu Rinawati
       </p>
     </div>
   )

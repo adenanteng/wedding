@@ -71,7 +71,7 @@ function RouteBoundsUpdater({ start, end }: { start: { lng: number, lat: number 
 function WeddingMap({ height = "280px" }: { height?: string }) {
   return (
     <div
-      className="w-full relative rounded-3xl overflow-hidden border-2 border-primary mt-4 outline-none transition-all duration-500"
+      className="w-full relative rounded-3xl overflow-hidden border-2 border-dashed border-primary mt-4 outline-none transition-all duration-500 shadow-lg"
       style={{ height }}
     >
       <Map
@@ -223,20 +223,11 @@ export default function EventSection() {
   const locations = [
     {
       venue: 'Akad Nikah',
-      address: 'Jl. Taman Wijaya Kusuma, Ps. Baru, Kecamatan Sawah Besar, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta',
+      address: 'Jl. Kencana Indah No.42, Kel. Margorejo, Kec. Metro Selatan, Kota Metro, Lampung.',
       mapUrl: 'https://maps.app.goo.gl/4vd44MRbjpuFvgrWA',
       lng: 105.29310599848067,
       lat: -5.1484356219499166,
     },
-    // {
-    //     title: 'Resepsi',
-    //     time: '11:00 - 14:00 WIB',
-    //     date: 'Minggu, 14 Juni 2026',
-    //     venue: 'Hotel Indonesia Kempinski',
-    //     address: 'Jl. M.H. Thamrin No.1, RT.1/RW.5, Menteng, Kec. Menteng, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta',
-    //     mapUrl: 'https://maps.app.goo.gl/ZqBxYpK2qK5JQR297',
-    //     embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.491264421111!2d106.82020297587127!3d-6.19873099378877!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f41f3e9b11bd%3A0xd6e5f8b9e6f30a2f!2sHotel%20Indonesia%20Kempinski%20Jakarta!5e0!3m2!1sid!2sid!4v1709477209787!5m2!1sid!2sid'
-    // }
   ];
 
   return (
@@ -335,7 +326,7 @@ export default function EventSection() {
 
       {/* Wedding Party Heading */}
       <h3
-        className="mt-10 text-center text-3xl tracking-wide text-primary"
+        className="mt-16 text-center text-3xl tracking-wide text-primary"
         style={{ fontFamily: "var(--font-heading)" }}
       >
         Wedding Party
@@ -346,11 +337,11 @@ export default function EventSection() {
         className="mt-5 text-center text-sm leading-relaxed"
         style={{ fontFamily: "var(--font-heading)" }}
       >
-        <p>Sunday, 15 Juni 2026</p>
+        <p>Senin, 15 Juni 2026</p>
         <p>09.00 WIB</p>
-        <p className="mt-2">di Mana mana</p>
-        <p>Jl. Kemang Timur No.89, Bangka, Kec.</p>
-        <p>Mampang Prpt., Kota Metro</p>
+        <p className="mt-2">Kediaman Mempelai Wanita</p>
+        <p>Jl. Kencana Indah No.42, Margorejo,</p>
+        <p>Metro Selatan, Kota Metro, Lampung.</p>
       </div>
 
       <div className="w-full px-10">
@@ -383,7 +374,7 @@ export default function EventSection() {
             <div className="mb-4">
               {locations.map((loc, index) => (
                 <div key={index} className="flex flex-col gap-4">
-                  <div className="w-full h-[40vh] rounded-3xl overflow-hidden relative border-2 border-primary" data-vaul-no-drag>
+                  <div className="w-full h-[40vh] rounded-3xl overflow-hidden relative border-2 border-dashed border-primary" data-vaul-no-drag>
                     <EventRouteMap
                       destination={{
                         lng: (loc as any).lng,

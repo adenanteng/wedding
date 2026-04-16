@@ -9,6 +9,8 @@ const bankCards = [
     accountNumber: "1234567890",
     logo: "/img/logo-bsi.png",
     rotate: -4,
+    translateX: -12,
+    translateY: -8,
   },
   {
     bankName: "Mandiri",
@@ -16,6 +18,8 @@ const bankCards = [
     accountNumber: "0987654321",
     logo: "/img/logo-mandiri.png",
     rotate: 3,
+    translateX: 8,
+    translateY: 12,
   },
   {
     bankName: "Seabank",
@@ -23,13 +27,17 @@ const bankCards = [
     accountNumber: "5544332211",
     logo: "/img/logo-seabank.png",
     rotate: -2,
+    translateX: -6,
+    translateY: 8,
   },
   {
     bankName: "Jago",
     accountName: "Aden Anteng",
     accountNumber: "1122334455",
     logo: "/img/logo-jago.png",
-    rotate: 2,
+    rotate: 4,
+    translateX: 10,
+    translateY: -6,
   },
 ]
 
@@ -41,7 +49,18 @@ export default function GiftSection() {
   }
 
   return (
-    <div className="flex w-full flex-col items-center px-6 pt-10 pb-16">
+    <div className="relative z-10 flex w-full flex-col items-center px-6 pt-10 pb-16">
+      <div className="relative w-full">
+        <div className="absolute top-0 left-10 -rotate-20">
+          <Image
+            src="/img/tie.png"
+            alt="Tie"
+            width={80}
+            height={80}
+            className="h-[80px] w-[80px] object-contain"
+          />
+        </div>
+      </div>
       {/* Heading */}
       <h2
         className="text-center text-4xl leading-tight tracking-wide text-primary font-bold"
@@ -57,9 +76,9 @@ export default function GiftSection() {
         className="mt-6 max-w-xs text-center text-sm leading-relaxed"
         style={{ fontFamily: "var(--font-heading)" }}
       >
-        Your presence is the most meaningful gift of all.
-        But if you&apos;d like to give something extra, we kindly prefer
-        cash gifts to help us begin our next chapter together.
+        Kehadiran Anda adalah hadiah paling bermakna.
+        Tetapi jika Anda ingin membantu kami memulai 
+        babak kehidupan selanjutnya bolehhhhhh.
       </p>
 
       {/* Bank Card - Ticket style */}
@@ -72,17 +91,17 @@ export default function GiftSection() {
           <div
             key={index}
             className="absolute inset-0 origin-center pointer-events-none"
-            style={{ transform: `rotate(${card.rotate}deg)` }}
+            style={{ transform: `translate(${card.translateX}px, ${card.translateY}px) rotate(${card.rotate}deg)` }}
           >
             <DraggableCardBody
               className="pointer-events-auto m-0! min-h-0! w-full! max-w-[260px]! bg-transparent! p-0! shadow-none! rounded-none!"
             >
               {/* Ticket shape with dashed border */}
-              <div className="relative overflow-hidden rounded-lg border-2 border-dashed border-[#9e0e00]/30 bg-[#f5f0ea] px-5 py-5 shadow-lg transition-transform cursor-grab active:cursor-grabbing">
+              <div className="relative overflow-hidden rounded-lg border-2 border-dashed border-primary/30 bg-[#f5f0ea] px-5 py-5 shadow-lg transition-transform cursor-grab active:cursor-grabbing">
                 {/* Left cutout */}
-                <div className="absolute top-1/2 -left-3 h-6 w-6 -translate-y-1/2 rounded-full bg-white ring-2 ring-dashed ring-[#9e0e00]/30" />
+                <div className="absolute top-1/2 -left-3 h-6 w-6 -translate-y-1/2 rounded-full bg-white ring-2 ring-dashed ring-primary/30" />
                 {/* Right cutout */}
-                <div className="absolute top-1/2 -right-3 h-6 w-6 -translate-y-1/2 rounded-full bg-white ring-2 ring-dashed ring-[#9e0e00]/30" />
+                <div className="absolute top-1/2 -right-3 h-6 w-6 -translate-y-1/2 rounded-full bg-white ring-2 ring-dashed ring-primary/30" />
 
                 {/* Logo or Bank Name */}
                 <div className="flex h-[20px] items-center">
@@ -151,17 +170,8 @@ export default function GiftSection() {
         className="mt-8 max-w-xs text-center text-sm leading-relaxed"
         style={{ fontFamily: "var(--font-heading)" }}
       >
-        Thinking of sending a gift? Just drop us a message on
-        WhatsApp first and we&apos;ll share our address with you!
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       </p>
-
-      {/* WhatsApp Button */}
-      <button
-        className="mt-8 rounded-lg border-2 border-primary bg-primary text-white px-6 py-3 text-sm tracking-wider transition-all hover:bg-white hover:text-primary"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        Contact Us
-      </button>
     </div>
   )
 }

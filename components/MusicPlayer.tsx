@@ -88,9 +88,14 @@ export default function MusicPlayer({ isOpened }: MusicPlayerProps) {
             {/* Spinning disk overlay if desired, but image transition is nice */}
           </div>
           <div className="flex flex-1 flex-col justify-center overflow-hidden">
-            <p className="font-medium text-white mb-1" style={{ fontFamily: "var(--font-sans)" }}>
-              {isPlaying ? "Now Playing" : "Music Paused"}
-            </p>
+            <div className="relative w-full overflow-hidden whitespace-nowrap mask-image-linear">
+              <p 
+                className={`font-medium text-white mb-1 inline-block ${isPlaying ? "animate-marquee" : ""}`} 
+                style={{ fontFamily: "var(--font-sans)" }}
+              >
+                {isPlaying ? "Sedang Memutar: Barasuara - Terbuang Dalam Waktu" : "Musik Dihentikan"}
+              </p>
+            </div>
             {/* Progress bar */}
             <div className="mt-1 flex items-center gap-2">
               <span className="text-xs text-gray-400 tabular-nums" style={{ fontFamily: "var(--font-sans)" }}>{currentTime}</span>
