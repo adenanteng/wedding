@@ -74,10 +74,10 @@ export default function MusicPlayer({ isOpened }: MusicPlayerProps) {
         onLoadedMetadata={handleTimeUpdate}
       />
       
-      <div className="overflow-hidden rounded-2xl bg-gray-900 shadow-xl">
+      <div className="overflow-hidden rounded-3xl bg-gray-900 shadow-lg">
         {/* Album Art / Couple Photo */}
         <div className="relative flex items-center gap-3 p-3">
-          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-gray-900">
+          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-gray-900">
             <Image
               src="/img/kid-square-rahma.jpeg"
               alt="Couple photo"
