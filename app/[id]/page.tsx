@@ -71,7 +71,7 @@ export default function Page() {
           className="mt-6 mb-10 text-center text-xs"
           style={{ fontFamily: "var(--font-heading)" }}
         >
-          Izinkan kami melantunkan tembang sakral bagi kami...
+          Izinkan kami melantunkan tembang sakral...
         </p>
 
         <BrideGroomSection />
