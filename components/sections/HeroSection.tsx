@@ -6,7 +6,7 @@ import { EndlessBouncingText } from "@/components/ui/endless-bouncing-text"
 
 export default function HeroSection() {
   return (
-    <div className="flex w-full flex-col items-center">
+    <div className="flex w-full flex-col items-center mt-10">
       {/* ===== SAVE THE DATE HEADING ===== */}
       <AnimatedSection className="relative z-10 pt-10 pb-2 text-center -rotate-5" delay={0.1}>
         <FloatingElement yOffset={10} duration={3}>

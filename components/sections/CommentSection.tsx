@@ -15,6 +15,7 @@ import {
 import Image from "next/image"
 import { AnimatedSection } from "@/components/ui/animated-section"
 import { FloatingElement } from "@/components/ui/floating-element"
+import { MessageCircle } from "lucide-react"
 
 export default function CommentSection() {
   const params = useParams()
@@ -27,6 +28,8 @@ export default function CommentSection() {
   const [isOpen, setIsOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState("")
+
+  const [visibleCount, setVisibleCount] = useState(10)
 
   useEffect(() => {
     const init = async () => {
@@ -45,7 +48,7 @@ export default function CommentSection() {
         }
       }
 
-      // Fetch comments
+      // Fetch initial comments
       const { data: commentsData } = await supabase
         .from("comments")
         .select("id, message, created_at, sender_id, rsvps(name)")
@@ -58,6 +61,39 @@ export default function CommentSection() {
     }
 
     init()
+
+    // Realtime subscription
+    const channel = supabase
+      .channel("comments_realtime")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "comments",
+        },
+        async (payload) => {
+          // Fetch the joined data for the new comment
+          const { data: newComment } = await supabase
+            .from("comments")
+            .select("id, message, created_at, sender_id, rsvps(name)")
+            .eq("id", payload.new.id)
+            .single()
+
+          if (newComment) {
+            setComments((prev) => {
+              // Avoid duplicates
+              if (prev.some(c => c.id === newComment.id)) return prev
+              return [newComment, ...prev]
+            })
+          }
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
   }, [guestId])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -135,7 +171,7 @@ export default function CommentSection() {
           {comments.length} Komentar
         </span>
       </AnimatedSection>
-
+      
       <AnimatedSection className="relative w-full" delay={0.3}>
         <FloatingElement className="absolute -top-20 left-10 -rotate-20" yOffset={6} duration={4}>
           <Image
@@ -158,7 +194,7 @@ export default function CommentSection() {
       </AnimatedSection>
 
       {/* Comments List */}
-      <AnimatedSection className="mt-10 w-full max-w-sm" delay={0.4}>
+      <AnimatedSection className="mt-5 w-full max-w-sm" delay={0.4}>
         {isLoading ? (
           <div className="flex justify-center py-8 text-primary">
             <IconLoader2 className="animate-spin" size={32} />
@@ -169,8 +205,8 @@ export default function CommentSection() {
             <p className="mt-1 text-xs">Jadilah yang pertama mengirim doa!</p>
           </div>
         ) : (
-          <div className="flex max-h-[500px] flex-col gap-4 overflow-y-auto pr-2 pb-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/20 hover:scrollbar-thumb-primary/40">
-            {comments.map((comment) => (
+          <div className="flex max-h-[450px] flex-col gap-4 overflow-y-auto px-2 pb-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/20 hover:scrollbar-thumb-primary/40">
+            {comments.slice(0, visibleCount).map((comment) => (
               <div
                 key={comment.id}
                 className="relative flex flex-col rounded-xl border-2 border-dashed border-primary/30 bg-white p-5 shadow-lg"
@@ -201,6 +237,16 @@ export default function CommentSection() {
                 </p>
               </div>
             ))}
+
+            {visibleCount < comments.length && (
+              <button
+                onClick={() => setVisibleCount((prev) => prev + 10)}
+                className="mx-auto mt-2 flex items-center justify-center rounded-lg border-2 border-dashed border-primary/40 px-6 py-2 text-[10px] font-bold tracking-wider text-primary/60 transition-all hover:border-primary hover:text-primary active:opacity-70"
+                style={{ fontFamily: "var(--font-heading)" }}
+              >
+                Lihat Selebihnya
+              </button>
+            )}
           </div>
         )}
       </AnimatedSection>
@@ -219,11 +265,9 @@ export default function CommentSection() {
           </DrawerTrigger>
           <DrawerContent className="bg-transparent border-none before:border-2 before:border-primary">
             <div className="mx-auto w-full max-w-sm px-6 pb-8">
-              <DrawerHeader className="px-0 pb-4">
-                <DrawerTitle
-                  className="text-center text-2xl text-primary font-bold"
-                  style={{ fontFamily: "var(--font-heading)" }}
-                >
+              <DrawerHeader className="px-0">
+                <DrawerTitle className="text-2xl text-primary flex justify-center items-center gap-2" style={{ fontFamily: "var(--font-heading)" }}>
+                  <MessageCircle className="size-6" />
                   Kirim Pesan
                 </DrawerTitle>
               </DrawerHeader>

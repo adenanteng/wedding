@@ -14,9 +14,8 @@ import { AnimatedSection } from "@/components/ui/animated-section";
 import { AnimatedText } from "@/components/ui/animated-text";
 import { FloatingElement } from "@/components/ui/floating-element";
 import { EndlessBouncingText } from "../ui/endless-bouncing-text";
-import { PartyPopper } from "../animate-ui/icons/party-popper";
 
-const VENUE_COORDS = { lng: 105.29310599848067, lat: -5.1484356219499166, name: "Metro Nih Boss" };
+const VENUE_COORDS = { lng: 105.29310599848067, lat: -5.1484356219499166, name: "Lokasi Acara" };
 
 interface RouteData {
   coordinates: [number, number][];
@@ -304,7 +303,7 @@ export default function EventSection() {
             15
           </span>
           {/* Circle around D-day */}
-          <FloatingElement className="absolute top-10 right-10" yOffset={5} duration={3} delay={0.5}>
+          <div className="absolute top-10 right-10">
             <Image
               src="/img/circle.svg"
               alt="Circle"
@@ -312,7 +311,7 @@ export default function EventSection() {
               height={60}
               className="h-[60px] w-[60px] object-contain"
             />
-          </FloatingElement>
+          </div>
           <span
             className="absolute top-22 right-5 text-sm font-bold text-primary -rotate-10"
             style={{ fontFamily: "var(--font-handwritten)" }}
@@ -341,7 +340,7 @@ export default function EventSection() {
       {/* Wedding Party Heading */}
       <AnimatedSection delay={0.3}>
         <h3
-          className="mt-16 text-center font-bold text-3xl tracking-wide text-primary"
+          className="mt-20 text-center font-bold text-3xl tracking-wide text-primary"
           style={{ fontFamily: "var(--font-heading)" }}
         >
           Wedding Party

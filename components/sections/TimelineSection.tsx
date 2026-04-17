@@ -4,7 +4,7 @@ import { FloatingElement } from "@/components/ui/floating-element"
 
 export default function TimelineSection() {
   return (
-    <div className="relative flex w-full flex-col items-center px-6 pb-16">
+    <div className="relative flex w-full flex-col items-center px-6 pt-10 pb-16">
       {/* Candle Illustration */}
       <AnimatedSection className="w-full flex justify-center" delay={0.1}>
         <FloatingElement yOffset={8} duration={3.5}>
@@ -33,7 +33,7 @@ export default function TimelineSection() {
               className="text-base"
               style={{ fontFamily: "var(--font-heading)" }}
             >
-              Wedding Ceremony
+              Akad Nikah
             </span>
           </div>
         </div>
@@ -51,7 +51,7 @@ export default function TimelineSection() {
               className="text-base"
               style={{ fontFamily: "var(--font-heading)" }}
             >
-              Reception
+              Resepsi
             </span>
           </div>
         </div>
@@ -102,6 +102,16 @@ export default function TimelineSection() {
             width={90}
             height={90}
             className="h-[90px] w-[90px] object-contain"
+          />
+        </FloatingElement>
+
+        <FloatingElement className="absolute bottom-40 right-10 rotate-20" yOffset={4} duration={3} delay={0.5}>
+          <Image
+            src="/img/sparkles.png"
+            alt="ornament"
+            width={20}
+            height={20}
+            className="object-contain"
           />
         </FloatingElement>
       </AnimatedSection>

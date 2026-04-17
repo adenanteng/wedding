@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Exclude static assets and reserved paths explicitly just in case
@@ -40,11 +40,11 @@ export async function middleware(request: NextRequest) {
       .single()
 
     if (error || !data) {
-      console.log(`Middleware: Guest ${shortId} not found, redirecting...`)
+      console.log(`Proxy: Guest ${shortId} not found, redirecting...`)
       return NextResponse.redirect(new URL('/unauthorized', request.url))
     }
   } catch (err) {
-    console.error('Middleware error:', err)
+    console.error('Proxy error:', err)
     // On core failure, maybe let them through or redirect to error?
     // Let's redirect to unauthorized for safety.
     return NextResponse.redirect(new URL('/unauthorized', request.url))

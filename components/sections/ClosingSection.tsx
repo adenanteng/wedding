@@ -9,7 +9,7 @@ export default function ClosingSection() {
   const { days, hours, minutes, seconds } = useCountdown(WEDDING_TIMESTAMP)
 
   return (
-    <div className="relative flex w-full flex-col overflow-hidden px-6 pt-10 pb-16">
+    <div className="relative flex w-full flex-col overflow-hidden px-6 pt-20 pb-16">
       <div className="flex w-full items-start gap-4">
         {/* Left side: heading + countdown */}
         <AnimatedSection className="flex flex-1 flex-col" delay={0.1}>

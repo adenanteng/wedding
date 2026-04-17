@@ -81,7 +81,7 @@ export default function GiftSection() {
         <AnimatedText
           className="mt-6 max-w-xs text-center text-sm leading-relaxed"
           style={{ fontFamily: "var(--font-heading)" }}
-          text="Kehadiran Anda adalah hadiah paling bermakna. Tetapi jika Anda ingin membantu kami memulai babak kehidupan selanjutnya bolehhhhhh."
+          text="Kehadiran Anda adalah kado, namun restu berupa transfer adalah deposito."
         />
       </AnimatedSection>
 
@@ -177,7 +177,7 @@ export default function GiftSection() {
           className="mt-8 max-w-xs text-center text-sm leading-relaxed"
           style={{ fontFamily: "var(--font-heading)" }}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Terima kasih telah ikut mendanai petualangan hidup Kami selanjutnya.
         </p>
       </AnimatedSection>
     </div>

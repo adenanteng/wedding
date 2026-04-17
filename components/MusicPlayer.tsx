@@ -132,11 +132,11 @@ export default function MusicPlayer({ isOpened }: MusicPlayerProps) {
             className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#1a1a1a] shadow-lg transition-transform hover:scale-110 active:scale-95"
           >
             {isPlaying ? (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="">
                 <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
               </svg>
             ) : (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="ml-1">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="">
                 <path d="M8 5v14l11-7z" />
               </svg>
             )}

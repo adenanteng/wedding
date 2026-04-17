@@ -20,8 +20,8 @@ export function AnimatedText({
   delay = 0,
   ...props
 }: AnimatedTextProps) {
-  // Split text into words to handle word wrap properly
-  const words = text.split(" ")
+  // Support multiline strings using \n
+  const lines = text.split("\n")
 
   const containerVariants: Variants = {
     hidden: { opacity: 1 },
@@ -53,21 +53,25 @@ export function AnimatedText({
         viewport={{ once, margin: "-50px" }}
         className="inline-block"
       >
-        {words.map((word, wordIndex) => (
-          <span key={wordIndex} className="inline-block">
-            {word.split("").map((char, charIndex) => (
-              <motion.span
-                key={charIndex}
-                variants={charVariants}
-                className="inline-block"
-              >
-                {char}
-              </motion.span>
+        {lines.map((line, lineIndex) => (
+          <span key={lineIndex} className="block">
+            {line.split(" ").map((word, wordIndex, words) => (
+              <span key={wordIndex} className="inline-block">
+                {word.split("").map((char, charIndex) => (
+                  <motion.span
+                    key={charIndex}
+                    variants={charVariants}
+                    className="inline-block"
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+                {/* Add space after each word except the last one in the line */}
+                {wordIndex < words.length - 1 && (
+                  <span className="inline-block">&nbsp;</span>
+                )}
+              </span>
             ))}
-            {/* Add space after each word except the last one */}
-            {wordIndex < words.length - 1 && (
-              <span className="inline-block">&nbsp;</span>
-            )}
           </span>
         ))}
       </motion.span>

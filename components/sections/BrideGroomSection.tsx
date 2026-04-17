@@ -8,7 +8,7 @@ export default function BrideGroomSection() {
       {/* Invitation Text */}
       <AnimatedSection delay={0.1}>
         <AnimatedText
-          text="Kami mengundang Anda untuk menghadiri acara pernikahan kami."
+          text="Izinkan kami untuk mengundang Anda menghadiri acara pernikahan kami."
           className="max-w-xs text-center text-sm leading-relaxed"
           style={{ fontFamily: "var(--font-heading)" }}
         />

@@ -1,18 +1,18 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useParams } from "next/navigation"
-import { supabase } from "@/lib/supabaseClient"
 import MusicPlayer from "@/components/MusicPlayer"
-import SplashSection from "@/components/sections/SplashSection"
-import HeroSection from "@/components/sections/HeroSection"
 import BrideGroomSection from "@/components/sections/BrideGroomSection"
-import EventSection from "@/components/sections/EventSection"
-import TimelineSection from "@/components/sections/TimelineSection"
-import RsvpSection from "@/components/sections/RsvpSection"
-import GiftSection from "@/components/sections/GiftSection"
-import CommentSection from "@/components/sections/CommentSection"
 import ClosingSection from "@/components/sections/ClosingSection"
+import CommentSection from "@/components/sections/CommentSection"
+import EventSection from "@/components/sections/EventSection"
+import GiftSection from "@/components/sections/GiftSection"
+import HeroSection from "@/components/sections/HeroSection"
+import RsvpSection from "@/components/sections/RsvpSection"
+import SplashSection from "@/components/sections/SplashSection"
+import TimelineSection from "@/components/sections/TimelineSection"
+import { supabase } from "@/lib/supabaseClient"
+import { useParams } from "next/navigation"
+import { useEffect, useState } from "react"
 
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false)
@@ -35,7 +35,7 @@ export default function Page() {
         setGuestName(data.name)
       }
     }
-    
+
     fetchGuest()
   }, [guestId])
 
@@ -71,7 +71,7 @@ export default function Page() {
           className="mt-6 mb-10 text-center text-xs"
           style={{ fontFamily: "var(--font-heading)" }}
         >
-          Klik tombol play untuk mendengarkan lagu kami..
+          Izinkan kami melantunkan tembang sakral bagi kami...
         </p>
 
         <BrideGroomSection />

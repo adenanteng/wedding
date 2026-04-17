@@ -38,7 +38,7 @@ export default function SplashSection({ isOpen, onOpen, guestName = "" }: Splash
         </FloatingElement>
 
         {/* Confetti decoration */}
-        <FloatingElement className="absolute top-42" duration={5} yOffset={8}>
+        <FloatingElement className="absolute top-47" duration={5} yOffset={8}>
           <Image
             src="/img/2.png"
             alt="Confetti"
@@ -61,14 +61,14 @@ export default function SplashSection({ isOpen, onOpen, guestName = "" }: Splash
         </h1> */}
 
         <AnimatedText
-          text="These Kids Are Getting Married"
+          text={"These Kids\nAre Getting\nMarried"}
           className="relative z-10 mt-8 text-center text-4xl font-bold leading-[1.1] tracking-wide text-primary uppercase"
           style={{ fontFamily: "var(--font-heading)" }}
           delay={0.1}
         />
 
         {/* Couple Photo */}
-        <div className="relative mt-16">
+        <div className="relative mt-20">
           {/* Photo with hand-drawn frame */}
           <div className="relative ml-8">
             <Image

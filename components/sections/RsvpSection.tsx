@@ -64,8 +64,8 @@ export default function RsvpSection() {
 
       if (data?.phone && data?.source) {
         const textMessage = presence
-          ? `Dear ${guestName},\n\n Kami mengucapkan terima kasih yang mendalam atas kesediaan Baginda menyempatkan waktu untuk hadir. Kehadiran Anda merupakan kehormatan besar bagi kami.`
-          : `Dear ${guestName},\n\n Kami sangat menyayangkan Baginda berhalangan hadir. Namun, jika berkenan, dukungan serta doa restu (dan tanda kasih berupa transfer) tetap kami nantikan demi kelancaran hajat ini.`
+          ? `Dear ${guestName},\n\n Kehadiran Anda adalah kehormatan, waktu yang Anda luangkan adalah kado terindah.`
+          : `Dear ${guestName},\n\n Ketidakhadiran Anda kami tangisi, namun saldo yang masuk akan sangat menghibur hati.`
 
         try {
           const textResult = await sendWhatsAppMessage({
@@ -84,10 +84,10 @@ export default function RsvpSection() {
               number: data.phone,
               type: "location",
               locationData: {
-                name: "Istana Perhelatan Agung",
-                address: "Jalan Kehormatan No. 1. Tempat kami menanti kehadiran Baginda dengan penuh suka cita.",
-                latitude: -16.505538233564373,
-                longitude: -151.7422770494996,
+                name: "Lokasi Acara",
+                address: "Jl. Kencana Indah No.42, Margorejo, Metro Selatan, Kota Metro, Lampung.",
+                latitude: -5.1484356219499166,
+                longitude: 105.29310599848067,
                 delay: 1200,
               },
             })
@@ -146,8 +146,8 @@ export default function RsvpSection() {
               style={{ fontFamily: "var(--font-heading)" }}
             >
               {currentUserPresence === false
-                ? "Gapapa ga hadir yang penting transfernya jangan lupa ya 😄"
-                : "Terima kasih sudah meluangkan waktu untuk hadir di acara kami."}
+                ? "Orangnya boleh ga ada, yang penting saldo tetap menyapa. 😄"
+                : "Senang sekali melihatmu menyempatkan hadir di tengah kesibukanmu. Terima kasih ya!"}
             </p>
             <div className="mt-8">
               <button
