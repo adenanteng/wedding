@@ -4,13 +4,13 @@ export default function UnauthorizedPage() {
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-[#f5f0ea] p-6 text-center text-primary">
       {/* Decorative Ornament */}
-      <div className="mb-6 animate-bounce">
+      <div className="mb-6">
         <Image
-          src="/img/6.svg"
+          src="/img/couple.jpeg"
           alt="Shoes Ornament"
-          width={100}
-          height={100}
-          className="h-auto w-24 object-contain opacity-50"
+          width={300}
+          height={300}
+          className="h-auto w-64 object-contain rounded-3xl border-2"
         />
       </div>
 
