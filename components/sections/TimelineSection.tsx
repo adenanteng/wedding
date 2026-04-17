@@ -1,19 +1,25 @@
 import Image from "next/image"
+import { AnimatedSection } from "@/components/ui/animated-section"
+import { FloatingElement } from "@/components/ui/floating-element"
 
 export default function TimelineSection() {
   return (
     <div className="relative flex w-full flex-col items-center px-6 pb-16">
       {/* Candle Illustration */}
-      <Image
-        src="/img/5.svg"
-        alt="Candle"
-        width={100}
-        height={100}
-        className="h-[100px] w-[100px] object-contain"
-      />
+      <AnimatedSection className="w-full flex justify-center" delay={0.1}>
+        <FloatingElement yOffset={8} duration={3.5}>
+          <Image
+            src="/img/5.svg"
+            alt="Candle"
+            width={100}
+            height={100}
+            className="h-[100px] w-[100px] object-contain"
+          />
+        </FloatingElement>
+      </AnimatedSection>
 
       {/* Timeline Schedule */}
-      <div className="mt-4 w-full max-w-xs">
+      <AnimatedSection className="mt-4 w-full max-w-xs" delay={0.2}>
         {/* Row 1 */}
         <div className="border-b border-black py-3">
           <div className="flex items-baseline gap-6">
@@ -85,11 +91,11 @@ export default function TimelineSection() {
             </span>
           </div>
         </div>
-      </div>
+      </AnimatedSection>
 
       {/* Shoes/Heels Illustration - bottom right */}
-      <div className="relative w-full">
-        <div className="absolute -top-15 left-0">
+      <AnimatedSection className="relative w-full" delay={0.3}>
+        <FloatingElement className="absolute -top-15 left-0" yOffset={6} duration={4} delay={0.5}>
           <Image
             src="/img/7.svg"
             alt="Shoes"
@@ -97,8 +103,8 @@ export default function TimelineSection() {
             height={90}
             className="h-[90px] w-[90px] object-contain"
           />
-        </div>
-      </div>
+        </FloatingElement>
+      </AnimatedSection>
     </div>
   )
 }

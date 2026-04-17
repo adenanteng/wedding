@@ -1,4 +1,6 @@
 import Image from "next/image"
+import { FloatingElement } from "@/components/ui/floating-element"
+import { AnimatedText } from "../ui/animated-text"
 
 interface SplashSectionProps {
   isOpen: boolean
@@ -15,7 +17,7 @@ export default function SplashSection({ isOpen, onOpen, guestName = "" }: Splash
     >
       <div className="relative flex w-full max-w-md flex-col items-center px-6">
         {/* Ring decoration - top left */}
-        <div className="absolute top-0 left-16 -rotate-20">
+        <FloatingElement className="absolute top-0 left-16 -rotate-20" duration={3}>
           <Image
             src="/img/ring.png"
             alt="Ring"
@@ -23,9 +25,9 @@ export default function SplashSection({ isOpen, onOpen, guestName = "" }: Splash
             height={60}
             className="h-[60px] w-[60px] object-contain"
           />
-        </div>
+        </FloatingElement>
 
-        <div className="absolute top-26 right-10 -rotate-20">
+        <FloatingElement className="absolute top-26 right-10 -rotate-20" duration={4} delay={0.5}>
           <Image
             src="/img/tie.png"
             alt="Tie"
@@ -33,19 +35,21 @@ export default function SplashSection({ isOpen, onOpen, guestName = "" }: Splash
             height={60}
             className="h-[60px] w-[60px] object-contain"
           />
-        </div>
+        </FloatingElement>
 
         {/* Confetti decoration */}
-        <Image
-          src="/img/2.png"
-          alt="Confetti"
-          width={100}
-          height={40}
-          className="absolute top-42 object-contain"
-        />
+        <FloatingElement className="absolute top-42" duration={5} yOffset={8}>
+          <Image
+            src="/img/2.png"
+            alt="Confetti"
+            width={100}
+            height={40}
+            className="object-contain"
+          />
+        </FloatingElement>
 
         {/* Heading */}
-        <h1
+        {/* <h1
           className="relative z-10 mt-8 text-center text-4xl font-bold leading-[1.1] tracking-wide text-primary uppercase"
           style={{ fontFamily: "var(--font-heading)" }}
         >
@@ -54,7 +58,14 @@ export default function SplashSection({ isOpen, onOpen, guestName = "" }: Splash
           Are Getting
           <br />
           Married
-        </h1>
+        </h1> */}
+
+        <AnimatedText
+          text="These Kids Are Getting Married"
+          className="relative z-10 mt-8 text-center text-4xl font-bold leading-[1.1] tracking-wide text-primary uppercase"
+          style={{ fontFamily: "var(--font-heading)" }}
+          delay={0.1}
+        />
 
         {/* Couple Photo */}
         <div className="relative mt-16">
@@ -90,13 +101,25 @@ export default function SplashSection({ isOpen, onOpen, guestName = "" }: Splash
           </div>
 
           {/* Sparkles decoration */}
-          <Image
-            src="/img/sparkles.png"
-            alt="Sparkles"
-            width={30}
-            height={30}
-            className="absolute -right-10 bottom-10 object-contain"
-          />
+          <FloatingElement className="absolute -left-5 top-10" duration={2} yOffset={6}>
+            <Image
+              src="/img/sparkles.png"
+              alt="Sparkles"
+              width={30}
+              height={30}
+              className="object-contain"
+            />
+          </FloatingElement>
+
+          <FloatingElement className="absolute -right-10 bottom-10" duration={3} delay={0.2} yOffset={6}>
+            <Image
+              src="/img/sparkles.png"
+              alt="Sparkles"
+              width={30}
+              height={30}
+              className="object-contain"
+            />
+          </FloatingElement>
         </div>
 
         {/* Names */}

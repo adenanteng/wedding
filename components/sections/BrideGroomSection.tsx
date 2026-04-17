@@ -1,28 +1,31 @@
 import Image from "next/image"
+import { AnimatedSection } from "@/components/ui/animated-section"
+import { AnimatedText } from "@/components/ui/animated-text"
 
 export default function BrideGroomSection() {
   return (
     <div className="flex w-full flex-col items-center px-6 pt-10 pb-16">
       {/* Invitation Text */}
-      <p
-        className="max-w-xs text-center text-sm leading-relaxed"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        Kami mengundang Anda untuk
-        <br />
-        menghadiri acara pernikahan kami.
-      </p>
+      <AnimatedSection delay={0.1}>
+        <AnimatedText
+          text="Kami mengundang Anda untuk menghadiri acara pernikahan kami."
+          className="max-w-xs text-center text-sm leading-relaxed"
+          style={{ fontFamily: "var(--font-heading)" }}
+        />
+      </AnimatedSection>
 
       {/* Bride & Groom Heading */}
-      <h2
-        className="mt-8 text-3xl tracking-wide text-primary font-bold"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        Bride & Groom
-      </h2>
+      <AnimatedSection delay={0.2}>
+        <h2
+          className="mt-8 text-3xl tracking-wide text-primary font-bold"
+          style={{ fontFamily: "var(--font-heading)" }}
+        >
+          Bride & Groom
+        </h2>
+      </AnimatedSection>
 
       {/* Couple Photo with Hand-drawn Frame */}
-      <div className="relative mt-6 flex items-center justify-center">
+      <AnimatedSection className="relative mt-6 flex items-center justify-center" delay={0.3}>
         {/* Frame SVG */}
         <Image
           src="/img/4.svg"
@@ -43,51 +46,49 @@ export default function BrideGroomSection() {
             />
           </div>
         </div>
-      </div>
+      </AnimatedSection>
 
       {/* Groom Name */}
-      <h3
-        className="mt-8 text-2xl tracking-wide text-primary font-bold"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        Aden Anteng Anugrah
-      </h3>
-      <p
-        className="mt-3 max-w-xs text-center text-sm leading-relaxed"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        Putra pertama dari
-        <br />
-        Bapak Enyang Suandi &
-        <br />
-        (Alm.) Ibu Kakai
-      </p>
+      <AnimatedSection delay={0.4} className="flex flex-col items-center">
+        <h3
+          className="mt-8 text-2xl tracking-wide text-primary font-bold"
+          style={{ fontFamily: "var(--font-heading)" }}
+        >
+          Aden Anteng Anugrah
+        </h3>
+        <AnimatedText
+          text="Putra pertama dari Bapak Enyang Suandi & (Alm.) Ibu Kakai"
+          className="mt-3 max-w-xs text-center text-sm leading-relaxed"
+          style={{ fontFamily: "var(--font-heading)" }}
+          delay={0.7}
+        />
+      </AnimatedSection>
 
       {/* Separator */}
-      <p
-        className="mt-8 text-3xl text-primary font-bold"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        &
-      </p>
+      <AnimatedSection delay={0.5}>
+        <p
+          className="mt-8 text-3xl text-primary font-bold"
+          style={{ fontFamily: "var(--font-heading)" }}
+        >
+          &
+        </p>
+      </AnimatedSection>
 
       {/* Bride Name */}
-      <h3
-        className="mt-4 text-2xl tracking-wide text-primary font-bold"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        Rahma Cahya Malinda
-      </h3>
-      <p
-        className="mt-3 max-w-xs text-center text-sm leading-relaxed"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        Putri pertama dari
-        <br />
-        Bapak Ahmad Ansori &
-        <br />
-        Ibu Rinawati
-      </p>
+      <AnimatedSection delay={0.6} className="flex flex-col items-center">
+        <h3
+          className="mt-4 text-2xl tracking-wide text-primary font-bold"
+          style={{ fontFamily: "var(--font-heading)" }}
+        >
+          Rahma Cahya Malinda
+        </h3>
+        <AnimatedText
+          text="Putri pertama dari Bapak Ahmad Ansori & Ibu Rinawati"
+          className="mt-3 max-w-xs text-center text-sm leading-relaxed"
+          style={{ fontFamily: "var(--font-heading)" }}
+          delay={0.7}
+        />
+      </AnimatedSection>
     </div>
   )
 }

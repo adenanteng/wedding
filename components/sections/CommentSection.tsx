@@ -13,6 +13,8 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import Image from "next/image"
+import { AnimatedSection } from "@/components/ui/animated-section"
+import { FloatingElement } from "@/components/ui/floating-element"
 
 export default function CommentSection() {
   const params = useParams()
@@ -117,21 +119,25 @@ export default function CommentSection() {
   return (
     <div className="flex w-full flex-col items-center px-2 pt-10 pb-5 bg-[#f5f0ea] shadow-lg rounded-3xl border-2 border-primary">
       {/* Heading */}
-      <h2
-        className="text-center text-4xl leading-tight tracking-wide text-primary font-bold"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        Buku Tamu
-      </h2>
-      <span 
-        className="text-primary/60 text-xs" 
-        style={{fontFamily: "var(--font-heading)"}}
-      >
-        {comments.length} Komentar
-      </span>
+      <AnimatedSection delay={0.1}>
+        <h2
+          className="text-center text-4xl leading-tight tracking-wide text-primary font-bold"
+          style={{ fontFamily: "var(--font-heading)" }}
+        >
+          Buku Tamu
+        </h2>
+      </AnimatedSection>
+      <AnimatedSection delay={0.2}>
+        <span 
+          className="text-primary/60 text-xs" 
+          style={{fontFamily: "var(--font-heading)"}}
+        >
+          {comments.length} Komentar
+        </span>
+      </AnimatedSection>
 
-      <div className="relative w-full">
-        <div className="absolute -top-20 left-10 -rotate-20">
+      <AnimatedSection className="relative w-full" delay={0.3}>
+        <FloatingElement className="absolute -top-20 left-10 -rotate-20" yOffset={6} duration={4}>
           <Image
             src="/img/ring.png"
             alt="ornament"
@@ -139,8 +145,8 @@ export default function CommentSection() {
             height={30}
             className="object-contain"
           />
-        </div>
-        <div className="absolute bottom-0 right-10 rotate-20">
+        </FloatingElement>
+        <FloatingElement className="absolute bottom-0 right-10 rotate-20" yOffset={4} duration={3} delay={0.5}>
           <Image
             src="/img/sparkles.png"
             alt="ornament"
@@ -148,11 +154,11 @@ export default function CommentSection() {
             height={20}
             className="object-contain"
           />
-        </div>
-      </div>
+        </FloatingElement>
+      </AnimatedSection>
 
       {/* Comments List */}
-      <div className="mt-10 w-full max-w-sm">
+      <AnimatedSection className="mt-10 w-full max-w-sm" delay={0.4}>
         {isLoading ? (
           <div className="flex justify-center py-8 text-primary">
             <IconLoader2 className="animate-spin" size={32} />
@@ -197,71 +203,73 @@ export default function CommentSection() {
             ))}
           </div>
         )}
-      </div>
+      </AnimatedSection>
 
-      <Drawer open={isOpen} onOpenChange={setIsOpen}>
-        <DrawerTrigger asChild>
-          <button
-            className="mt-5 flex items-center justify-center rounded-lg border-2 border-primary bg-primary px-6 py-3 text-sm font-bold tracking-wider text-white transition-all active:opacity-70 disabled:opacity-50"
-            style={{ fontFamily: "var(--font-heading)" }}
-            disabled={!guestRealId || isLoading}
-          >
-            <IconMessageCircle className="mr-2" size={20} />
-            Tinggalkan Pesan
-          </button>
-        </DrawerTrigger>
-        <DrawerContent className="bg-transparent border-none before:border-2 before:border-primary">
-          <div className="mx-auto w-full max-w-sm px-6 pb-8">
-            <DrawerHeader className="px-0 pb-4">
-              <DrawerTitle
-                className="text-center text-2xl text-primary font-bold"
-                style={{ fontFamily: "var(--font-heading)" }}
-              >
-                Kirim Pesan
-              </DrawerTitle>
-            </DrawerHeader>
-
-            <form onSubmit={handleSubmit} className="px-0">
-            <textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Tulis pesan atau harapan baik Anda..."
-              className="min-h-[120px] w-full resize-none rounded-xl border-2 border-dashed border-primary p-4 text-sm focus:border-primary focus:outline-none"
+      <AnimatedSection delay={0.5}>
+        <Drawer open={isOpen} onOpenChange={setIsOpen}>
+          <DrawerTrigger asChild>
+            <button
+              className="mt-5 flex items-center justify-center rounded-lg border-2 border-primary bg-primary px-6 py-3 text-sm font-bold tracking-wider text-white transition-all active:opacity-70 disabled:opacity-50"
               style={{ fontFamily: "var(--font-heading)" }}
-              disabled={isSubmitting}
-              autoFocus
-            />
-
-            <div className="mt-6 flex flex-col gap-3">
-              <button
-                type="submit"
-                disabled={!message.trim() || isSubmitting}
-                className="flex w-full items-center justify-center rounded-full border-2 border-primary bg-primary py-3 text-sm font-bold tracking-wider text-white transition-all active:opacity-70 disabled:opacity-50"
-                style={{ fontFamily: "var(--font-heading)" }}
-              >
-                {isSubmitting ? (
-                  <IconLoader2 className="animate-spin" />
-                ) : (
-                  <>
-                    <IconSend className="mr-2" size={18} />
-                    Kirim Pesan
-                  </>
-                )}
-              </button>
-              <DrawerClose asChild>
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-center rounded-full border-2 border-primary bg-transparent py-3 text-sm font-bold tracking-wider text-primary transition-all active:opacity-70"
+              disabled={!guestRealId || isLoading}
+            >
+              <IconMessageCircle className="mr-2" size={20} />
+              Tinggalkan Pesan
+            </button>
+          </DrawerTrigger>
+          <DrawerContent className="bg-transparent border-none before:border-2 before:border-primary">
+            <div className="mx-auto w-full max-w-sm px-6 pb-8">
+              <DrawerHeader className="px-0 pb-4">
+                <DrawerTitle
+                  className="text-center text-2xl text-primary font-bold"
                   style={{ fontFamily: "var(--font-heading)" }}
                 >
-                  Batal
+                  Kirim Pesan
+                </DrawerTitle>
+              </DrawerHeader>
+
+              <form onSubmit={handleSubmit} className="px-0">
+              <textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Tulis pesan atau harapan baik Anda..."
+                className="min-h-[120px] w-full resize-none rounded-xl border-2 border-dashed border-primary p-4 text-sm focus:border-primary focus:outline-none"
+                style={{ fontFamily: "var(--font-heading)" }}
+                disabled={isSubmitting}
+                autoFocus
+              />
+
+              <div className="mt-6 flex flex-col gap-3">
+                <button
+                  type="submit"
+                  disabled={!message.trim() || isSubmitting}
+                  className="flex w-full items-center justify-center rounded-full border-2 border-primary bg-primary py-3 text-sm font-bold tracking-wider text-white transition-all active:opacity-70 disabled:opacity-50"
+                  style={{ fontFamily: "var(--font-heading)" }}
+                >
+                  {isSubmitting ? (
+                    <IconLoader2 className="animate-spin" />
+                  ) : (
+                    <>
+                      <IconSend className="mr-2" size={18} />
+                      Kirim Pesan
+                    </>
+                  )}
                 </button>
-              </DrawerClose>
+                <DrawerClose asChild>
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-center rounded-full border-2 border-primary bg-transparent py-3 text-sm font-bold tracking-wider text-primary transition-all active:opacity-70"
+                    style={{ fontFamily: "var(--font-heading)" }}
+                  >
+                    Batal
+                  </button>
+                </DrawerClose>
+              </div>
+            </form>
             </div>
-          </form>
-          </div>
-        </DrawerContent>
-      </Drawer>
+          </DrawerContent>
+        </Drawer>
+      </AnimatedSection>
     </div>
   )
 }

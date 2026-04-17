@@ -5,6 +5,7 @@ import { useParams } from "next/navigation"
 import { supabase } from "@/lib/supabaseClient"
 import { IconLoader2, IconHeart } from "@tabler/icons-react"
 import { sendWhatsAppMessage } from "@/lib/actions/invite"
+import { AnimatedSection } from "@/components/ui/animated-section"
 
 export default function RsvpSection() {
   const params = useParams()
@@ -115,14 +116,16 @@ export default function RsvpSection() {
   return (
     <div className="flex w-full flex-col items-center px-6 pt-10 pb-16">
       {/* Heading */}
-      <h2
-        className="text-center text-4xl leading-tight tracking-wide text-primary font-bold"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        Reservasi
-      </h2>
+      <AnimatedSection delay={0.1}>
+        <h2
+          className="text-center text-4xl leading-tight tracking-wide text-primary font-bold"
+          style={{ fontFamily: "var(--font-heading)" }}
+        >
+          Reservasi
+        </h2>
+      </AnimatedSection>
 
-      <div className="mt-8 w-full max-w-sm rounded-xl border-2 border-primary border-dashed bg-[#fdfcf5] p-6 shadow-sm">
+      <AnimatedSection className="mt-8 w-full max-w-sm rounded-xl border-2 border-primary border-dashed bg-[#fdfcf5] p-6 shadow-sm" delay={0.2}>
         {isLoading ? (
           <div className="flex justify-center py-8 text-primary">
             <IconLoader2 className="animate-spin" size={32} />
@@ -130,7 +133,7 @@ export default function RsvpSection() {
         ) : showSubmittedView ? (
           <div className="text-center py-4">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full text-primary">
-              <IconHeart size={40} className="fill-current text-[#9e0e00]" />
+              <IconHeart size={40} className="text-primary" />
             </div>
             <h3
               className="mb-2 text-xl font-bold tracking-wide text-primary"
@@ -212,7 +215,7 @@ export default function RsvpSection() {
             )}
           </div>
         )}
-      </div>
+      </AnimatedSection>
     </div>
   )
 }

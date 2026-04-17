@@ -1,5 +1,7 @@
 import Image from "next/image"
 import { useCountdown } from "@/hooks/useCountdown"
+import { AnimatedSection } from "@/components/ui/animated-section"
+import { FloatingElement } from "@/components/ui/floating-element"
 
 const WEDDING_TIMESTAMP = new Date("2026-06-15T08:00:00+07:00").getTime()
 
@@ -10,7 +12,7 @@ export default function ClosingSection() {
     <div className="relative flex w-full flex-col overflow-hidden px-6 pt-10 pb-16">
       <div className="flex w-full items-start gap-4">
         {/* Left side: heading + countdown */}
-        <div className="flex flex-1 flex-col">
+        <AnimatedSection className="flex flex-1 flex-col" delay={0.1}>
           {/* OUR BIG DAY AWAITS */}
           <h2
             className="text-3xl font-bold leading-tight tracking-wide text-primary uppercase"
@@ -98,59 +100,65 @@ export default function ClosingSection() {
               </span>
             </div>
           </div>
-        </div>
+        </AnimatedSection>
 
         <div className="relative">
           {/* Right side: Photo booth strip */}
-          <div className="absolute right-0 -bottom-106 -rotate-10 flex w-[120px] flex-col gap-1 border-4 border-primary bg-primary shadow-lg">
-            <div className="h-[120px] w-full overflow-hidden p-1">
-              <Image
-                src="/img/couple1.jpeg"
-                alt="Couple photo 1"
-                width={200}
-                height={160}
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="h-[120px] w-full overflow-hidden p-1">
-              <Image
-                src="/img/couple2.jpeg"
-                alt="Couple photo 2"
-                width={200}
-                height={160}
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="h-[120px] w-full overflow-hidden p-1">
-              <Image
-                src="/img/couple3.jpeg"
-                alt="Couple photo 3"
-                width={200}
-                height={160}
-                className="h-full w-full object-cover"
-              />
-            </div>
-          </div>
+          <AnimatedSection className="absolute right-0 -bottom-106" delay={0.2}>
+            <FloatingElement className="-rotate-10 flex w-[120px] flex-col gap-1 border-4 border-primary bg-primary shadow-lg" yOffset={8} duration={4}>
+              <div className="h-[120px] w-full overflow-hidden p-1">
+                <Image
+                  src="/img/couple1.jpeg"
+                  alt="Couple photo 1"
+                  width={200}
+                  height={160}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="h-[120px] w-full overflow-hidden p-1">
+                <Image
+                  src="/img/couple2.jpeg"
+                  alt="Couple photo 2"
+                  width={200}
+                  height={160}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="h-[120px] w-full overflow-hidden p-1">
+                <Image
+                  src="/img/couple3.jpeg"
+                  alt="Couple photo 3"
+                  width={200}
+                  height={160}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </FloatingElement>
+          </AnimatedSection>
         </div>
       </div>
 
       {/* SEE YOU ON DATE */}
-      <h2
-        className="mt-16 text-3xl font-bold leading-tight tracking-wide text-primary uppercase"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        See You
-        <br />
-        On 15.06.26
-      </h2>
+      <AnimatedSection delay={0.3}>
+        <h2
+          className="mt-16 text-3xl font-bold leading-tight tracking-wide text-primary uppercase"
+          style={{ fontFamily: "var(--font-heading)" }}
+        >
+          See You
+          <br />
+          On 15.06.26
+        </h2>
+      </AnimatedSection>
 
       {/* Couple Names */}
-      <p
-        className="mt-4 text-2xl tracking-wide text-primary"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        Aden & Rahma
-      </p>
+      <AnimatedSection delay={0.4}>
+        <p
+          className="mt-4 text-2xl tracking-wide text-primary"
+          style={{ fontFamily: "var(--font-heading)" }}
+        >
+          Aden & Rahma
+        </p>
+      </AnimatedSection>
     </div>
   )
 }

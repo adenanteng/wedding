@@ -4,14 +4,17 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-import { Clock, Loader2, MapPin, MapPinIcon, Navigation, RouteIcon } from "lucide-react";
+import { Clock, Loader2, MapPin, Navigation, RouteIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import { AnimatedSection } from "@/components/ui/animated-section";
+import { AnimatedText } from "@/components/ui/animated-text";
+import { FloatingElement } from "@/components/ui/floating-element";
+import { EndlessBouncingText } from "../ui/endless-bouncing-text";
+import { PartyPopper } from "../animate-ui/icons/party-popper";
 
 const VENUE_COORDS = { lng: 105.29310599848067, lat: -5.1484356219499166, name: "Metro Nih Boss" };
 
@@ -27,14 +30,14 @@ function formatDuration(seconds: number): string {
   // OSRM provides ideal time, multiply to account for real-world traffic/lights
   const realSeconds = seconds * TRAFFIC_MULTIPLIER;
   const mins = Math.round(realSeconds / 60);
-  
+
   if (mins < 60) {
     return `${mins} mnt`;
   }
-  
+
   const hours = Math.floor(mins / 60);
   const remainingMins = mins % 60;
-  
+
   return remainingMins > 0 ? `${hours} jam ${remainingMins} mnt` : `${hours} jam`;
 }
 
@@ -233,9 +236,9 @@ export default function EventSection() {
   return (
     <div className="flex w-full flex-col items-center px-6 pt-10 pb-16">
       {/* Disco Ball + Save The Date */}
-      <div className="flex w-full max-w-xs items-start justify-between gap-2">
+      <AnimatedSection className="flex w-full max-w-xs items-start justify-between gap-2" delay={0.1}>
         {/* Disco Ball */}
-        <div className="w-[120px] shrink-0">
+        <FloatingElement className="w-[120px] shrink-0" yOffset={10} duration={4}>
           <Image
             src="/img/disco.png"
             alt="Disco ball illustration"
@@ -243,9 +246,9 @@ export default function EventSection() {
             height={240}
             className="h-auto w-full object-contain -rotate-5"
           />
-        </div>
+        </FloatingElement>
         {/* Save The Date text */}
-        <h2
+        {/* <h2
           className="text-center text-5xl tracking-wide text-primary font-bold uppercase rotate-10"
           style={{ fontFamily: "var(--font-heading)" }}
         >
@@ -254,11 +257,22 @@ export default function EventSection() {
           The
           <br />
           Date!
-        </h2>
-      </div>
+        </h2> */}
+
+        <AnimatedSection className="" delay={0.1}>
+          <FloatingElement yOffset={10} duration={3}>
+            <EndlessBouncingText
+              as="h1"
+              text={"Save\nThe\nDate!"}
+              className="font-heading text-center text-5xl tracking-wide text-primary font-bold uppercase rotate-10"
+              style={{ fontFamily: "var(--font-heading)" }}
+            />
+          </FloatingElement>
+        </AnimatedSection>
+      </AnimatedSection>
 
       {/* Calendar Section */}
-      <div className="mt-8 flex w-[calc(100%+5rem)] -mx-10 items-stretch -rotate-5">
+      <AnimatedSection className="mt-8 flex w-[calc(100%+5rem)] -mx-10 items-stretch -rotate-5" delay={0.2}>
         {/* Saturday */}
         <div className="flex flex-1 flex-col items-center border-y-2 border-l-2 border-primary">
           <span
@@ -290,7 +304,7 @@ export default function EventSection() {
             15
           </span>
           {/* Circle around D-day */}
-          <div className="absolute top-10 right-10">
+          <FloatingElement className="absolute top-10 right-10" yOffset={5} duration={3} delay={0.5}>
             <Image
               src="/img/circle.svg"
               alt="Circle"
@@ -298,7 +312,7 @@ export default function EventSection() {
               height={60}
               className="h-[60px] w-[60px] object-contain"
             />
-          </div>
+          </FloatingElement>
           <span
             className="absolute top-22 right-5 text-sm font-bold text-primary -rotate-10"
             style={{ fontFamily: "var(--font-handwritten)" }}
@@ -322,95 +336,99 @@ export default function EventSection() {
             16
           </span>
         </div>
-      </div>
+      </AnimatedSection>
 
       {/* Wedding Party Heading */}
-      <h3
-        className="mt-16 text-center text-3xl tracking-wide text-primary"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        Wedding Party
-      </h3>
+      <AnimatedSection delay={0.3}>
+        <h3
+          className="mt-16 text-center font-bold text-3xl tracking-wide text-primary"
+          style={{ fontFamily: "var(--font-heading)" }}
+        >
+          Wedding Party
+          {/* <PartyPopper size={50} animate loop loopDelay={2000} className="absolute right-9" /> */}
+        </h3>
+      </AnimatedSection>
 
       {/* Event Details */}
-      <div
-        className="mt-5 text-center text-sm leading-relaxed"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        <p>Senin, 15 Juni 2026</p>
-        <p>09.00 WIB</p>
-        <p className="mt-2">Kediaman Mempelai Wanita</p>
-        <p>Jl. Kencana Indah No.42, Margorejo,</p>
-        <p>Metro Selatan, Kota Metro, Lampung.</p>
-      </div>
+      <AnimatedSection delay={0.4}>
+        <div
+          className="mt-5 text-center text-sm leading-relaxed"
+          style={{ fontFamily: "var(--font-heading)" }}
+        >
+          <AnimatedText text="Senin, 15 Juni 2026" />
+          <AnimatedText text="09.00 WIB" />
+          <AnimatedText text="Kediaman Mempelai Wanita" className="mt-2" />
+          <AnimatedText text="Jl. Kencana Indah No.42, Margorejo," />
+          <AnimatedText text="Metro Selatan, Kota Metro, Lampung." />
+        </div>
+      </AnimatedSection>
 
-      <div className="w-full px-10">
+      <AnimatedSection className="w-full px-10" delay={0.5}>
         <WeddingMap />
-      </div>
+      </AnimatedSection>
 
       {/* See Location Drawer */}
-      <Drawer>
-        <DrawerTrigger asChild>
-          <button
-            className="mt-6 rounded-lg border-2 border-primary bg-primary text-white px-6 py-3 text-sm tracking-wider transition-all hover:bg-white hover:text-primary flex items-center gap-2 group"
-            style={{ fontFamily: "var(--font-heading)" }}
-          >
-            <Navigation className="size-4 group-hover:animate-bounce" />
-            Lihat Rute
-          </button>
-        </DrawerTrigger>
-        <DrawerContent className="bg-transparent border-none before:border-2 before:border-primary">
-          <div className="mx-auto w-full max-w-sm px-6 pb-8">
-            <DrawerHeader className="px-0">
-              <DrawerTitle className="text-2xl text-primary flex justify-center items-center gap-2" style={{ fontFamily: "var(--font-heading)" }}>
-                <MapPin className="size-6" />
-                Rute Lokasi
-              </DrawerTitle>
-              {/* <DrawerDescription className="text-sm text-center" style={{ fontFamily: "var(--font-heading)" }}>
-                Silakan klik tombol di bawah untuk membuka navigasi di Google Maps.
-              </DrawerDescription> */}
-            </DrawerHeader>
+      <AnimatedSection delay={0.6}>
+        <Drawer>
+          <DrawerTrigger asChild>
+            <button
+              className="mt-6 rounded-lg border-2 border-primary bg-primary text-white px-6 py-3 text-sm tracking-wider transition-all hover:bg-white hover:text-primary flex items-center gap-2 group"
+              style={{ fontFamily: "var(--font-heading)" }}
+            >
+              <Navigation className="size-4 group-hover:animate-bounce" />
+              Lihat Rute
+            </button>
+          </DrawerTrigger>
+          <DrawerContent className="bg-transparent border-none before:border-2 before:border-primary">
+            <div className="mx-auto w-full max-w-sm px-6 pb-8">
+              <DrawerHeader className="px-0">
+                <DrawerTitle className="text-2xl text-primary flex justify-center items-center gap-2" style={{ fontFamily: "var(--font-heading)" }}>
+                  <MapPin className="size-6" />
+                  Rute Lokasi
+                </DrawerTitle>
+              </DrawerHeader>
 
-            <div className="mb-4">
-              {locations.map((loc, index) => (
-                <div key={index} className="flex flex-col gap-4">
-                  <div className="w-full h-[40vh] rounded-3xl overflow-hidden relative border-2 border-dashed border-primary" data-vaul-no-drag>
-                    <EventRouteMap
-                      destination={{
-                        lng: (loc as any).lng,
-                        lat: (loc as any).lat,
-                        name: loc.venue
-                      }}
-                    />
+              <div className="mb-4">
+                {locations.map((loc, index) => (
+                  <div key={index} className="flex flex-col gap-4">
+                    <div className="w-full h-[40vh] rounded-3xl overflow-hidden relative border-2 border-dashed border-primary" data-vaul-no-drag>
+                      <EventRouteMap
+                        destination={{
+                          lng: (loc as any).lng,
+                          lat: (loc as any).lat,
+                          name: loc.venue
+                        }}
+                      />
+                    </div>
+
                   </div>
+                ))}
+              </div>
 
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 flex flex-col gap-3">
-              <a
-                href={gmapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-4 bg-primary text-white rounded-xl text-center font-bold flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] active:scale-[0.98] shadow-lg"
-                style={{ fontFamily: "var(--font-heading)" }}
-              >
-                <Navigation className="size-5" />
-                Buka di Google Maps
-              </a>
-              <DrawerClose asChild>
-                <button
-                  className="w-full py-3 text-primary font-bold border-2 border-primary rounded-xl transition-all hover:bg-primary/5"
+              <div className="mt-6 flex flex-col gap-3">
+                <a
+                  href={gmapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-4 bg-primary text-white rounded-xl text-center font-bold flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] active:scale-[0.98] shadow-lg"
                   style={{ fontFamily: "var(--font-heading)" }}
                 >
-                  Tutup
-                </button>
-              </DrawerClose>
+                  <Navigation className="size-5" />
+                  Buka di Google Maps
+                </a>
+                <DrawerClose asChild>
+                  <button
+                    className="w-full py-3 text-primary font-bold border-2 border-primary rounded-xl transition-all hover:bg-primary/5"
+                    style={{ fontFamily: "var(--font-heading)" }}
+                  >
+                    Tutup
+                  </button>
+                </DrawerClose>
+              </div>
             </div>
-          </div>
-        </DrawerContent>
-      </Drawer>
+          </DrawerContent>
+        </Drawer>
+      </AnimatedSection>
     </div>
   )
 }
