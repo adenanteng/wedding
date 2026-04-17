@@ -23,7 +23,7 @@ interface RouteData {
   distance: number;
 }
 
-const TRAFFIC_MULTIPLIER = 1.4;
+const TRAFFIC_MULTIPLIER = 2.0;
 
 function formatDuration(seconds: number): string {
   // OSRM provides ideal time, multiply to account for real-world traffic/lights
@@ -84,7 +84,9 @@ function WeddingMap({ height = "280px" }: { height?: string }) {
       >
         <MapControls
           showZoom={true}
-          showLocate={true}
+          showLocate={false}
+          showCompass={true}
+          showFullscreen={true}
           position="bottom-right"
         />
 
@@ -165,6 +167,7 @@ function EventRouteMap({ destination }: { destination: { lng: number, lat: numbe
           showZoom={true}
           showLocate={true}
           showCompass={true}
+          showFullscreen={true}
           position="bottom-right"
         />
 
@@ -197,14 +200,14 @@ function EventRouteMap({ destination }: { destination: { lng: number, lat: numbe
 
       {routes.length > 0 && (
         <div className="absolute top-2 left-2 flex flex-col gap-1 pointer-events-none" style={{ fontFamily: "var(--font-sans)" }}>
-          <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-xl shadow-sm border border-gray-100 flex flex-col gap-0.5">
-            <div className="flex items-center gap-1.5 text-[11px] font-bold text-gray-900">
-              <Clock className="size-3 text-primary" />
-              {formatDuration(routes[0].duration)}
-            </div>
-            <div className="flex items-center gap-1.5 text-[10px] text-gray-500">
-              <RouteIcon className="size-3" />
+          <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-xl shadow-sm border flex flex-col gap-0.5">
+            <div className="flex items-center gap-1.5 text-sm font-bold text-gray-900">
+              <RouteIcon className="size-3 text-primary" />
               {formatDistance(routes[0].distance)}
+            </div>
+            <div className="flex items-center gap-1.5 text-xs text-gray-600">
+              <Clock className="size-3" />
+              {formatDuration(routes[0].duration)}
             </div>
           </div>
         </div>
