@@ -411,7 +411,7 @@ export default function EventSection() {
               </button>
             </DrawerTrigger>
             <DrawerContent className="bg-transparent border-none before:border-2 before:border-primary">
-              <div className="mx-auto w-full max-w-sm px-6 pb-8">
+              <div className="mx-auto w-full max-w-sm px-6 pb-6">
                 <DrawerHeader className="px-0">
                   <DrawerTitle className="text-2xl text-primary flex justify-center items-center gap-2" style={{ fontFamily: "var(--font-heading)" }}>
                     <MapPin className="size-6" />
