@@ -160,7 +160,7 @@ export default function ProposalVideoSection() {
                     </div>
 
                     {/* Bottom Controls */}
-                    <div className="flex items-center justify-end">
+                    {/* <div className="flex items-center justify-end">
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
@@ -169,7 +169,7 @@ export default function ProposalVideoSection() {
                       >
                         {isFullscreen ? <IconMinimize size={20} /> : <IconMaximize size={20} />}
                       </motion.button>
-                    </div>
+                    </div> */}
                   </motion.div>
                 )}
               </AnimatePresence>
