@@ -110,7 +110,7 @@ export default function MusicPlayer({ isOpened }: MusicPlayerProps) {
               alt="Couple photo"
               width={64}
               height={64}
-              className={`h-full w-full object-cover ${isPlaying ? "animate-spin-slow" : ""}`}
+              className={`h-auto w-full object-cover ${isPlaying ? "animate-spin-slow" : ""}`}
             />
             {/* Spinning disk overlay if desired, but image transition is nice */}
           </div>

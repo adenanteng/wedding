@@ -43,7 +43,7 @@ export default function UnauthorizedPage() {
             alt="Sparkles"
             width={40}
             height={40}
-            className="mx-auto"
+            className="mx-auto h-auto w-10"
           />
         </div>
       </div>
@@ -51,10 +51,10 @@ export default function UnauthorizedPage() {
       {/* Background decoration */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden opacity-[0.03]">
         <div className="absolute -left-10 top-20 -rotate-12">
-          <Image src="/img/ring.png" alt="" width={200} height={200} />
+          <Image src="/img/ring.png" alt="" width={200} height={200} className="h-auto w-[200px]" />
         </div>
         <div className="absolute -right-10 bottom-20 rotate-12">
-          <Image src="/img/tie.png" alt="" width={200} height={200} />
+          <Image src="/img/tie.png" alt="" width={200} height={200} className="h-auto w-[200px]" />
         </div>
       </div>
     </div>

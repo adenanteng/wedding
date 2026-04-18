@@ -111,7 +111,7 @@ export default function TimelineSection() {
             alt="ornament"
             width={20}
             height={20}
-            className="object-contain"
+            className="h-auto w-[20px] object-contain"
           />
         </FloatingElement>
       </AnimatedSection>

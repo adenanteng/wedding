@@ -8,6 +8,7 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -179,7 +180,7 @@ export default function CommentSection() {
             alt="ornament"
             width={30}
             height={30}
-            className="object-contain"
+            className="h-auto w-[30px] object-contain"
           />
         </FloatingElement>
         <FloatingElement className="absolute bottom-0 right-10 rotate-20" yOffset={4} duration={3} delay={0.5}>
@@ -188,7 +189,7 @@ export default function CommentSection() {
             alt="ornament"
             width={20}
             height={20}
-            className="object-contain"
+            className="h-auto w-[20px] object-contain"
           />
         </FloatingElement>
       </AnimatedSection>
@@ -270,6 +271,9 @@ export default function CommentSection() {
                   <MessageCircle className="size-6" />
                   Kirim Pesan
                 </DrawerTitle>
+                <DrawerDescription className="text-center" style={{ fontFamily: "var(--font-heading)" }}>
+                  
+                </DrawerDescription>
               </DrawerHeader>
 
               <form onSubmit={handleSubmit} className="px-0">

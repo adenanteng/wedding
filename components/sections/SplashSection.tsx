@@ -44,7 +44,7 @@ export default function SplashSection({ isOpen, onOpen, guestName = "" }: Splash
             alt="Confetti"
             width={100}
             height={40}
-            className="object-contain"
+            className="h-auto w-[100px] object-contain"
           />
         </FloatingElement>
 
@@ -107,7 +107,7 @@ export default function SplashSection({ isOpen, onOpen, guestName = "" }: Splash
               alt="Sparkles"
               width={30}
               height={30}
-              className="object-contain"
+              className="h-auto w-[30px] object-contain"
             />
           </FloatingElement>
 
@@ -117,7 +117,7 @@ export default function SplashSection({ isOpen, onOpen, guestName = "" }: Splash
               alt="Sparkles"
               width={30}
               height={30}
-              className="object-contain"
+              className="h-auto w-[30px] object-contain"
             />
           </FloatingElement>
         </div>

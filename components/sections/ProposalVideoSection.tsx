@@ -183,7 +183,7 @@ export default function ProposalVideoSection() {
                   alt="ornament"
                   width={40}
                   height={40}
-                  className="object-contain"
+                  className="h-auto w-[40px] object-contain"
                 />
               </FloatingElement>
             )}
@@ -197,7 +197,7 @@ export default function ProposalVideoSection() {
             alt="Hand-drawn ornament"
             width={120}
             height={40}
-            className="object-contain rotate-180"
+            className="h-auto w-[120px] object-contain rotate-180"
           />
         </FloatingElement>
       </AnimatedSection>

@@ -5,6 +5,7 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -416,6 +417,9 @@ export default function EventSection() {
                     <MapPin className="size-6" />
                     Rute Lokasi
                   </DrawerTitle>
+                  <DrawerDescription className="text-center" style={{ fontFamily: "var(--font-heading)" }}>
+                    
+                  </DrawerDescription>
                 </DrawerHeader>
 
                 <div className="mb-4">

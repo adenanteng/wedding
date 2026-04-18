@@ -42,7 +42,7 @@ export default function BrideGroomSection() {
               alt="Couple photo"
               width={380}
               height={520}
-              className="h-full w-full object-cover rounded-3xl border-2 shadow-lg"
+              className="h-auto w-full object-cover rounded-3xl border-2 shadow-lg"
             />
           </div>
         </div>
