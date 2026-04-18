@@ -64,8 +64,8 @@ export default function RsvpSection() {
 
       if (data?.phone && data?.source) {
         const textMessage = presence
-          ? `Dear ${guestName},\n\n Kehadiran Anda adalah kehormatan, waktu yang Anda luangkan adalah kado terindah.`
-          : `Dear ${guestName},\n\n Ketidakhadiran Anda kami tangisi, namun saldo yang masuk akan sangat menghibur hati.`
+          ? `Dear ${guestName},\n\nKehadiran Anda adalah kehormatan, waktu yang Anda luangkan adalah kado terindah.`
+          : `Dear ${guestName},\n\nGak apa-apa, we totally understand. Makasih ya udah sempetin ngabarin. Sending love from here! 🤍`
 
         try {
           const textResult = await sendWhatsAppMessage({
@@ -146,7 +146,7 @@ export default function RsvpSection() {
               style={{ fontFamily: "var(--font-heading)" }}
             >
               {currentUserPresence === false
-                ? "Orangnya boleh ga ada, yang penting saldo tetap menyapa. 😄"
+                ? "Gak apa-apa, we totally understand. Makasih ya udah sempetin ngabarin. Sending love from here! 🤍"
                 : "Senang sekali melihatmu menyempatkan hadir di tengah kesibukanmu. Terima kasih ya!"}
             </p>
             <div className="mt-8">

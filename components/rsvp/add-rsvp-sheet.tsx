@@ -91,57 +91,59 @@ export function AddRsvpSheet({ onSuccess }: AddRsvpSheetProps) {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button>
+        <Button className="text-lg">
           <IconPlus className="mr-2 h-4 w-4" />
           Add Manual RSVP
         </Button>
       </SheetTrigger>
-      <SheetContent style={{ fontFamily: "var(--font-sans)" }}>
+      <SheetContent style={{ fontFamily: "var(--font-sans)" }} className="text-lg">
         <SheetHeader>
-          <SheetTitle>Tambah Tamu Undangan</SheetTitle>
-          <SheetDescription>
+          <SheetTitle className="text-lg">Tambah Tamu Undangan</SheetTitle>
+          <SheetDescription className="text-lg">
             Masukkan detail tamu secara manual untuk masuk ke daftar undangan.
           </SheetDescription>
         </SheetHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-6 px-6">
           <div className="space-y-2">
-            <Label htmlFor="name">Nama Tamu</Label>
+            <Label htmlFor="name" className="text-lg">Nama Tamu</Label>
             <Input
               id="name"
               placeholder=""
+              className="text-lg"
               value={formData.name}
               onChange={(e) => setFormData(p => ({ ...p, name: e.target.value }))}
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="phone">Nomor WhatsApp</Label>
+            <Label htmlFor="phone" className="text-lg">Nomor WhatsApp</Label>
             <Input
               id="phone"
               placeholder=""
+              className="text-lg"
               value={formData.phone}
               onChange={(e) => setFormData(p => ({ ...p, phone: e.target.value }))}
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="source">Source</Label>
+            <Label htmlFor="source" className="text-lg">Source</Label>
             <Select
-              value={formData.source} 
+              value={formData.source}
               onValueChange={(value) => setFormData(p => ({ ...p, source: value }))}
             >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Pilih" />
+              <SelectTrigger className="w-full text-lg">
+                <SelectValue placeholder="Pilih" className="text-lg" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="aden">aden</SelectItem>
-                <SelectItem value="rahma">rahma</SelectItem>
-                <SelectItem value="enola">enola</SelectItem>
+                <SelectItem value="aden" className="text-lg font-sans">aden</SelectItem>
+                <SelectItem value="rahma" className="text-lg font-sans">rahma</SelectItem>
+                <SelectItem value="enola" className="text-lg font-sans">enola</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <SheetFooter className="pt-4 p-0">
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full text-lg" disabled={loading}>
               {loading ? <IconLoader2 className="mr-2 h-4 w-4 animate-spin" /> : "Simpan Tamu"}
             </Button>
           </SheetFooter>

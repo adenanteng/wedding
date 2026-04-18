@@ -17,62 +17,50 @@ export default function MusicPlayer({ isOpened }: MusicPlayerProps) {
 
   // Handle autoplay when invitation is opened
   useEffect(() => {
-    if (isOpened && audioRef.current && !isForcePaused) {
-      audioRef.current.play().then(() => {
-        setIsPlaying(true)
-      }).catch((err) => {
-        console.warn("Autoplay was prevented by browser:", err)
-      })
+    if (isOpened) {
+      setIsPlaying(true)
     }
-  }, [isOpened, isForcePaused, setIsPlaying])
+  }, [isOpened, setIsPlaying])
 
-  // Handle force pause from video with fade
+  // Handle play/pause with fade
   useEffect(() => {
-    if (audioRef.current) {
-      if (isForcePaused) {
-        // Fade out
-        let vol = audioRef.current.volume
-        const interval = setInterval(() => {
-          if (vol > 0.05) {
-            vol -= 0.05
-            if (audioRef.current) audioRef.current.volume = vol
-          } else {
-            if (audioRef.current) {
-              audioRef.current.volume = 0
-              audioRef.current.pause()
-            }
-            clearInterval(interval)
-          }
-        }, 150)
-        return () => clearInterval(interval)
-      } else if (isPlaying) {
-        // Fade in
-        audioRef.current.volume = 0
-        audioRef.current.play().catch(err => console.warn(err))
-        let vol = 0
-        const interval = setInterval(() => {
-          if (vol < 0.95) {
-            vol += 0.05
-            if (audioRef.current) audioRef.current.volume = vol
-          } else {
-            if (audioRef.current) audioRef.current.volume = 1
-            clearInterval(interval)
-          }
-        }, 150)
-        return () => clearInterval(interval)
-      }
+    if (!audioRef.current) return;
+    const audio = audioRef.current;
+
+    if (isForcePaused || !isPlaying) {
+      // Fade out
+      let vol = audio.volume;
+      const fadeOutInterval = setInterval(() => {
+        if (vol > 0.05) {
+          vol -= 0.05;
+          audio.volume = Math.max(0, vol);
+        } else {
+          audio.volume = 0;
+          audio.pause();
+          clearInterval(fadeOutInterval);
+        }
+      }, 50);
+      return () => clearInterval(fadeOutInterval);
+    } else {
+      // Fade in
+      audio.volume = 0;
+      audio.play().catch(err => console.warn("Audio play prevented:", err));
+      let vol = 0;
+      const fadeInInterval = setInterval(() => {
+        if (vol < 0.95) {
+          vol += 0.05;
+          audio.volume = Math.min(1, vol);
+        } else {
+          audio.volume = 1;
+          clearInterval(fadeInInterval);
+        }
+      }, 50);
+      return () => clearInterval(fadeInInterval);
     }
-  }, [isForcePaused, isPlaying])
+  }, [isForcePaused, isPlaying]);
 
   const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause()
-      } else {
-        audioRef.current.play()
-      }
-      setIsPlaying(!isPlaying)
-    }
+    setIsPlaying(!isPlaying)
   }
 
   const formatTime = (time: number) => {

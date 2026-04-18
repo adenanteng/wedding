@@ -134,7 +134,7 @@ export const columns: ColumnDef<RSVP>[] = [
           if (updateError) throw updateError;
 
           const origin = window.location.origin;
-          const messageText = `Kpd Yth. *${rsvp.name}*,\n\nBismillah Ar-Rahman Ar-Rahim\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada acara pernikahan kami.\n\nUndangan Digital:\n${origin}/${rsvp.short_id}\n\nSebuah kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.\n\nTerima kasih.`;
+          const messageText = `Kpd Yth. *${rsvp.name}*\n\nBismillah Ar-Rahman Ar-Rahim.\n\nDi hari yang berbahagia nanti, kami sangat mengharapkan kehadiran Bapak/Ibu/Saudara/i untuk ikut merayakan babak baru kehidupan kami.\n\nDetail Undangan:\n${origin}/${rsvp.short_id}\n\nTerima kasih telah menjadi bagian dari perjalanan kami. Sampai jumpa di hari bahagia!`;
 
           const result = await sendWhatsAppMessage({
             source: rsvp.source,
@@ -168,9 +168,9 @@ export const columns: ColumnDef<RSVP>[] = [
 
       return (
         <>
-          <EditRsvpSheet 
-            rsvp={rsvp} 
-            open={isEditOpen} 
+          <EditRsvpSheet
+            rsvp={rsvp}
+            open={isEditOpen}
             onOpenChange={setIsEditOpen}
             onSuccess={() => {
               if ((table.options.meta as any)?.refresh) {
@@ -180,12 +180,12 @@ export const columns: ColumnDef<RSVP>[] = [
           />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
+              <Button variant="ghost" className="h-8 w-8 p-0 font-sans">
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="text-lg font-sans">
               <DropdownMenuItem
                 onClick={() => handleInvite(rsvp.id)}
               >

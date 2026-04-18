@@ -66,7 +66,8 @@ export function BulkInviteSheet({ onSuccess }: BulkInviteSheetProps) {
         }
 
         const guest = guests[i]
-        const messageText = `Kpd Yth. *${guest.name}*,\n\nBismillah Ar-Rahman Ar-Rahim\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada acara pernikahan kami.\n\nUndangan Digital:\n${origin}/${guest.short_id}\n\nSebuah kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.\n\nTerima kasih.`;
+        const messageText = `Kpd Yth. *${guest.name}*\n\nBismillah Ar-Rahman Ar-Rahim.\n\nDi hari yang berbahagia nanti, kami sangat mengharapkan kehadiran Bapak/Ibu/Saudara/i untuk ikut merayakan babak baru kehidupan kami.\n\nDetail Undangan:\n${origin}/${guest.short_id}\n\nTerima kasih telah menjadi bagian dari perjalanan kami. Sampai jumpa di hari bahagia!`;
+
 
         try {
           // Send WhatsApp via Server Action
@@ -108,24 +109,24 @@ export function BulkInviteSheet({ onSuccess }: BulkInviteSheetProps) {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" className="text-lg">
           <IconConfetti className="mr-2 h-4 w-4" />
           Bulk Invite
         </Button>
       </SheetTrigger>
       <SheetContent className="sm:max-w-md" style={{ fontFamily: "var(--font-sans)" }}>
         <SheetHeader>
-          <SheetTitle>Bulk Invite WhatsApp</SheetTitle>
-          <SheetDescription>
+          <SheetTitle className="text-lg">Bulk Invite WhatsApp</SheetTitle>
+          <SheetDescription className="text-lg">
             Kirim undangan ke semua tamu yang belum terundang secara otomatis dengan delay.
           </SheetDescription>
         </SheetHeader>
 
-        <div className="py-8 px-6 space-y-6">
+        <div className="py-8 px-6 space-y-6 text-lg">
           {!isProcessing ? (
             <div className="bg-secondary/30 p-4 rounded-lg flex flex-col gap-2">
-              <p className="text-sm font-medium">Informasi:</p>
-              <ul className="text-xs text-muted-foreground list-disc list-inside space-y-1">
+              <p className="font-medium">Informasi:</p>
+              <ul className="text-muted-foreground list-disc list-inside space-y-1">
                 <li>Hanya tamu dengan status "Belum Terundang" yang akan dikirim.</li>
                 <li>Ada jeda 5-8 detik antar pesan untuk keamanan akun WhatsApp.</li>
                 <li>Jangan tutup tab browser ini selama proses berjalan.</li>
@@ -154,12 +155,12 @@ export function BulkInviteSheet({ onSuccess }: BulkInviteSheetProps) {
 
         <div className="px-6">
           {!isProcessing ? (
-            <Button className="w-full" onClick={handleBulkInvite}>
+            <Button className="w-full text-lg" onClick={handleBulkInvite}>
               <IconPlayerPlay className="mr-2 h-4 w-4" />
               Mulai Bulk Invite
             </Button>
           ) : (
-            <Button variant="destructive" className="w-full" onClick={() => stopRef.current = true}>
+            <Button variant="destructive" className="w-full text-lg" onClick={() => stopRef.current = true}>
               <IconPlayerStop className="mr-2 h-4 w-4" />
               Stop Proses
             </Button>
