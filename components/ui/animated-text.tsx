@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, Variants } from "framer-motion"
-import { ElementType, HTMLAttributes } from "react"
+import { ElementType, HTMLAttributes, useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 
 interface AnimatedTextProps extends HTMLAttributes<HTMLElement> {
@@ -20,6 +20,12 @@ export function AnimatedText({
   delay = 0,
   ...props
 }: AnimatedTextProps) {
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   // Support multiline strings using \n
   const lines = text.split("\n")
 
@@ -49,7 +55,7 @@ export function AnimatedText({
       <motion.span
         variants={containerVariants}
         initial="hidden"
-        whileInView="visible"
+        whileInView={isMounted ? "visible" : "hidden"}
         viewport={{ once, margin: "-50px" }}
         className="inline-block"
       >

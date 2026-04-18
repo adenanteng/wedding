@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, Variants } from "framer-motion"
-import { ElementType, HTMLAttributes } from "react"
+import { ElementType, HTMLAttributes, useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
 
 interface EndlessBouncingTextProps extends HTMLAttributes<HTMLElement> {
@@ -18,6 +18,12 @@ export function EndlessBouncingText({
   delay = 0,
   ...props
 }: EndlessBouncingTextProps) {
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   // Support multiline strings using \n
   const lines = text.split("\n")
 
@@ -51,7 +57,7 @@ export function EndlessBouncingText({
                     <motion.span
                       key={currentIndex}
                       variants={charVariants(currentIndex)}
-                      animate="animate"
+                      animate={isMounted ? "animate" : ""}
                       className="inline-block origin-center"
                     >
                       {char}

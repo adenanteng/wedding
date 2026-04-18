@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, HTMLMotionProps } from "framer-motion"
-import { ReactNode } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
 
 interface FloatingElementProps extends HTMLMotionProps<"div"> {
@@ -20,9 +20,15 @@ export function FloatingElement({
     delay = 0,
     ...props
 }: FloatingElementProps) {
+    const [isMounted, setIsMounted] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
+
     return (
         <motion.div
-            animate={{ y: [0, -yOffset, 0] }}
+            animate={isMounted ? { y: [0, -yOffset, 0] } : { y: 0 }}
             transition={{ 
                 duration, 
                 repeat: Infinity, 

@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image"
 import { Map, MapControls, MapMarker, MapRoute, MarkerContent, MarkerLabel, useMap } from "../ui/map";
 import {
@@ -9,7 +10,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import { Clock, Loader2, MapPin, Navigation, RouteIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { AnimatedText } from "@/components/ui/animated-text";
 import { FloatingElement } from "@/components/ui/floating-element";
@@ -95,7 +96,7 @@ function WeddingMap({ height = "280px" }: { height?: string }) {
             <div className="size-6 rounded-full bg-primary border-2 border-white shadow-lg flex items-center justify-center">
               <div className="size-2 rounded-full bg-white animate-pulse" />
             </div>
-            <MarkerLabel position="top">{VENUE_COORDS.name}</MarkerLabel>
+            <MarkerLabel position="top" className="font-sans">{VENUE_COORDS.name}</MarkerLabel>
           </MarkerContent>
         </MapMarker>
       </Map>
@@ -107,19 +108,29 @@ function EventRouteMap({ destination }: { destination: { lng: number, lat: numbe
   const [userLoc, setUserLoc] = useState<{ lng: number, lat: number } | null>(null);
   const [routes, setRoutes] = useState<RouteData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [geoError, setGeoError] = useState<string | null>(null);
 
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           setUserLoc({ lng: pos.coords.longitude, lat: pos.coords.latitude });
+          setGeoError(null);
         },
         (error) => {
           console.error("Geolocation error:", error);
+          let errorMsg = "Gagal mendapatkan lokasi Anda.";
+          if (error.code === 1) errorMsg = "Akses lokasi ditolak.";
+          else if (error.code === 2) errorMsg = "Lokasi tidak tersedia.";
+          else if (error.code === 3) errorMsg = "Waktu akses lokasi habis.";
+          
+          setGeoError(errorMsg);
           setIsLoading(false);
-        }
+        },
+        { timeout: 10000, enableHighAccuracy: true }
       );
     } else {
+      setGeoError("Browser tidak mendukung geolokasi.");
       setIsLoading(false);
     }
   }, []);
@@ -214,8 +225,17 @@ function EventRouteMap({ destination }: { destination: { lng: number, lat: numbe
       )}
 
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white/50 backdrop-blur-[2px]">
-          <Loader2 className="size-6 animate-spin text-primary" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/50 backdrop-blur-[2px] text-center p-4 pt-10" style={{ fontFamily: "var(--font-sans)" }}>
+          <Loader2 className="size-6 animate-spin text-primary mb-2" />
+          <p className="text-xs font-medium">Mencari rute terbaik...</p>
+        </div>
+      )}
+
+      {!isLoading && geoError && !userLoc && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 backdrop-blur-[2px] text-center p-6 pt-10" style={{ fontFamily: "var(--font-sans)" }}>
+          <MapPin className="size-8 text-gray-400 mb-2" />
+          <p className="text-sm text-gray-800 font-medium mb-1">{geoError}</p>
+          <p className="text-xs text-gray-600">Silakan aktifkan GPS atau buka di Google Maps untuk navigasi.</p>
         </div>
       )}
     </div>
@@ -223,9 +243,16 @@ function EventRouteMap({ destination }: { destination: { lng: number, lat: numbe
 }
 
 export default function EventSection() {
+  const [isMounted, setIsMounted] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const gmapsUrl = `https://www.google.com/maps/search/?api=1&query=${VENUE_COORDS.lat},${VENUE_COORDS.lng}`;
 
-  const locations = [
+  const locations = useMemo(() => [
     {
       venue: 'Akad Nikah',
       address: 'Jl. Kencana Indah No.42, Kel. Margorejo, Kec. Metro Selatan, Kota Metro, Lampung.',
@@ -233,7 +260,7 @@ export default function EventSection() {
       lng: 105.29310599848067,
       lat: -5.1484356219499166,
     },
-  ];
+  ], []);
 
   return (
     <div className="flex w-full flex-col items-center px-6 pt-10 pb-16">
@@ -371,65 +398,67 @@ export default function EventSection() {
 
       {/* See Location Drawer */}
       <AnimatedSection delay={0.6}>
-        <Drawer>
-          <DrawerTrigger asChild>
-            <button
-              className="mt-6 rounded-lg border-2 border-primary bg-primary text-white px-6 py-3 text-sm tracking-wider transition-all hover:bg-white hover:text-primary flex items-center gap-2 group"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              <Navigation className="size-4 group-hover:animate-bounce" />
-              Lihat Rute
-            </button>
-          </DrawerTrigger>
-          <DrawerContent className="bg-transparent border-none before:border-2 before:border-primary">
-            <div className="mx-auto w-full max-w-sm px-6 pb-8">
-              <DrawerHeader className="px-0">
-                <DrawerTitle className="text-2xl text-primary flex justify-center items-center gap-2" style={{ fontFamily: "var(--font-heading)" }}>
-                  <MapPin className="size-6" />
-                  Rute Lokasi
-                </DrawerTitle>
-              </DrawerHeader>
+        {isMounted && (
+          <Drawer onOpenChange={setIsDrawerOpen}>
+            <DrawerTrigger asChild>
+              <button
+                className="mt-6 rounded-lg border-2 border-primary bg-primary text-white px-6 py-3 text-sm tracking-wider transition-all hover:bg-white hover:text-primary flex items-center gap-2 group"
+                style={{ fontFamily: "var(--font-heading)" }}
+              >
+                <Navigation className="size-4 group-hover:animate-bounce" />
+                Lihat Rute
+              </button>
+            </DrawerTrigger>
+            <DrawerContent className="bg-transparent border-none before:border-2 before:border-primary">
+              <div className="mx-auto w-full max-w-sm px-6 pb-8">
+                <DrawerHeader className="px-0">
+                  <DrawerTitle className="text-2xl text-primary flex justify-center items-center gap-2" style={{ fontFamily: "var(--font-heading)" }}>
+                    <MapPin className="size-6" />
+                    Rute Lokasi
+                  </DrawerTitle>
+                </DrawerHeader>
 
-              <div className="mb-4">
-                {locations.map((loc, index) => (
-                  <div key={index} className="flex flex-col gap-4">
-                    <div className="w-full h-[40vh] rounded-3xl overflow-hidden relative border-2 border-dashed border-primary" data-vaul-no-drag>
-                      <EventRouteMap
-                        destination={{
-                          lng: (loc as any).lng,
-                          lat: (loc as any).lat,
-                          name: loc.venue
-                        }}
-                      />
+                <div className="mb-4">
+                  {isDrawerOpen && locations.map((loc, index) => (
+                    <div key={index} className="flex flex-col gap-4">
+                      <div className="w-full h-[40vh] rounded-3xl overflow-hidden relative border-2 border-dashed border-primary" data-vaul-no-drag>
+                        <EventRouteMap
+                          destination={{
+                            lng: loc.lng,
+                            lat: loc.lat,
+                            name: loc.venue
+                          }}
+                        />
+                      </div>
+
                     </div>
+                  ))}
+                </div>
 
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6 flex flex-col gap-3">
-                <a
-                  href={gmapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-4 bg-primary text-white rounded-xl text-center font-bold flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] active:scale-[0.98] shadow-lg"
-                  style={{ fontFamily: "var(--font-heading)" }}
-                >
-                  <Navigation className="size-5" />
-                  Buka di Google Maps
-                </a>
-                <DrawerClose asChild>
-                  <button
-                    className="w-full py-3 text-primary font-bold border-2 border-primary rounded-xl transition-all hover:bg-primary/5"
+                <div className="mt-6 flex flex-col gap-3">
+                  <a
+                    href={gmapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-4 bg-primary text-white rounded-xl text-center font-bold flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] active:scale-[0.98] shadow-lg"
                     style={{ fontFamily: "var(--font-heading)" }}
                   >
-                    Tutup
-                  </button>
-                </DrawerClose>
+                    <Navigation className="size-5" />
+                    Buka di Google Maps
+                  </a>
+                  <DrawerClose asChild>
+                    <button
+                      className="w-full py-3 text-primary font-bold border-2 border-primary rounded-xl transition-all hover:bg-primary/5"
+                      style={{ fontFamily: "var(--font-heading)" }}
+                    >
+                      Tutup
+                    </button>
+                  </DrawerClose>
+                </div>
               </div>
-            </div>
-          </DrawerContent>
-        </Drawer>
+            </DrawerContent>
+          </Drawer>
+        )}
       </AnimatedSection>
     </div>
   )

@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, HTMLMotionProps } from "framer-motion"
-import { ReactNode } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
 
 interface AnimatedSectionProps extends HTMLMotionProps<"div"> {
@@ -16,10 +16,16 @@ export function AnimatedSection({
     delay = 0,
     ...props
 }: AnimatedSectionProps) {
+    const [isMounted, setIsMounted] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            whileInView={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
             viewport={{ once: false, margin: "-50px" }}
             transition={{ duration: 0.8, delay, ease: "easeOut" }}
             className={className}
