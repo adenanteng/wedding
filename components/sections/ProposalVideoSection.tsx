@@ -2,7 +2,7 @@ import { AnimatedSection } from "@/components/ui/animated-section"
 import { Backlight } from "@/components/ui/backlight"
 import { FloatingElement } from "@/components/ui/floating-element"
 import { useMusic } from "@/context/MusicContext"
-import { IconMaximize, IconMinimize, IconPlayerPause, IconPlayerPlay } from "@tabler/icons-react"
+import { IconMaximize, IconMinimize, IconPlayerPause, IconPlayerPlay, IconRewindBackward5, IconRewindForward5 } from "@tabler/icons-react"
 import { AnimatePresence, motion } from "framer-motion"
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
@@ -82,6 +82,12 @@ export default function ProposalVideoSection() {
     }
   }
 
+  const skip = (seconds: number) => {
+    if (!videoRef.current) return
+    videoRef.current.currentTime += seconds
+    startControlsTimer()
+  }
+
   const startControlsTimer = (forceIsPlaying?: boolean) => {
     if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current)
     setShowControls(true)
@@ -148,15 +154,57 @@ export default function ProposalVideoSection() {
                     className="absolute inset-0 z-20 flex flex-col justify-between bg-black/20 rounded-xl p-4"
                   >
                     {/* Center Play Button */}
-                    <div className="flex flex-1 items-center justify-center mt-10">
+                    <div className="flex flex-1 items-center justify-center gap-6 mt-10">
+                      <AnimatePresence>
+                        {isPlaying && (
+                          <motion.button
+                            initial={{ opacity: 0, scale: 0.5, x: 20 }}
+                            animate={{ opacity: 1, scale: 1, x: 0 }}
+                            exit={{ opacity: 0, scale: 0.5, x: 20 }}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              skip(-5)
+                            }}
+                            className="flex h-12 w-12 items-center justify-center rounded-full border-[3px] border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                          >
+                            <IconRewindBackward5 size={24} />
+                          </motion.button>
+                        )}
+                      </AnimatePresence>
+
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={togglePlay}
                         className="flex h-16 w-16 items-center justify-center rounded-full border-[3px] border-black bg-white text-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
                       >
-                        {isPlaying ? <IconPlayerPause size={32} /> : <IconPlayerPlay size={32} className="ml-1" />}
+                        {isPlaying ? (
+                          <IconPlayerPause size={32} />
+                        ) : (
+                          <IconPlayerPlay size={32} className="" />
+                        )}
                       </motion.button>
+
+                      <AnimatePresence>
+                        {isPlaying && (
+                          <motion.button
+                            initial={{ opacity: 0, scale: 0.5, x: -20 }}
+                            animate={{ opacity: 1, scale: 1, x: 0 }}
+                            exit={{ opacity: 0, scale: 0.5, x: -20 }}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              skip(5)
+                            }}
+                            className="flex h-12 w-12 items-center justify-center rounded-full border-[3px] border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                          >
+                            <IconRewindForward5 size={24} />
+                          </motion.button>
+                        )}
+                      </AnimatePresence>
                     </div>
 
                     {/* Bottom Controls */}
