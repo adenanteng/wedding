@@ -154,7 +154,7 @@ export default function ProposalVideoSection() {
                     className="absolute inset-0 z-20 flex flex-col justify-between bg-black/20 rounded-xl p-4"
                   >
                     {/* Center Play Button */}
-                    <div className="flex flex-1 items-center justify-center gap-6 mt-10">
+                    <div className="flex flex-1 items-center justify-center gap-6">
                       <AnimatePresence>
                         {isPlaying && (
                           <motion.button
