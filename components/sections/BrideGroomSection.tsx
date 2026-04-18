@@ -8,7 +8,7 @@ export default function BrideGroomSection() {
       {/* Invitation Text */}
       <AnimatedSection delay={0.1}>
         <AnimatedText
-          text="Dengan penuh bahagia, kami mengundang Anda untuk menjadi saksi pengawal janji suci kami."
+          text="Dengan rasa syukur dan bahagia, kami mengundang Anda untuk menjadi saksi janji suci kami."
           className="max-w-xs text-center text-sm leading-relaxed"
           style={{ fontFamily: "var(--font-heading)" }}
         />
@@ -57,7 +57,7 @@ export default function BrideGroomSection() {
           Aden Anteng Anugrah
         </h3>
         <AnimatedText
-          text="Putra pertama dari Bapak Enyang Suandi & (Alm.) Ibu Kakai"
+          text="Putra pertama dari Bapak Enyang Suandi & Bunda Kakai Almarhumah"
           className="mt-3 max-w-xs text-center text-sm leading-relaxed"
           style={{ fontFamily: "var(--font-heading)" }}
           delay={0.7}

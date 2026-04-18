@@ -89,7 +89,7 @@ export default function GiftSection() {
       <AnimatedSection className="w-full flex justify-center" delay={0.4}>
         <DraggableCardContainer className="relative mt-8 flex h-[220px] w-full max-w-[260px] items-center justify-center">
           <p className="absolute top-1/2 mx-auto max-w-sm -translate-y-3/4 text-center text-2xl font-black font-dancing">
-            Sudah habis kak..
+            Pilih salah satu aja ya..
           </p>
 
           {bankCards.map((card, index) => (
