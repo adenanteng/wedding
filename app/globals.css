@@ -147,6 +147,25 @@
   .animate-marquee {
     animation: marquee 20s linear infinite;
   }
+
+  .video-fullscreen-container:fullscreen {
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  @media (orientation: portrait) {
+    .video-fullscreen-container:fullscreen {
+      transform: rotate(90deg);
+      width: 100vh;
+      height: 100vw;
+      transform-origin: center;
+    }
+  }
 }
 
 @keyframes marquee {

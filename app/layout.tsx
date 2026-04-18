@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
+import { MusicProvider } from "@/context/MusicContext"
 
 const gloriaHallelujah = Gloria_Hallelujah({
   weight: '400',
@@ -46,8 +47,10 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
-          {children}
-          <Toaster />
+          <MusicProvider>
+            {children}
+            <Toaster />
+          </MusicProvider>
         </ThemeProvider>
       </body>
     </html>

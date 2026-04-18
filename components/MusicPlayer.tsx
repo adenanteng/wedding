@@ -2,13 +2,14 @@
 
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
+import { useMusic } from "@/context/MusicContext"
 
 interface MusicPlayerProps {
   isOpened: boolean
 }
 
 export default function MusicPlayer({ isOpened }: MusicPlayerProps) {
-  const [isPlaying, setIsPlaying] = useState(false)
+  const { isPlaying, setIsPlaying, isForcePaused } = useMusic()
   const [progress, setProgress] = useState(0)
   const [currentTime, setCurrentTime] = useState("00:00")
   const [duration, setDuration] = useState("00:00")
@@ -16,14 +17,52 @@ export default function MusicPlayer({ isOpened }: MusicPlayerProps) {
 
   // Handle autoplay when invitation is opened
   useEffect(() => {
-    if (isOpened && audioRef.current) {
+    if (isOpened && audioRef.current && !isForcePaused) {
       audioRef.current.play().then(() => {
         setIsPlaying(true)
       }).catch((err) => {
         console.warn("Autoplay was prevented by browser:", err)
       })
     }
-  }, [isOpened])
+  }, [isOpened, isForcePaused, setIsPlaying])
+
+  // Handle force pause from video with fade
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isForcePaused) {
+        // Fade out
+        let vol = audioRef.current.volume
+        const interval = setInterval(() => {
+          if (vol > 0.05) {
+            vol -= 0.05
+            if (audioRef.current) audioRef.current.volume = vol
+          } else {
+            if (audioRef.current) {
+              audioRef.current.volume = 0
+              audioRef.current.pause()
+            }
+            clearInterval(interval)
+          }
+        }, 50)
+        return () => clearInterval(interval)
+      } else if (isPlaying) {
+        // Fade in
+        audioRef.current.volume = 0
+        audioRef.current.play().catch(err => console.warn(err))
+        let vol = 0
+        const interval = setInterval(() => {
+          if (vol < 0.95) {
+            vol += 0.05
+            if (audioRef.current) audioRef.current.volume = vol
+          } else {
+            if (audioRef.current) audioRef.current.volume = 1
+            clearInterval(interval)
+          }
+        }, 50)
+        return () => clearInterval(interval)
+      }
+    }
+  }, [isForcePaused, isPlaying])
 
   const togglePlay = () => {
     if (audioRef.current) {

@@ -10,6 +10,7 @@ import HeroSection from "@/components/sections/HeroSection"
 import RsvpSection from "@/components/sections/RsvpSection"
 import SplashSection from "@/components/sections/SplashSection"
 import TimelineSection from "@/components/sections/TimelineSection"
+import ProposalVideoSection from "@/components/sections/ProposalVideoSection"
 import { supabase } from "@/lib/supabaseClient"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -79,6 +80,7 @@ export default function Page() {
         <TimelineSection />
         <RsvpSection />
         <GiftSection />
+        <ProposalVideoSection />
         <div className="bg-white px-6 py-10 w-full">
           <CommentSection />
         </div>
