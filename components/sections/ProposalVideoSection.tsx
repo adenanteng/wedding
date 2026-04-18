@@ -130,6 +130,7 @@ export default function ProposalVideoSection() {
                 className="w-full h-full object-cover rounded-xl"
                 playsInline
                 src="/video/lamaran.mp4"
+                poster="/img/thumbnail.jpeg"
                 onEnded={() => {
                   setIsPlaying(false)
                   setIsForcePaused(false)
