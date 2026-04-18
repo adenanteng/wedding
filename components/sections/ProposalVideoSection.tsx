@@ -127,7 +127,7 @@ export default function ProposalVideoSection() {
             <div className={`video-inner-wrapper relative z-10 w-full h-full p-2 ${!isFullscreen ? 'rotate-[-0.5deg]' : 'p-0'}`}>
               <video
                 ref={videoRef}
-                className="w-full h-full object-cover rounded-xl"
+                className={`w-full h-full object-cover ${!isFullscreen ? 'rounded-xl' : 'rounded-2xl'}`}
                 playsInline
                 src="/video/lamaran.mp4"
                 poster="/img/thumbnail.jpeg"
