@@ -33,7 +33,7 @@ export default function TimelineSection() {
               className="text-base"
               style={{ fontFamily: "var(--font-heading)" }}
             >
-              Akad Nikah
+              Jadwal Belum Pasti
             </span>
           </div>
         </div>
@@ -51,7 +51,7 @@ export default function TimelineSection() {
               className="text-base"
               style={{ fontFamily: "var(--font-heading)" }}
             >
-              Resepsi
+              Jadwal Belum Pasti
             </span>
           </div>
         </div>
@@ -63,13 +63,13 @@ export default function TimelineSection() {
               className="w-[90px] text-right text-sm"
               style={{ fontFamily: "var(--font-heading)" }}
             >
-              18:00
+              11:00
             </span>
             <span
               className="text-base"
               style={{ fontFamily: "var(--font-heading)" }}
             >
-              Party
+              Jadwal Belum Pasti
             </span>
           </div>
         </div>
@@ -81,13 +81,13 @@ export default function TimelineSection() {
               className="w-[90px] text-right text-sm"
               style={{ fontFamily: "var(--font-heading)" }}
             >
-              19:00
+              12:00
             </span>
             <span
               className="text-base"
               style={{ fontFamily: "var(--font-heading)" }}
             >
-              Photo and Greeting
+              Jadwal Belum Pasti
             </span>
           </div>
         </div>

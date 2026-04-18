@@ -9,7 +9,7 @@ const bankCards = [
   {
     bankName: "BSI",
     accountName: "Aden Anteng",
-    accountNumber: "1234567890",
+    accountNumber: "7197229758",
     logo: "/img/logo-bsi.png",
     rotate: -4,
     translateX: -12,
@@ -18,7 +18,7 @@ const bankCards = [
   {
     bankName: "Mandiri",
     accountName: "Rahma Cahya",
-    accountNumber: "0987654321",
+    accountNumber: "1140029268995",
     logo: "/img/logo-mandiri.png",
     rotate: 3,
     translateX: 8,
@@ -27,7 +27,7 @@ const bankCards = [
   {
     bankName: "Seabank",
     accountName: "Rahma Cahya",
-    accountNumber: "5544332211",
+    accountNumber: "901925112727",
     logo: "/img/logo-seabank.png",
     rotate: -2,
     translateX: -6,
@@ -36,7 +36,7 @@ const bankCards = [
   {
     bankName: "Jago",
     accountName: "Aden Anteng",
-    accountNumber: "1122334455",
+    accountNumber: "109922214313",
     logo: "/img/logo-jago.png",
     rotate: 4,
     translateX: 10,
@@ -81,7 +81,7 @@ export default function GiftSection() {
         <AnimatedText
           className="mt-6 max-w-xs text-center text-sm leading-relaxed"
           style={{ fontFamily: "var(--font-heading)" }}
-          text="Kehadiran Anda adalah kado, namun restu berupa transfer adalah deposito."
+          text="Datang bawa doa itu mulia, tambah saldo itu luar biasa."
         />
       </AnimatedSection>
 
