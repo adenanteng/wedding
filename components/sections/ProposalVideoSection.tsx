@@ -31,6 +31,27 @@ export default function ProposalVideoSection() {
     }
   }, [])
 
+  // Slow video volume fading (3-4 seconds)
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    if (isPlaying) {
+      video.volume = 0
+      let vol = 0
+      const interval = setInterval(() => {
+        if (vol < 0.98) {
+          vol += 0.02
+          video.volume = vol
+        } else {
+          video.volume = 1
+          clearInterval(interval)
+        }
+      }, 80) // 80ms * 50 steps = 4 seconds
+      return () => clearInterval(interval)
+    }
+  }, [isPlaying])
+
   const togglePlay = (e?: React.MouseEvent) => {
     e?.stopPropagation()
     if (!videoRef.current) return
@@ -39,7 +60,7 @@ export default function ProposalVideoSection() {
       videoRef.current.play()
       setIsPlaying(true)
       setIsForcePaused(true)
-      startControlsTimer()
+      startControlsTimer(true)
     } else {
       videoRef.current.pause()
       setIsPlaying(false)
@@ -61,11 +82,12 @@ export default function ProposalVideoSection() {
     }
   }
 
-  const startControlsTimer = () => {
+  const startControlsTimer = (forceIsPlaying?: boolean) => {
     if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current)
     setShowControls(true)
 
-    if (isPlaying) {
+    const isCurrentlyPlaying = typeof forceIsPlaying === "boolean" ? forceIsPlaying : isPlaying
+    if (isCurrentlyPlaying) {
       controlsTimeoutRef.current = setTimeout(() => {
         setShowControls(false)
       }, 3000)
@@ -93,16 +115,16 @@ export default function ProposalVideoSection() {
         <Backlight blur={40} className="w-full max-w-[400px]">
           <div
             ref={containerRef}
-            className={`video-fullscreen-container relative w-full aspect-video group cursor-pointer ${isFullscreen ? 'fixed inset-0 z-50' : ''}`}
+            className={`video-fullscreen-container relative w-full aspect-video group cursor-pointer ${isFullscreen ? 'fixed inset-0 z-50 bg-black' : ''}`}
             onClick={handleContainerClick}
-            onMouseMove={startControlsTimer}
+            onMouseMove={() => startControlsTimer()}
           >
             {/* Hand-drawn look container with shadow (only when NOT fullscreen) */}
             {!isFullscreen && (
               <div className="absolute inset-0 bg-white border-[2.5px] border-black shadow-[8px_8px_0px_0px_rgba(130,14,3,0.9)] rounded-xl rotate-[-1.5deg]"></div>
             )}
 
-            <div className={`relative z-10 w-full h-full p-2 ${!isFullscreen ? 'rotate-[-0.5deg]' : 'p-0'}`}>
+            <div className={`video-inner-wrapper relative z-10 w-full h-full p-2 ${!isFullscreen ? 'rotate-[-0.5deg]' : 'p-0'}`}>
               <video
                 ref={videoRef}
                 className="w-full h-full object-cover rounded-xl"

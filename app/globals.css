@@ -148,22 +148,28 @@
     animation: marquee 20s linear infinite;
   }
 
-  .video-fullscreen-container:fullscreen {
-    background: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+  .video-fullscreen-container:fullscreen,
+  .video-fullscreen-container:-webkit-full-screen {
+    background: black !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow: hidden !important;
   }
 
   @media (orientation: portrait) {
-    .video-fullscreen-container:fullscreen {
-      transform: rotate(90deg);
-      width: 100vh;
-      height: 100vw;
-      transform-origin: center;
+    .video-fullscreen-container:fullscreen .video-inner-wrapper,
+    .video-fullscreen-container:-webkit-full-screen .video-inner-wrapper,
+    .video-fullscreen-container.fixed .video-inner-wrapper {
+      width: 100vh !important;
+      height: 100vw !important;
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) rotate(90deg) !important;
+      transform-origin: center !important;
     }
   }
 }

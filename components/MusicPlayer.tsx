@@ -43,7 +43,7 @@ export default function MusicPlayer({ isOpened }: MusicPlayerProps) {
             }
             clearInterval(interval)
           }
-        }, 50)
+        }, 150)
         return () => clearInterval(interval)
       } else if (isPlaying) {
         // Fade in
@@ -58,7 +58,7 @@ export default function MusicPlayer({ isOpened }: MusicPlayerProps) {
             if (audioRef.current) audioRef.current.volume = 1
             clearInterval(interval)
           }
-        }, 50)
+        }, 150)
         return () => clearInterval(interval)
       }
     }
