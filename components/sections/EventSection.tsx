@@ -96,7 +96,7 @@ function WeddingMap({ height = "280px" }: { height?: string }) {
             <div className="size-6 rounded-full bg-primary border-2 border-white shadow-lg flex items-center justify-center">
               <div className="size-2 rounded-full bg-white animate-pulse" />
             </div>
-            <MarkerLabel position="top" className="font-sans">{VENUE_COORDS.name}</MarkerLabel>
+            <MarkerLabel position="top" className="font-sans text-base">{VENUE_COORDS.name}</MarkerLabel>
           </MarkerContent>
         </MapMarker>
       </Map>
@@ -196,15 +196,15 @@ function EventRouteMap({ destination }: { destination: { lng: number, lat: numbe
           <MapMarker longitude={userLoc.lng} latitude={userLoc.lat}>
             <MarkerContent>
               <div className="size-4 rounded-full bg-blue-500 border-2 border-white shadow-lg" />
-              <MarkerLabel position="top">Anda</MarkerLabel>
+              <MarkerLabel position="top" className="font-sans text-base">Anda</MarkerLabel>
             </MarkerContent>
           </MapMarker>
-        )}
+        )}venue
 
         <MapMarker longitude={destination.lng} latitude={destination.lat}>
           <MarkerContent>
             <div className="size-5 rounded-full bg-primary border-2 border-white shadow-lg" />
-            <MarkerLabel position="bottom">{destination.name}</MarkerLabel>
+            <MarkerLabel position="bottom" className="font-sans text-base">{destination.name}</MarkerLabel>
           </MarkerContent>
         </MapMarker>
       </Map>
@@ -254,7 +254,7 @@ export default function EventSection() {
 
   const locations = useMemo(() => [
     {
-      venue: 'Akad Nikah',
+      venue: 'Lokasi Acara',
       address: 'Jl. Kencana Indah No.42, Kel. Margorejo, Kec. Metro Selatan, Kota Metro, Lampung.',
       mapUrl: 'https://maps.app.goo.gl/4vd44MRbjpuFvgrWA',
       lng: 105.29310599848067,
