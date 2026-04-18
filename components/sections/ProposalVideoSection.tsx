@@ -164,7 +164,7 @@ export default function ProposalVideoSection() {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={toggleFullscreen}
-                        className="flex h-10 w-10 mr-1 items-center justify-center border-2 border-black bg-white text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"
+                        className={`flex h-10 w-10 ${isFullscreen ? 'mr-5' : 'mr-1'} items-center justify-center border-2 border-black bg-white text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]`}
                       >
                         {isFullscreen ? <IconMinimize size={20} /> : <IconMaximize size={20} />}
                       </motion.button>
