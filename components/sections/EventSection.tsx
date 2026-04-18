@@ -228,14 +228,14 @@ function EventRouteMap({ destination }: { destination: { lng: number, lat: numbe
       {isLoading && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/50 backdrop-blur-[2px] text-center p-4 pt-10" style={{ fontFamily: "var(--font-sans)" }}>
           <Loader2 className="size-6 animate-spin text-primary mb-2" />
-          <p className="text-xs font-medium">Mencari rute terbaik...</p>
+          <p className="text-base font-medium">Mencari rute terbaik...</p>
         </div>
       )}
 
       {!isLoading && geoError && !userLoc && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 backdrop-blur-[2px] text-center p-6 pt-10" style={{ fontFamily: "var(--font-sans)" }}>
           <MapPin className="size-8 text-gray-400 mb-2" />
-          <p className="text-sm text-gray-800 font-medium mb-1">{geoError}</p>
+          <p className="text-base text-gray-800 font-medium mb-1">{geoError}</p>
           <p className="text-xs text-gray-600">Silakan aktifkan GPS atau buka di Google Maps untuk navigasi.</p>
         </div>
       )}
