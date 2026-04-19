@@ -81,5 +81,30 @@ npm run lint
 npm run format
 ```
 
+## 📊 Database Schema
+
+Project ini menggunakan **Supabase** sebagai database. Berikut adalah visualisasi struktur tabelnya:
+
+```mermaid
+erDiagram
+    RSVPS ||--o{ COMMENTS : "gives"
+    RSVPS {
+        uuid id PK
+        string short_id UK "Generated for unique URL"
+        string name
+        boolean presence
+        string phone
+        boolean invited
+        string source
+        timestamp created_at
+    }
+    COMMENTS {
+        uuid id PK
+        uuid sender_id FK "References rsvps.id"
+        text message
+        timestamp created_at
+    }
+```
+
 ## 📄 Lisensi
 Proyek ini dibuat untuk keperluan pribadi (Pernikahan Aden & Rahma). Kamu boleh pakai tapi nikahannya jangan mendahului kami ya.
