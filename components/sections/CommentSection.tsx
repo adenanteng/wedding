@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useParams } from "next/navigation"
 import { supabase } from "@/lib/supabaseClient"
 import { IconLoader2, IconMessageCircle, IconSend } from "@tabler/icons-react"
@@ -31,6 +31,7 @@ export default function CommentSection() {
   const [message, setMessage] = useState("")
 
   const [visibleCount, setVisibleCount] = useState(10)
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const init = async () => {
@@ -114,6 +115,11 @@ export default function CommentSection() {
 
       if (newComment) {
         setComments((prev) => [newComment, ...prev])
+        
+        // Scroll to top after a short delay to ensure DOM is updated
+        setTimeout(() => {
+          scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" })
+        }, 100)
       }
       
       setMessage("")
@@ -206,7 +212,10 @@ export default function CommentSection() {
             <p className="mt-1 text-xs">Jadilah yang pertama mengirim doa!</p>
           </div>
         ) : (
-          <div className="flex max-h-[450px] flex-col gap-4 overflow-y-auto px-2 pb-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/20 hover:scrollbar-thumb-primary/40">
+          <div 
+            ref={scrollRef}
+            className="flex max-h-[450px] flex-col gap-4 overflow-y-auto px-2 pb-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/20 hover:scrollbar-thumb-primary/40"
+          >
             {comments.slice(0, visibleCount).map((comment) => (
               <div
                 key={comment.id}
