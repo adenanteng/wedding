@@ -25,9 +25,9 @@ export default function DressCodeSection() {
       <AnimatedSection delay={0.3}>
         <div className="flex -space-x-4 mt-4 justify-center items-center">
           <div className="h-16 w-16 rounded-full bg-white shadow-md border-4 border-background relative z-10" title="White" />
-          <div className="h-16 w-16 rounded-full shadow-inner border-4 border-background relative z-20" style={{ backgroundColor: "#EAE3D2" }} title="Cream" />
-          <div className="h-16 w-16 rounded-full shadow-inner border-4 border-background relative z-30" style={{ backgroundColor: "#DDC1A4" }} title="Khaki" />
-          <div className="h-16 w-16 rounded-full shadow-inner border-4 border-background relative z-40" style={{ backgroundColor: "#A09D82" }} title="Olive" />
+          <div className="h-16 w-16 rounded-full shadow-md border-4 border-background relative z-20" style={{ backgroundColor: "#EAE3D2" }} title="Cream" />
+          <div className="h-16 w-16 rounded-full shadow-md border-4 border-background relative z-30" style={{ backgroundColor: "#DDC1A4" }} title="Khaki" />
+          <div className="h-16 w-16 rounded-full shadow-md border-4 border-background relative z-40" style={{ backgroundColor: "#A09D82" }} title="Olive" />
         </div>
         <p className="text-center text-xs font-semibold mt-1 mb-4 tracking-wider" style={{ fontFamily: "var(--font-heading)" }}>
           White • Cream • Khaki • Olive

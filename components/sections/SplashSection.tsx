@@ -1,6 +1,8 @@
 import Image from "next/image"
 import { FloatingElement } from "@/components/ui/floating-element"
 import { AnimatedText } from "../ui/animated-text"
+import { Loader2 } from "lucide-react"
+import { EndlessBouncingText } from "../ui/endless-bouncing-text"
 
 interface SplashSectionProps {
   isOpen: boolean
@@ -12,9 +14,8 @@ interface SplashSectionProps {
 export default function SplashSection({ isOpen, onOpen, guestName = "", isLoadingGuest = false }: SplashSectionProps) {
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-white transition-all duration-700 ${
-        isOpen ? "pointer-events-none -translate-y-full opacity-0" : "translate-y-0 opacity-100"
-      }`}
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-white transition-all duration-700 ${isOpen ? "pointer-events-none -translate-y-full opacity-0" : "translate-y-0 opacity-100"
+        }`}
     >
       <div className="relative flex w-full max-w-md flex-col items-center px-6">
         {/* Ring decoration - top left */}
@@ -49,24 +50,15 @@ export default function SplashSection({ isOpen, onOpen, guestName = "", isLoadin
           />
         </FloatingElement>
 
-        {/* Heading */}
-        {/* <h1
-          className="relative z-10 mt-8 text-center text-4xl font-bold leading-[1.1] tracking-wide text-primary uppercase"
-          style={{ fontFamily: "var(--font-heading)" }}
-        >
-          These Kids
-          <br />
-          Are Getting
-          <br />
-          Married
-        </h1> */}
-
-        <AnimatedText
-          text={"These Kids\nAre Getting\nMarried"}
-          className="relative z-10 mt-8 text-center text-4xl font-bold leading-[1.1] tracking-wide text-primary uppercase"
-          style={{ fontFamily: "var(--font-heading)" }}
-          delay={0.1}
-        />
+        <div className="-rotate-5">
+          <FloatingElement yOffset={10} duration={3}>
+            <EndlessBouncingText
+              as="h1"
+              text={"These Kids\nAre Getting\nMarried"}
+              className="font-chewy font-bold text-4xl text-center leading-[1.2] tracking-widest text-primary uppercase"
+            />
+          </FloatingElement>
+        </div>
 
         {/* Couple Photo */}
         <div className="relative mt-20">
@@ -148,10 +140,18 @@ export default function SplashSection({ isOpen, onOpen, guestName = "", isLoadin
         {/* Open Invitation Button */}
         <button
           onClick={onOpen}
-          className="mt-8 rounded-lg border-2 border-primary bg-primary text-white px-6 py-3 text-sm tracking-wider transition-all hover:bg-white hover:text-primary"
+          disabled={isLoadingGuest}
+          className="mt-8 flex items-center justify-center gap-2 rounded-lg border-2 border-primary bg-primary text-white px-6 py-3 text-sm tracking-wider transition-all hover:enabled:bg-white hover:enabled:text-primary disabled:opacity-70 disabled:cursor-not-allowed"
           style={{ fontFamily: "var(--font-heading)" }}
         >
-          Open Invitation
+          {isLoadingGuest ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>Tunggu Sebentar...</span>
+            </>
+          ) : (
+            "Open Invitation"
+          )}
         </button>
       </div>
     </div>

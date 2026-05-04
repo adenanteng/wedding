@@ -95,7 +95,7 @@ export default function TimelineSection() {
 
       {/* Shoes/Heels Illustration - bottom right */}
       <AnimatedSection className="relative w-full" delay={0.3}>
-        <FloatingElement className="absolute -top-15 left-0" yOffset={6} duration={4} delay={0.5}>
+        <FloatingElement className="absolute -top-5 left-0" yOffset={6} duration={4} delay={0.5}>
           <Image
             src="/img/7.svg"
             alt="Shoes"
