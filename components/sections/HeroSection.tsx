@@ -26,7 +26,6 @@ export default function HeroSection() {
           width={600}
           height={300}
           className="h-auto w-full object-contain"
-          priority
         />
       </AnimatedSection>
 

@@ -251,6 +251,15 @@ export default function EventSection() {
     setIsMounted(true);
   }, []);
 
+  useEffect(() => {
+    if (isDrawerOpen) {
+      // Blur the trigger button immediately to prevent "aria-hidden" focus warnings
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
+    }
+  }, [isDrawerOpen]);
+
   const gmapsUrl = `https://www.google.com/maps/search/?api=1&query=${VENUE_COORDS.lat},${VENUE_COORDS.lng}`;
 
   const locations = useMemo(() => [
