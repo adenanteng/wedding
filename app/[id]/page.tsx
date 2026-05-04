@@ -4,6 +4,7 @@ import MusicPlayer from "@/components/MusicPlayer"
 import BrideGroomSection from "@/components/sections/BrideGroomSection"
 import ClosingSection from "@/components/sections/ClosingSection"
 import CommentSection from "@/components/sections/CommentSection"
+import DressCodeSection from "@/components/sections/DressCodeSection"
 import EventSection from "@/components/sections/EventSection"
 import GiftSection from "@/components/sections/GiftSection"
 import HeroSection from "@/components/sections/HeroSection"
@@ -78,6 +79,7 @@ export default function Page() {
         <BrideGroomSection />
         <EventSection />
         <TimelineSection />
+        <DressCodeSection />
         <RsvpSection />
         <GiftSection />
         <ProposalVideoSection />

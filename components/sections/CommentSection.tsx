@@ -167,7 +167,7 @@ export default function CommentSection() {
           className="text-center text-4xl leading-tight tracking-wide text-primary font-bold"
           style={{ fontFamily: "var(--font-heading)" }}
         >
-          Buku Tamu
+          Warmest Wishes
         </h2>
       </AnimatedSection>
       <AnimatedSection delay={0.2}>
@@ -180,7 +180,7 @@ export default function CommentSection() {
       </AnimatedSection>
       
       <AnimatedSection className="relative w-full" delay={0.3}>
-        <FloatingElement className="absolute -top-20 left-10 -rotate-20" yOffset={6} duration={4}>
+        <FloatingElement className="absolute -top-25 left-1 -rotate-20" yOffset={6} duration={4}>
           <Image
             src="/img/ring.png"
             alt="ornament"
@@ -293,7 +293,6 @@ export default function CommentSection() {
                 className="min-h-[120px] w-full resize-none rounded-xl border-2 border-dashed border-primary p-4 text-sm focus:border-primary focus:outline-none"
                 style={{ fontFamily: "var(--font-heading)" }}
                 disabled={isSubmitting}
-                autoFocus
               />
 
               <div className="mt-6 flex flex-col gap-3">

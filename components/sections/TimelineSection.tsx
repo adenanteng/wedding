@@ -33,7 +33,7 @@ export default function TimelineSection() {
               className="text-base"
               style={{ fontFamily: "var(--font-heading)" }}
             >
-              Jadwal Belum Pasti
+              Akad Nikah
             </span>
           </div>
         </div>
@@ -51,13 +51,13 @@ export default function TimelineSection() {
               className="text-base"
               style={{ fontFamily: "var(--font-heading)" }}
             >
-              Jadwal Belum Pasti
+              Resepsi
             </span>
           </div>
         </div>
 
         {/* Row 3 */}
-        <div className="border-b border-black py-3">
+        {/* <div className="border-b border-black py-3">
           <div className="flex items-baseline gap-6">
             <span
               className="w-[90px] text-right text-sm"
@@ -72,10 +72,10 @@ export default function TimelineSection() {
               Jadwal Belum Pasti
             </span>
           </div>
-        </div>
+        </div> */}
 
         {/* Row 4 */}
-        <div className="border-b border-black py-3">
+        {/* <div className="border-b border-black py-3">
           <div className="flex items-baseline gap-6">
             <span
               className="w-[90px] text-right text-sm"
@@ -90,7 +90,7 @@ export default function TimelineSection() {
               Jadwal Belum Pasti
             </span>
           </div>
-        </div>
+        </div> */}
       </AnimatedSection>
 
       {/* Shoes/Heels Illustration - bottom right */}

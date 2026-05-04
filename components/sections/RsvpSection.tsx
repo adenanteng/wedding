@@ -121,7 +121,7 @@ export default function RsvpSection() {
           className="text-center text-4xl leading-tight tracking-wide text-primary font-bold"
           style={{ fontFamily: "var(--font-heading)" }}
         >
-          Reservasi
+          Attendance Confirmation
         </h2>
       </AnimatedSection>
 

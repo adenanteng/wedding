@@ -115,7 +115,7 @@ export default function ProposalVideoSection() {
           className="text-3xl tracking-wide text-primary font-bold mb-10"
           style={{ fontFamily: "var(--font-heading)" }}
         >
-          Our Journey
+          Engagement Story
         </h2>
 
         <Backlight blur={40} className="w-full max-w-[400px]">

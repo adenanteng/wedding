@@ -173,12 +173,11 @@ export default function GiftSection() {
 
       {/* WhatsApp message */}
       <AnimatedSection delay={0.5}>
-        <p
-          className="mt-8 max-w-xs text-center text-sm leading-relaxed"
+        <AnimatedText
+          className="mt-6 max-w-xs text-center text-sm leading-relaxed"
           style={{ fontFamily: "var(--font-heading)" }}
-        >
-          Terima kasih telah ikut mendanai petualangan hidup Kami selanjutnya.
-        </p>
+          text="Terima kasih telah ikut mendanai petualangan hidup Kami selanjutnya."
+        />
       </AnimatedSection>
     </div>
   )
