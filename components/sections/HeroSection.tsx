@@ -13,8 +13,7 @@ export default function HeroSection() {
           <EndlessBouncingText
             as="h1"
             text={"Save\nThe\nDate!"}
-            className="font-heading font-bold text-5xl leading-[1.15] tracking-wide text-primary uppercase"
-            style={{ fontFamily: "var(--font-heading)" }}
+            className="font-chewy font-bold text-5xl leading-[1.15] tracking-wide text-primary uppercase"
           />
         </FloatingElement>
       </AnimatedSection>

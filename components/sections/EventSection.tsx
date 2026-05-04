@@ -1,6 +1,6 @@
 "use client"
-import Image from "next/image"
-import { Map, MapControls, MapMarker, MapRoute, MarkerContent, MarkerLabel, useMap } from "../ui/map";
+import { AnimatedSection } from "@/components/ui/animated-section";
+import { AnimatedText } from "@/components/ui/animated-text";
 import {
   Drawer,
   DrawerClose,
@@ -9,13 +9,13 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer"
-import { Clock, Loader2, MapPin, Navigation, RouteIcon } from "lucide-react";
-import { useEffect, useState, useMemo } from "react";
-import { AnimatedSection } from "@/components/ui/animated-section";
-import { AnimatedText } from "@/components/ui/animated-text";
+} from "@/components/ui/drawer";
 import { FloatingElement } from "@/components/ui/floating-element";
+import { Clock, Loader2, MapPin, Navigation, RouteIcon } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
 import { EndlessBouncingText } from "../ui/endless-bouncing-text";
+import { Map, MapControls, MapMarker, MapRoute, MarkerContent, MarkerLabel, useMap } from "../ui/map";
 
 const VENUE_COORDS = { lng: 105.29310599848067, lat: -5.1484356219499166, name: "Lokasi Acara" };
 
@@ -124,7 +124,7 @@ function EventRouteMap({ destination }: { destination: { lng: number, lat: numbe
           if (error.code === 1) errorMsg = "Akses lokasi ditolak.";
           else if (error.code === 2) errorMsg = "Lokasi tidak tersedia.";
           else if (error.code === 3) errorMsg = "Waktu akses lokasi habis.";
-          
+
           setGeoError(errorMsg);
           setIsLoading(false);
         },
@@ -246,7 +246,7 @@ function EventRouteMap({ destination }: { destination: { lng: number, lat: numbe
 export default function EventSection() {
   const [isMounted, setIsMounted] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -294,8 +294,7 @@ export default function EventSection() {
             <EndlessBouncingText
               as="h1"
               text={"Save\nThe\nDate!"}
-              className="font-heading text-center text-5xl tracking-wide text-primary font-bold uppercase rotate-10"
-              style={{ fontFamily: "var(--font-heading)" }}
+              className="font-chewy text-center text-5xl tracking-wide text-primary font-bold uppercase rotate-10"
             />
           </FloatingElement>
         </AnimatedSection>
@@ -345,7 +344,7 @@ export default function EventSection() {
           </div>
           <span
             className="absolute top-22 right-5 text-sm font-bold text-primary -rotate-10"
-            style={{ fontFamily: "var(--font-handwritten)" }}
+            style={{ fontFamily: "var(--font-chewy)" }}
           >
             D-day !!
           </span>
@@ -418,7 +417,7 @@ export default function EventSection() {
                     Rute Lokasi
                   </DrawerTitle>
                   <DrawerDescription className="text-center" style={{ fontFamily: "var(--font-heading)" }}>
-                    
+
                   </DrawerDescription>
                 </DrawerHeader>
 

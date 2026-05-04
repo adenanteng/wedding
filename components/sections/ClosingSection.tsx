@@ -1,7 +1,7 @@
-import Image from "next/image"
-import { useCountdown } from "@/hooks/useCountdown"
 import { AnimatedSection } from "@/components/ui/animated-section"
 import { FloatingElement } from "@/components/ui/floating-element"
+import { useCountdown } from "@/hooks/useCountdown"
+import Image from "next/image"
 
 const WEDDING_TIMESTAMP = new Date("2026-06-15T08:00:00+07:00").getTime()
 
@@ -34,7 +34,7 @@ export default function ClosingSection() {
               </span>
               <span
                 className="mt-1 text-[9px] uppercase tracking-widest text-primary"
-                style={{ fontFamily: "var(--font-handwritten)" }}
+                style={{ fontFamily: "var(--font-chewy)" }}
               >
                 Days
               </span>
@@ -54,7 +54,7 @@ export default function ClosingSection() {
               </span>
               <span
                 className="mt-1 text-[9px] uppercase tracking-widest text-primary"
-                style={{ fontFamily: "var(--font-handwritten)" }}
+                style={{ fontFamily: "var(--font-chewy)" }}
               >
                 Hours
               </span>
@@ -74,7 +74,7 @@ export default function ClosingSection() {
               </span>
               <span
                 className="mt-1 text-[9px] uppercase tracking-widest text-primary"
-                style={{ fontFamily: "var(--font-handwritten)" }}
+                style={{ fontFamily: "var(--font-chewy)" }}
               >
                 Minutes
               </span>
@@ -94,7 +94,7 @@ export default function ClosingSection() {
               </span>
               <span
                 className="mt-1 text-[9px] uppercase tracking-widest text-primary"
-                style={{ fontFamily: "var(--font-handwritten)" }}
+                style={{ fontFamily: "var(--font-chewy)" }}
               >
                 Seconds
               </span>
