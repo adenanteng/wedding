@@ -36,6 +36,11 @@ export default function CommentSection() {
 
   useEffect(() => {
     if (isOpen) {
+      // Blur the trigger button immediately to prevent "aria-hidden" focus warnings
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur()
+      }
+
       // Delay focus to allow drawer animation to complete before keyboard pops up
       const timer = setTimeout(() => {
         textareaRef.current?.focus()

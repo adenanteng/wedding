@@ -64,8 +64,8 @@ export default function RsvpSection() {
 
       if (data?.phone && data?.source) {
         const textMessage = presence
-          ? `Dear ${guestName},\n\nKehadiran Anda adalah kehormatan, waktu yang Anda luangkan adalah kado terindah.`
-          : `Dear ${guestName},\n\nGak apa-apa, we totally understand. Makasih ya udah sempetin ngabarin. Sending love from here! 🤍`
+          ? `Dear ${guestName},\n\nKehadiran Anda adalah kehormatan, waktu yang Anda luangkan adalah kado terindah bagi kami. \n\n Berikut kami lampirkan informasi terkait acara kami:`
+          : `Dear ${guestName},\n\nTerima kasih atas konfirmasi ketidakhadirannya. Gak apa-apa, we totally understand. Makasih ya udah sempetin ngabarin. Sending love from here! 🤍`
 
         try {
           const textResult = await sendWhatsAppMessage({
@@ -76,6 +76,17 @@ export default function RsvpSection() {
 
           if (!textResult.success) {
             console.error("Failed to send text message:", textResult.error)
+          }
+
+          const stickerResult = await sendWhatsAppMessage({
+            source: data.source,
+            number: data.phone,
+            type: "sticker",
+            stickerUrl: `${window.location.origin}/img/sticker.png`,
+          })
+
+          if (!stickerResult.success) {
+            console.error("Failed to send sticker message:", stickerResult.error)
           }
 
           if (presence) {

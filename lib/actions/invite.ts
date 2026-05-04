@@ -5,19 +5,21 @@ export async function sendWhatsAppMessage({
   number, 
   text, 
   type = 'text',
-  locationData 
+  locationData,
+  stickerUrl
 }: { 
   source: string, 
   number: string, 
   text?: string, 
-  type?: 'text' | 'location',
+  type?: 'text' | 'location' | 'sticker',
   locationData?: {
     name: string,
     address: string,
     latitude: number,
     longitude: number,
     delay?: number
-  }
+  },
+  stickerUrl?: string
 }) {
   const baseUrl = process.env.EVO_API_URL
   const apiKey = process.env.EVO_API_KEY
@@ -26,10 +28,19 @@ export async function sendWhatsAppMessage({
     throw new Error("Evolution API credentials are missing on the server")
   }
 
-  const endpoint = type === 'text' ? `/message/sendText/${source}` : `/message/sendLocation/${source}`
-  const body = type === 'text' 
-    ? { number, text } 
-    : { number, ...locationData }
+  let endpoint = ""
+  let body: any = { number }
+
+  if (type === 'text') {
+    endpoint = `/message/sendText/${source}`
+    body.text = text
+  } else if (type === 'location') {
+    endpoint = `/message/sendLocation/${source}`
+    body = { ...body, ...locationData }
+  } else if (type === 'sticker') {
+    endpoint = `/message/sendSticker/${source}`
+    body.sticker = stickerUrl
+  }
 
   try {
     const response = await fetch(`${baseUrl}${endpoint}`, {
