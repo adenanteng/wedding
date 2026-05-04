@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { MusicProvider } from "@/context/MusicContext"
+import { ConsoleGreeting } from "@/components/console-greeting"
 
 const gloriaHallelujah = Gloria_Hallelujah({
   weight: '400',
@@ -46,6 +47,7 @@ export default function RootLayout({
       )}
     >
       <body>
+        <ConsoleGreeting />
         <ThemeProvider>
           <MusicProvider>
             {children}

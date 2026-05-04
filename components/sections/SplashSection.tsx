@@ -6,9 +6,10 @@ interface SplashSectionProps {
   isOpen: boolean
   onOpen: () => void
   guestName?: string
+  isLoadingGuest?: boolean
 }
 
-export default function SplashSection({ isOpen, onOpen, guestName = "" }: SplashSectionProps) {
+export default function SplashSection({ isOpen, onOpen, guestName = "", isLoadingGuest = false }: SplashSectionProps) {
   return (
     <div
       className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-white transition-all duration-700 ${
@@ -123,12 +124,18 @@ export default function SplashSection({ isOpen, onOpen, guestName = "" }: Splash
         </div>
 
         {/* Names */}
-        <h2
-          className="mt-6 text-center text-2xl tracking-wide"
-          style={{ fontFamily: "var(--font-heading)" }}
-        >
-          {guestName}
-        </h2>
+        <div className="mt-6 flex h-8 items-center justify-center">
+          {isLoadingGuest ? (
+            <div className="h-6 w-40 animate-pulse rounded-md bg-primary/20"></div>
+          ) : (
+            <h2
+              className="text-center text-2xl tracking-wide"
+              style={{ fontFamily: "var(--font-heading)" }}
+            >
+              {guestName}
+            </h2>
+          )}
+        </div>
 
         {/* Date */}
         <p

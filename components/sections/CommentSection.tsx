@@ -32,6 +32,17 @@ export default function CommentSection() {
 
   const [visibleCount, setVisibleCount] = useState(10)
   const scrollRef = useRef<HTMLDivElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    if (isOpen) {
+      // Delay focus to allow drawer animation to complete before keyboard pops up
+      const timer = setTimeout(() => {
+        textareaRef.current?.focus()
+      }, 400)
+      return () => clearTimeout(timer)
+    }
+  }, [isOpen])
 
   useEffect(() => {
     const init = async () => {
@@ -115,13 +126,13 @@ export default function CommentSection() {
 
       if (newComment) {
         setComments((prev) => [newComment, ...prev])
-        
+
         // Scroll to top after a short delay to ensure DOM is updated
         setTimeout(() => {
           scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" })
         }, 100)
       }
-      
+
       setMessage("")
       setIsOpen(false)
     } catch (error) {
@@ -139,22 +150,22 @@ export default function CommentSection() {
     const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
 
     if (diffInSeconds < 60) return "Baru saja"
-    
+
     const diffInMinutes = Math.floor(diffInSeconds / 60)
     if (diffInMinutes < 60) return `${diffInMinutes} menit yang lalu`
-    
+
     const diffInHours = Math.floor(diffInMinutes / 60)
     if (diffInHours < 24) return `${diffInHours} jam yang lalu`
-    
+
     const diffInDays = Math.floor(diffInHours / 24)
     if (diffInDays < 7) return `${diffInDays} hari yang lalu`
-    
+
     const diffInWeeks = Math.floor(diffInDays / 7)
     if (diffInWeeks < 4) return `${diffInWeeks} minggu yang lalu`
-    
+
     const diffInMonths = Math.floor(diffInDays / 30)
     if (diffInMonths < 12) return `${diffInMonths} bulan yang lalu`
-    
+
     const diffInYears = Math.floor(diffInDays / 365)
     return `${diffInYears} tahun yang lalu`
   }
@@ -171,14 +182,14 @@ export default function CommentSection() {
         </h2>
       </AnimatedSection>
       <AnimatedSection delay={0.2}>
-        <span 
-          className="text-primary/60 text-xs" 
-          style={{fontFamily: "var(--font-heading)"}}
+        <span
+          className="text-primary/60 text-xs"
+          style={{ fontFamily: "var(--font-heading)" }}
         >
           {comments.length} Komentar
         </span>
       </AnimatedSection>
-      
+
       <AnimatedSection className="relative w-full" delay={0.3}>
         <FloatingElement className="absolute -top-25 left-1 -rotate-20" yOffset={6} duration={4}>
           <Image
@@ -212,7 +223,7 @@ export default function CommentSection() {
             <p className="mt-1 text-xs">Jadilah yang pertama mengirim doa!</p>
           </div>
         ) : (
-          <div 
+          <div
             ref={scrollRef}
             className="flex max-h-[450px] flex-col gap-4 overflow-y-auto px-2 pb-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/20 hover:scrollbar-thumb-primary/40"
           >
@@ -223,23 +234,23 @@ export default function CommentSection() {
               >
                 {/* Decorative Pin/Dot */}
                 <div className="absolute top-4 right-4 h-2 w-2 rounded-full bg-primary/30" />
-                
+
                 <h3
                   className="text-lg font-bold text-primary"
                   style={{ fontFamily: "var(--font-heading)" }}
                 >
-                  {comment.rsvps?.name || "Tamu Undangan"}
+                  {comment.rsvps?.name || ""}
                 </h3>
-                <p 
+                <p
                   className="mt-1 text-xs"
                   style={{ fontFamily: "var(--font-sans)" }}
                 >
                   {formatDate(comment.created_at)}
                 </p>
-                
+
                 <div className="my-3 w-full border-t border-dashed border-primary/50" />
-                
-                <p 
+
+                <p
                   className="text-sm leading-relaxed whitespace-pre-wrap"
                   style={{ fontFamily: "var(--font-heading)" }}
                 >
@@ -281,47 +292,48 @@ export default function CommentSection() {
                   Kirim Pesan
                 </DrawerTitle>
                 <DrawerDescription className="text-center" style={{ fontFamily: "var(--font-heading)" }}>
-                  
+
                 </DrawerDescription>
               </DrawerHeader>
 
               <form onSubmit={handleSubmit} className="px-0">
-              <textarea
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Tulis pesan atau harapan baik Anda..."
-                className="min-h-[120px] w-full resize-none rounded-xl border-2 border-dashed border-primary p-4 text-sm focus:border-primary focus:outline-none"
-                style={{ fontFamily: "var(--font-heading)" }}
-                disabled={isSubmitting}
-              />
-
-              <div className="mt-6 flex flex-col gap-3">
-                <button
-                  type="submit"
-                  disabled={!message.trim() || isSubmitting}
-                  className="flex w-full items-center justify-center rounded-full border-2 border-primary bg-primary py-3 text-sm font-bold tracking-wider text-white transition-all active:opacity-70 disabled:opacity-50"
+                <textarea
+                  ref={textareaRef}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Tulis pesan atau harapan baik Anda..."
+                  className="min-h-[120px] w-full resize-none rounded-xl border-2 border-dashed border-primary p-4 text-sm focus:border-primary focus:outline-none"
                   style={{ fontFamily: "var(--font-heading)" }}
-                >
-                  {isSubmitting ? (
-                    <IconLoader2 className="animate-spin" />
-                  ) : (
-                    <>
-                      <IconSend className="mr-2" size={18} />
-                      Kirim Pesan
-                    </>
-                  )}
-                </button>
-                <DrawerClose asChild>
+                  disabled={isSubmitting}
+                />
+
+                <div className="mt-6 flex flex-col gap-3">
                   <button
-                    type="button"
-                    className="flex w-full items-center justify-center rounded-full border-2 border-primary bg-transparent py-3 text-sm font-bold tracking-wider text-primary transition-all active:opacity-70"
+                    type="submit"
+                    disabled={!message.trim() || isSubmitting}
+                    className="flex w-full items-center justify-center rounded-full border-2 border-primary bg-primary py-3 text-sm font-bold tracking-wider text-white transition-all active:opacity-70 disabled:opacity-50"
                     style={{ fontFamily: "var(--font-heading)" }}
                   >
-                    Batal
+                    {isSubmitting ? (
+                      <IconLoader2 className="animate-spin" />
+                    ) : (
+                      <>
+                        <IconSend className="mr-2" size={18} />
+                        Kirim Pesan
+                      </>
+                    )}
                   </button>
-                </DrawerClose>
-              </div>
-            </form>
+                  <DrawerClose asChild>
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-center rounded-full border-2 border-primary bg-transparent py-3 text-sm font-bold tracking-wider text-primary transition-all active:opacity-70"
+                      style={{ fontFamily: "var(--font-heading)" }}
+                    >
+                      Batal
+                    </button>
+                  </DrawerClose>
+                </div>
+              </form>
             </div>
           </DrawerContent>
         </Drawer>

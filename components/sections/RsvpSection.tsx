@@ -15,7 +15,7 @@ export default function RsvpSection() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [currentUserPresence, setCurrentUserPresence] = useState<boolean | null>(null)
   const [isChangingMind, setIsChangingMind] = useState(false)
-  const [guestName, setGuestName] = useState("Tamu Undangan")
+  const [guestName, setGuestName] = useState("")
 
   // Fetch initial RSVP status
   useEffect(() => {

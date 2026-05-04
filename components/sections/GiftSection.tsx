@@ -86,7 +86,7 @@ export default function GiftSection() {
       </AnimatedSection>
 
       {/* Bank Card - Ticket style */}
-      <AnimatedSection className="w-full flex justify-center" delay={0.4}>
+      {/* <AnimatedSection className="w-full flex justify-center" delay={0.4}> */}
         <DraggableCardContainer className="relative mt-8 flex h-[220px] w-full max-w-[260px] items-center justify-center">
           <p className="absolute top-1/2 mx-auto max-w-sm -translate-y-3/4 text-center text-2xl font-black font-dancing">
             Pilih salah satu aja ya..
@@ -169,7 +169,7 @@ export default function GiftSection() {
             </div>
           ))}
         </DraggableCardContainer>
-      </AnimatedSection>
+      {/* </AnimatedSection> */}
 
       {/* WhatsApp message */}
       <AnimatedSection delay={0.5}>

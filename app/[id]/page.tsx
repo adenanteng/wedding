@@ -18,15 +18,20 @@ import { useEffect, useState } from "react"
 
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false)
-  const [guestName, setGuestName] = useState("Tamu Undangan")
+  const [guestName, setGuestName] = useState("")
+  const [isLoadingGuest, setIsLoadingGuest] = useState(true)
   const params = useParams()
   const guestId = params?.id as string
 
   // Fetch guest name from Supabase
   useEffect(() => {
     const fetchGuest = async () => {
-      if (!guestId) return
+      if (!guestId) {
+        setIsLoadingGuest(false)
+        return
+      }
 
+      setIsLoadingGuest(true)
       const { data, error } = await supabase
         .from("rsvps")
         .select("name")
@@ -36,6 +41,7 @@ export default function Page() {
       if (data && !error) {
         setGuestName(data.name)
       }
+      setIsLoadingGuest(false)
     }
 
     fetchGuest()
@@ -59,6 +65,7 @@ export default function Page() {
         isOpen={isOpen}
         onOpen={() => setIsOpen(true)}
         guestName={guestName}
+        isLoadingGuest={isLoadingGuest}
       />
 
       {/* ===== MAIN CONTENT ===== */}
