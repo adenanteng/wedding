@@ -78,17 +78,6 @@ export default function RsvpSection() {
             console.error("Failed to send text message:", textResult.error)
           }
 
-          const stickerResult = await sendWhatsAppMessage({
-            source: data.source,
-            number: data.phone,
-            type: "sticker",
-            stickerUrl: `${window.location.origin}/img/sticker.png`,
-          })
-
-          if (!stickerResult.success) {
-            console.error("Failed to send sticker message:", stickerResult.error)
-          }
-
           if (presence) {
             const locationResult = await sendWhatsAppMessage({
               source: data.source,
@@ -106,6 +95,17 @@ export default function RsvpSection() {
             if (!locationResult.success) {
               console.error("Failed to send location message:", locationResult.error)
             }
+          }
+
+          const stickerResult = await sendWhatsAppMessage({
+            source: data.source,
+            number: data.phone,
+            type: "sticker",
+            stickerUrl: `${window.location.origin}/img/sticker.png`,
+          })
+
+          if (!stickerResult.success) {
+            console.error("Failed to send sticker message:", stickerResult.error)
           }
         } catch (apiError) {
           console.error("Failed to trigger WhatsApp message action:", apiError)
