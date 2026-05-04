@@ -44,7 +44,7 @@ export default function CommentSection() {
       // Delay focus to allow drawer animation to complete before keyboard pops up
       const timer = setTimeout(() => {
         textareaRef.current?.focus()
-      }, 400)
+      }, 1000)
       return () => clearTimeout(timer)
     }
   }, [isOpen])
