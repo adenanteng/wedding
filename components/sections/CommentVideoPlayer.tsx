@@ -52,9 +52,13 @@ export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
     }
   }
 
-  // Handle back button to close modal
+  // Handle back button to close modal and lock scroll
   useEffect(() => {
     if (isModalOpen) {
+      // Lock scroll
+      const originalStyle = window.getComputedStyle(document.body).overflow;
+      document.body.style.overflow = "hidden";
+
       window.history.pushState({ modalOpen: true }, "")
 
       const handlePopState = () => {
@@ -66,7 +70,12 @@ export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
       }
 
       window.addEventListener("popstate", handlePopState)
-      return () => window.removeEventListener("popstate", handlePopState)
+      
+      return () => {
+        // Unlock scroll
+        document.body.style.overflow = originalStyle;
+        window.removeEventListener("popstate", handlePopState)
+      }
     }
   }, [isModalOpen, wasMusicPlaying, setIsMusicPlaying, setIsForcePaused])
 
