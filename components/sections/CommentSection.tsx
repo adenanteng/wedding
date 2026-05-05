@@ -389,7 +389,7 @@ export default function CommentSection() {
                 </DrawerDescription>
               </DrawerHeader>
 
-              <div className="mb-4 flex justify-center gap-2">
+              {/* <div className="mb-4 flex justify-center gap-2">
                 <button
                   onClick={() => setMode("text")}
                   className={`flex flex-1 items-center justify-center gap-2 rounded-full py-2 text-xs font-bold transition-all ${mode === "text" ? "bg-primary text-white" : "bg-white text-primary border-2 border-primary"
@@ -408,7 +408,7 @@ export default function CommentSection() {
                   <Video size={16} />
                   Video Ucapan
                 </button>
-              </div>
+              </div> */}
 
               {mode === "video" ? (
                 <VideoRecorder
