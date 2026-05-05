@@ -418,7 +418,7 @@ export default function CommentSection() {
                   )}
 
                   <textarea
-                    ref={textareaRef}
+                    // ref={textareaRef}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder={videoUrl ? "Tambahkan pesan untuk video Anda (opsional)..." : "Tulis pesan atau harapan baik Anda..."}
