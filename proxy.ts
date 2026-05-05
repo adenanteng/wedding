@@ -8,7 +8,7 @@ export async function proxy(request: NextRequest) {
   // Exclude static assets and reserved paths explicitly just in case
   if (
     pathname === '/' ||
-    pathname.startsWith('/404') ||
+    pathname.startsWith('/not-found') ||
     pathname.startsWith('/rsvp') ||
     pathname.startsWith('/api') ||
     pathname.startsWith('/_next') ||
@@ -41,13 +41,11 @@ export async function proxy(request: NextRequest) {
 
     if (error || !data) {
       console.log(`Proxy: Guest ${shortId} not found, redirecting...`)
-      return NextResponse.redirect(new URL('/404', request.url))
+      return NextResponse.redirect(new URL('/not-found', request.url))
     }
   } catch (err) {
     console.error('Proxy error:', err)
-    // On core failure, maybe let them through or redirect to error?
-    // Let's redirect to unauthorized for safety.
-    return NextResponse.redirect(new URL('/404', request.url))
+    return NextResponse.redirect(new URL('/not-found', request.url))
   }
 
   return NextResponse.next()
@@ -64,6 +62,6 @@ export const config = {
      * - img (images)
      * - audio (audio files)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|404|img|audio).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|not-found|img|audio).*)',
   ],
 }

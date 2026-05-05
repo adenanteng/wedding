@@ -1,7 +1,6 @@
 import { Chewy, Gloria_Hallelujah, Patrick_Hand } from "next/font/google";
 
 import { ConsoleGreeting } from "@/components/console-greeting";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { MusicProvider } from "@/context/MusicContext";
 import { cn } from "@/lib/utils";
@@ -49,12 +48,10 @@ export default function RootLayout({
     >
       <body>
         <ConsoleGreeting />
-        <ThemeProvider>
-          <MusicProvider>
-            {children}
-            <Toaster />
-          </MusicProvider>
-        </ThemeProvider>
+        <MusicProvider>
+          {children}
+          <Toaster />
+        </MusicProvider>
       </body>
     </html>
   )

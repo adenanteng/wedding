@@ -1,9 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import { useParams } from "next/navigation"
-import { supabase } from "@/lib/supabaseClient"
-import { IconLoader2, IconMessageCircle, IconSend } from "@tabler/icons-react"
+import { AnimatedSection } from "@/components/ui/animated-section"
 import {
   Drawer,
   DrawerClose,
@@ -13,17 +10,33 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-import Image from "next/image"
-import { AnimatedSection } from "@/components/ui/animated-section"
 import { FloatingElement } from "@/components/ui/floating-element"
-import { MessageCircle } from "lucide-react"
+import { supabase } from "@/lib/supabaseClient"
+import { IconLoader2, IconMessageCircle, IconSend, IconTrash } from "@tabler/icons-react"
+import { MessageCircle, Type, Video } from "lucide-react"
+import Image from "next/image"
+import { useParams } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
+import VideoRecorder from "./VideoRecorder"
+import { CommentVideoPlayer } from "./CommentVideoPlayer"
 
 export default function CommentSection() {
   const params = useParams()
   const guestId = params?.id as string
 
+  interface Comment {
+    id: string
+    message: string
+    created_at: string
+    sender_id: string
+    video_url?: string | null
+    rsvps: {
+      name: string
+    } | null
+  }
+
   const [isLoading, setIsLoading] = useState(true)
-  const [comments, setComments] = useState<any[]>([])
+  const [comments, setComments] = useState<Comment[]>([])
   const [guestRealId, setGuestRealId] = useState<string | null>(null)
 
   const [isOpen, setIsOpen] = useState(false)
@@ -33,6 +46,9 @@ export default function CommentSection() {
   const [visibleCount, setVisibleCount] = useState(10)
   const scrollRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  const [mode, setMode] = useState<"text" | "video">("text")
+  const [videoUrl, setVideoUrl] = useState<string | null>(null)
 
   useEffect(() => {
     if (isOpen) {
@@ -69,11 +85,11 @@ export default function CommentSection() {
       // Fetch initial comments
       const { data: commentsData } = await supabase
         .from("comments")
-        .select("id, message, created_at, sender_id, rsvps(name)")
+        .select("id, message, created_at, sender_id, video_url, rsvps(name)")
         .order("created_at", { ascending: false })
 
       if (commentsData) {
-        setComments(commentsData)
+        setComments(commentsData as unknown as Comment[])
       }
       setIsLoading(false)
     }
@@ -94,7 +110,7 @@ export default function CommentSection() {
           // Fetch the joined data for the new comment
           const { data: newComment } = await supabase
             .from("comments")
-            .select("id, message, created_at, sender_id, rsvps(name)")
+            .select("id, message, created_at, sender_id, video_url, rsvps(name)")
             .eq("id", payload.new.id)
             .single()
 
@@ -102,7 +118,7 @@ export default function CommentSection() {
             setComments((prev) => {
               // Avoid duplicates
               if (prev.some(c => c.id === newComment.id)) return prev
-              return [newComment, ...prev]
+              return [newComment as unknown as Comment, ...prev]
             })
           }
         }
@@ -114,6 +130,11 @@ export default function CommentSection() {
     }
   }, [guestId])
 
+  const handleVideoUpload = (url: string) => {
+    setVideoUrl(url)
+    setMode("text") // Switch back to text to add message if they want
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!message.trim() || !guestRealId) return
@@ -123,14 +144,18 @@ export default function CommentSection() {
       // Insert comment and select the newly created joined object
       const { data: newComment, error } = await supabase
         .from("comments")
-        .insert([{ sender_id: guestRealId, message: message.trim() }])
-        .select("id, message, created_at, sender_id, rsvps(name)")
+        .insert([{
+          sender_id: guestRealId,
+          message: message.trim(),
+          video_url: videoUrl
+        }])
+        .select("id, message, created_at, sender_id, video_url, rsvps(name)")
         .single()
 
       if (error) throw error
 
       if (newComment) {
-        setComments((prev) => [newComment, ...prev])
+        setComments((prev) => [newComment as unknown as Comment, ...prev])
 
         // Scroll to top after a short delay to ensure DOM is updated
         setTimeout(() => {
@@ -139,12 +164,43 @@ export default function CommentSection() {
       }
 
       setMessage("")
+      setVideoUrl(null)
+      setMode("text")
       setIsOpen(false)
     } catch (error) {
       console.error("Failed to submit comment:", error)
       alert("Gagal mengirim pesan. Silakan coba lagi.")
     } finally {
       setIsSubmitting(false)
+    }
+  }
+
+  const handleDeleteComment = async (id: string, videoUrl?: string | null) => {
+    if (!confirm("Apakah Anda yakin ingin menghapus pesan ini?")) return
+
+    try {
+      const { error } = await supabase
+        .from("comments")
+        .delete()
+        .eq("id", id)
+
+      if (error) throw error
+
+      if (videoUrl) {
+        try {
+          const fileName = videoUrl.split("/").pop()
+          if (fileName) {
+            await supabase.storage.from("video-wishes").remove([fileName])
+          }
+        } catch (storageError) {
+          console.error("Error deleting video from storage:", storageError)
+        }
+      }
+
+      setComments((prev) => prev.filter((c) => c.id !== id))
+    } catch (error) {
+      console.error("Error deleting comment:", error)
+      alert("Gagal menghapus pesan.")
     }
   }
 
@@ -238,7 +294,18 @@ export default function CommentSection() {
                 className="relative flex flex-col rounded-xl border-2 border-dashed border-primary/30 bg-white p-5 shadow-lg"
               >
                 {/* Decorative Pin/Dot */}
-                <div className="absolute top-4 right-4 h-2 w-2 rounded-full bg-primary/30" />
+                <div className="absolute top-4 right-4 flex items-center gap-2">
+                  {comment.sender_id === guestRealId && (
+                    <button
+                      onClick={() => handleDeleteComment(comment.id, comment.video_url)}
+                      className="p-1 text-primary transition-colors"
+                      title="Hapus Pesan"
+                    >
+                      <IconTrash size={16} />
+                    </button>
+                  )}
+                  <div className="h-2 w-2 rounded-full bg-primary/30" />
+                </div>
 
                 <h3
                   className="text-lg font-bold text-primary"
@@ -255,8 +322,14 @@ export default function CommentSection() {
 
                 <div className="my-3 w-full border-t border-dashed border-primary/50" />
 
+                {comment.video_url && (
+                  <div className="mt-3">
+                    <CommentVideoPlayer src={comment.video_url} />
+                  </div>
+                )}
+
                 <p
-                  className="text-sm leading-relaxed whitespace-pre-wrap"
+                  className="text-sm leading-relaxed whitespace-pre-wrap mt-3"
                   style={{ fontFamily: "var(--font-heading)" }}
                 >
                   {comment.message}
@@ -301,44 +374,89 @@ export default function CommentSection() {
                 </DrawerDescription>
               </DrawerHeader>
 
-              <form onSubmit={handleSubmit} className="px-0">
-                <textarea
-                  ref={textareaRef}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Tulis pesan atau harapan baik Anda..."
-                  className="min-h-[120px] w-full resize-none rounded-xl border-2 border-dashed border-primary p-4 text-sm focus:border-primary focus:outline-none"
+              <div className="mb-4 flex justify-center gap-2">
+                <button
+                  onClick={() => setMode("text")}
+                  className={`flex flex-1 items-center justify-center gap-2 rounded-full py-2 text-xs font-bold transition-all ${mode === "text" ? "bg-primary text-white" : "bg-white text-primary border-2 border-primary"
+                    }`}
                   style={{ fontFamily: "var(--font-heading)" }}
-                  disabled={isSubmitting}
-                />
+                >
+                  <Type size={16} />
+                  Pesan Teks
+                </button>
+                <button
+                  onClick={() => setMode("video")}
+                  className={`flex flex-1 items-center justify-center gap-2 rounded-full py-2 text-xs font-bold transition-all ${mode === "video" ? "bg-primary text-white" : "bg-white text-primary border-2 border-primary"
+                    }`}
+                  style={{ fontFamily: "var(--font-heading)" }}
+                >
+                  <Video size={16} />
+                  Video Ucapan
+                </button>
+              </div>
 
-                <div className="mt-6 flex flex-col gap-3">
-                  <button
-                    type="submit"
-                    disabled={!message.trim() || isSubmitting}
-                    className="flex w-full items-center justify-center rounded-full border-2 border-primary bg-primary py-3 text-sm font-bold tracking-wider text-white transition-all active:opacity-70 disabled:opacity-50"
+              {mode === "video" ? (
+                <VideoRecorder
+                  onUploadComplete={handleVideoUpload}
+                />
+              ) : (
+                <form onSubmit={handleSubmit} className="px-0">
+                  {videoUrl && (
+                    <div className="mb-4">
+                      <CommentVideoPlayer src={videoUrl} />
+                      <div className="mt-2 flex justify-between items-center">
+                        <div className="bg-primary text-white text-xs font-sans px-2 py-1 rounded-full flex items-center gap-1">
+                          <Video size={10} /> Video Terlampir
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setVideoUrl(null)}
+                          className="bg-primary text-white p-1 rounded-full shadow-lg"
+                        >
+                          <IconTrash size={14} />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  <textarea
+                    ref={textareaRef}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder={videoUrl ? "Tambahkan pesan untuk video Anda (opsional)..." : "Tulis pesan atau harapan baik Anda..."}
+                    className="min-h-[120px] w-full resize-none rounded-xl border-2 border-dashed border-primary p-4 text-sm focus:border-primary focus:outline-none"
                     style={{ fontFamily: "var(--font-heading)" }}
-                  >
-                    {isSubmitting ? (
-                      <IconLoader2 className="animate-spin" />
-                    ) : (
-                      <>
-                        <IconSend className="mr-2" size={18} />
-                        Kirim Pesan
-                      </>
-                    )}
-                  </button>
-                  <DrawerClose asChild>
+                    disabled={isSubmitting}
+                  />
+
+                  <div className="mt-6 flex flex-col gap-3">
                     <button
-                      type="button"
-                      className="flex w-full items-center justify-center rounded-full border-2 border-primary bg-transparent py-3 text-sm font-bold tracking-wider text-primary transition-all active:opacity-70"
+                      type="submit"
+                      disabled={(!message.trim() && !videoUrl) || isSubmitting}
+                      className="flex w-full items-center justify-center rounded-full border-2 border-primary bg-primary py-3 text-sm font-bold tracking-wider text-white transition-all active:opacity-70 disabled:opacity-50"
                       style={{ fontFamily: "var(--font-heading)" }}
                     >
-                      Batal
+                      {isSubmitting ? (
+                        <IconLoader2 className="animate-spin" />
+                      ) : (
+                        <>
+                          <IconSend className="mr-2" size={18} />
+                          {videoUrl ? "Kirim Video & Pesan" : "Kirim Pesan"}
+                        </>
+                      )}
                     </button>
-                  </DrawerClose>
-                </div>
-              </form>
+                    <DrawerClose asChild>
+                      <button
+                        type="button"
+                        className="flex w-full items-center justify-center rounded-full border-2 border-primary bg-transparent py-3 text-sm font-bold tracking-wider text-primary transition-all active:opacity-70"
+                        style={{ fontFamily: "var(--font-heading)" }}
+                      >
+                        Batal
+                      </button>
+                    </DrawerClose>
+                  </div>
+                </form>
+              )}
             </div>
           </DrawerContent>
         </Drawer>

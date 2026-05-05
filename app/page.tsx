@@ -1,5 +1,6 @@
-import { redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 
 export default function Page() {
-  redirect('/404')
+  // Root path has no guest ID — show 404
+  notFound()
 }
