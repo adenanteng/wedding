@@ -294,7 +294,7 @@ export default function CommentSection() {
       </AnimatedSection>
 
       {/* Comments List */}
-      <AnimatedSection className="mt-5 w-full max-w-sm" delay={0.4}>
+      <AnimatedSection className="mt-2 w-full max-w-sm" delay={0.4}>
         {isLoading ? (
           <div className="flex justify-center py-8 text-primary">
             <IconLoader2 className="animate-spin" size={32} />
@@ -373,7 +373,7 @@ export default function CommentSection() {
 
       <AnimatedSection delay={0.5} className="w-full">
         <Drawer open={isOpen} onOpenChange={setIsOpen}>
-          <div className="mt-8 flex flex-col sm:flex-row gap-3 w-full max-w-sm mx-auto">
+          <div className="mt-3 flex flex-col sm:flex-row gap-3 w-full max-w-sm mx-auto px-2">
             <DrawerTrigger asChild>
               <button
                 onClick={() => setMode("text")}

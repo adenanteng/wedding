@@ -7,6 +7,65 @@ import { IconLoader2, IconHeart } from "@tabler/icons-react"
 import { sendWhatsAppMessage } from "@/lib/actions/invite"
 import { AnimatedSection } from "@/components/ui/animated-section"
 
+// Helper function to handle automated WhatsApp confirmations (Option 3)
+const triggerWhatsAppConfirmation = async (
+  data: { phone: string; source: string },
+  presence: boolean,
+  guestName: string
+) => {
+  // [TEMP SKIP] Set to true to enable automated messages
+  const isEnabled = false
+  if (!isEnabled) return
+
+  const textMessage = presence
+    ? `Dear ${guestName},\n\nKehadiran Anda adalah kehormatan, waktu yang Anda luangkan adalah kado terindah bagi kami. \n\n Berikut kami lampirkan informasi terkait acara kami:`
+    : `Dear ${guestName},\n\nTerima kasih atas konfirmasi ketidakhadirannya. Gak apa-apa, we totally understand. Makasih ya udah sempetin ngabarin. Sending love from here! 🤍`
+
+  try {
+    const textResult = await sendWhatsAppMessage({
+      source: data.source,
+      number: data.phone,
+      text: textMessage,
+    })
+
+    if (!textResult.success) {
+      console.error("Failed to send text message:", textResult.error)
+    }
+
+    if (presence) {
+      const locationResult = await sendWhatsAppMessage({
+        source: data.source,
+        number: data.phone,
+        type: "location",
+        locationData: {
+          name: "Lokasi Acara",
+          address: "Jl. Kencana Indah No.42, Margorejo, Metro Selatan, Kota Metro, Lampung.",
+          latitude: -5.1484356219499166,
+          longitude: 105.29310599848067,
+          delay: 1200,
+        },
+      })
+
+      if (!locationResult.success) {
+        console.error("Failed to send location message:", locationResult.error)
+      }
+    }
+
+    const stickerResult = await sendWhatsAppMessage({
+      source: data.source,
+      number: data.phone,
+      type: "sticker",
+      stickerUrl: `${window.location.origin}/img/sticker.png`,
+    })
+
+    if (!stickerResult.success) {
+      console.error("Failed to send sticker message:", stickerResult.error)
+    }
+  } catch (apiError) {
+    console.error("Failed to trigger WhatsApp message action:", apiError)
+  }
+}
+
 export default function RsvpSection() {
   const params = useParams()
   const guestId = params?.id as string
@@ -63,53 +122,7 @@ export default function RsvpSection() {
       if (error) throw error
 
       if (data?.phone && data?.source) {
-        const textMessage = presence
-          ? `Dear ${guestName},\n\nKehadiran Anda adalah kehormatan, waktu yang Anda luangkan adalah kado terindah bagi kami. \n\n Berikut kami lampirkan informasi terkait acara kami:`
-          : `Dear ${guestName},\n\nTerima kasih atas konfirmasi ketidakhadirannya. Gak apa-apa, we totally understand. Makasih ya udah sempetin ngabarin. Sending love from here! 🤍`
-
-        try {
-          const textResult = await sendWhatsAppMessage({
-            source: data.source,
-            number: data.phone,
-            text: textMessage,
-          })
-
-          if (!textResult.success) {
-            console.error("Failed to send text message:", textResult.error)
-          }
-
-          if (presence) {
-            const locationResult = await sendWhatsAppMessage({
-              source: data.source,
-              number: data.phone,
-              type: "location",
-              locationData: {
-                name: "Lokasi Acara",
-                address: "Jl. Kencana Indah No.42, Margorejo, Metro Selatan, Kota Metro, Lampung.",
-                latitude: -5.1484356219499166,
-                longitude: 105.29310599848067,
-                delay: 1200,
-              },
-            })
-
-            if (!locationResult.success) {
-              console.error("Failed to send location message:", locationResult.error)
-            }
-          }
-
-          const stickerResult = await sendWhatsAppMessage({
-            source: data.source,
-            number: data.phone,
-            type: "sticker",
-            stickerUrl: `${window.location.origin}/img/sticker.png`,
-          })
-
-          if (!stickerResult.success) {
-            console.error("Failed to send sticker message:", stickerResult.error)
-          }
-        } catch (apiError) {
-          console.error("Failed to trigger WhatsApp message action:", apiError)
-        }
+        await triggerWhatsAppConfirmation(data, presence, guestName)
       }
 
       setCurrentUserPresence(presence)

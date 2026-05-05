@@ -40,7 +40,7 @@ export default function SplashSection({ isOpen, onOpen, guestName = "", isLoadin
         </FloatingElement>
 
         {/* Confetti decoration */}
-        <FloatingElement className="absolute top-47" duration={5} yOffset={8}>
+        <FloatingElement className="absolute top-40" duration={5} yOffset={8}>
           <Image
             src="/img/2.png"
             alt="Confetti"

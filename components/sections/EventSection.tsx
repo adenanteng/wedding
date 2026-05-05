@@ -416,12 +416,12 @@ export default function EventSection() {
       </AnimatedSection>
 
       {/* See Location Drawer */}
-      <AnimatedSection delay={0.6}>
+      <AnimatedSection delay={0.6} className="w-full px-10">
         {isMounted && (
           <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
             <DrawerTrigger asChild>
               <button
-                className="mt-6 rounded-xl border-2 border-primary bg-primary text-white px-8 py-3.5 text-sm font-bold tracking-wider shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none flex items-center gap-2 group"
+                className="mt-6 w-full rounded-xl border-2 border-primary bg-primary text-white py-3.5 text-sm font-bold tracking-wider shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none flex items-center justify-center gap-2 group"
                 style={{ fontFamily: "var(--font-heading)" }}
               >
                 <Navigation className="size-4 group-hover:animate-bounce" />

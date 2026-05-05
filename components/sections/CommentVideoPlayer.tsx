@@ -94,7 +94,7 @@ export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
     <>
       {/* Thumbnail in Feed */}
       <div 
-        className="relative w-full aspect-video rounded-lg overflow-hidden border-2 border-primary/20 shadow-inner group cursor-pointer" 
+        className="relative w-full aspect-video rounded-xl overflow-hidden shadow-inner group cursor-pointer" 
         onClick={toggleModal}
       >
         <video
@@ -106,7 +106,7 @@ export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
         {/* Play Button Overlay */}
         <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors group-hover:bg-black/20">
           <div className="flex h-12 w-12 items-center justify-center rounded-full border-[3px] border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:scale-110">
-            <IconPlayerPlay size={24} fill="currentColor" />
+            <IconPlayerPlay size={24} />
           </div>
         </div>
       </div>
@@ -130,7 +130,7 @@ export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
             >
               <Backlight blur={40} className="w-full">
                 <div 
-                  className="relative w-full overflow-hidden rounded-2xl border-[3px] border-black bg-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+                  className="relative w-full overflow-hidden rounded-3xl border-[3px] border-black bg-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
                   style={{ aspectRatio: aspectRatio }}
                   onClick={togglePlay}
                 >

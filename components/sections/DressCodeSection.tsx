@@ -1,3 +1,6 @@
+"use client"
+
+import { motion } from "framer-motion"
 import { AnimatedSection } from "@/components/ui/animated-section"
 import { AnimatedText } from "../ui/animated-text"
 
@@ -24,10 +27,37 @@ export default function DressCodeSection() {
       {/* Color Palette */}
       <AnimatedSection delay={0.3}>
         <div className="flex -space-x-4 mt-4 justify-center items-center">
-          <div className="h-16 w-16 rounded-full bg-white shadow-md border-4 border-background relative z-10" title="White" />
-          <div className="h-16 w-16 rounded-full shadow-md border-4 border-background relative z-20" style={{ backgroundColor: "#EAE3D2" }} title="Cream" />
-          <div className="h-16 w-16 rounded-full shadow-md border-4 border-background relative z-30" style={{ backgroundColor: "#DDC1A4" }} title="Khaki" />
-          <div className="h-16 w-16 rounded-full shadow-md border-4 border-background relative z-40" style={{ backgroundColor: "#A09D82" }} title="Olive" />
+          <motion.div
+            whileHover={{ scale: 1.15, zIndex: 50 }}
+            whileTap={{ scale: 0.8 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            className="h-16 w-16 rounded-full bg-white shadow-md border-4 border-background relative z-10 cursor-pointer transition-shadow hover:shadow-lg"
+            title="White"
+          />
+          <motion.div
+            whileHover={{ scale: 1.15, zIndex: 50 }}
+            whileTap={{ scale: 0.8 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            className="h-16 w-16 rounded-full shadow-md border-4 border-background relative z-20 cursor-pointer transition-shadow hover:shadow-lg"
+            style={{ backgroundColor: "#EAE3D2" }}
+            title="Cream"
+          />
+          <motion.div
+            whileHover={{ scale: 1.15, zIndex: 50 }}
+            whileTap={{ scale: 0.8 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            className="h-16 w-16 rounded-full shadow-md border-4 border-background relative z-30 cursor-pointer transition-shadow hover:shadow-lg"
+            style={{ backgroundColor: "#DDC1A4" }}
+            title="Khaki"
+          />
+          <motion.div
+            whileHover={{ scale: 1.15, zIndex: 50 }}
+            whileTap={{ scale: 0.8 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            className="h-16 w-16 rounded-full shadow-md border-4 border-background relative z-40 cursor-pointer transition-shadow hover:shadow-lg"
+            style={{ backgroundColor: "#A09D82" }}
+            title="Olive"
+          />
         </div>
         <p className="text-center text-xs font-semibold mt-1 mb-4 tracking-wider" style={{ fontFamily: "var(--font-heading)" }}>
           White • Cream • Khaki • Olive
