@@ -141,12 +141,12 @@ export default function SplashSection({ isOpen, onOpen, guestName = "", isLoadin
         <button
           onClick={onOpen}
           disabled={isLoadingGuest}
-          className="mt-8 flex items-center justify-center gap-2 rounded-lg border-2 border-primary bg-primary text-white px-6 py-3 text-sm tracking-wider transition-all hover:enabled:bg-white hover:enabled:text-primary disabled:opacity-70 disabled:cursor-not-allowed"
+          className="mt-8 flex items-center justify-center gap-2 rounded-xl border-2 border-primary bg-primary text-white px-10 py-3.5 text-base font-bold tracking-wider shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all enabled:active:translate-x-[2px] enabled:active:translate-y-[2px] enabled:active:shadow-none disabled:opacity-70 disabled:cursor-not-allowed"
           style={{ fontFamily: "var(--font-heading)" }}
         >
           {isLoadingGuest ? (
             <>
-              <Loader2 className="h-4 w-4 animate-spin" />
+              <Loader2 className="h-5 w-5 animate-spin" />
               <span>Tunggu Sebentar...</span>
             </>
           ) : (

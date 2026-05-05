@@ -411,7 +411,7 @@ export default function EventSection() {
           <Drawer onOpenChange={setIsDrawerOpen}>
             <DrawerTrigger asChild>
               <button
-                className="mt-6 rounded-lg border-2 border-primary bg-primary text-white px-6 py-3 text-sm tracking-wider transition-all hover:bg-white hover:text-primary flex items-center gap-2 group"
+                className="mt-6 rounded-xl border-2 border-primary bg-primary text-white px-8 py-3.5 text-sm font-bold tracking-wider shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none flex items-center gap-2 group"
                 style={{ fontFamily: "var(--font-heading)" }}
               >
                 <Navigation className="size-4 group-hover:animate-bounce" />
@@ -452,7 +452,7 @@ export default function EventSection() {
                     href={gmapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-4 bg-primary text-white rounded-xl text-center font-bold flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] active:scale-[0.98] shadow-lg"
+                    className="w-full py-4 bg-primary text-white border-2 border-black rounded-xl text-center font-bold flex items-center justify-center gap-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
                     style={{ fontFamily: "var(--font-heading)" }}
                   >
                     <Navigation className="size-5" />
@@ -460,7 +460,7 @@ export default function EventSection() {
                   </a>
                   <DrawerClose asChild>
                     <button
-                      className="w-full py-3 text-primary font-bold border-2 border-primary rounded-xl transition-all hover:bg-primary/5"
+                      className="w-full py-3.5 text-primary font-bold border-2 border-primary rounded-xl bg-white shadow-[4px_4px_0px_0px_rgba(130,14,3,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
                       style={{ fontFamily: "var(--font-heading)" }}
                     >
                       Tutup

@@ -104,10 +104,10 @@ export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
               {/* Close Button */}
               <button
                 onClick={toggleModal}
-                className="absolute -top-12 right-0 text-white hover:text-primary transition-colors flex items-center gap-2 font-bold"
+                className="absolute -top-14 right-0 px-4 py-2 bg-white text-primary rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none flex items-center gap-2 font-bold"
                 style={{ fontFamily: "var(--font-heading)" }}
               >
-                Tutup <IconX size={24} />
+                Tutup <IconX size={20} />
               </button>
 
               <Backlight blur={40} className="w-full">

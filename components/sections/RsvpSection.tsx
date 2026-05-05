@@ -163,7 +163,7 @@ export default function RsvpSection() {
             <div className="mt-8">
               <button
                 onClick={() => setIsChangingMind(true)}
-                className="w-full rounded-lg border-2 border-primary bg-transparent py-2.5 text-sm font-bold tracking-wider text-primary transition-all active:opacity-70"
+                className="w-full rounded-xl border-2 border-primary bg-white py-3 text-sm font-bold tracking-wider text-primary shadow-[4px_4px_0px_0px_rgba(130,14,3,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
                 style={{ fontFamily: "var(--font-heading)" }}
               >
                 Saya berubah pikiran
@@ -191,7 +191,7 @@ export default function RsvpSection() {
               <button
                 disabled={isSubmitting}
                 onClick={() => handleRSVP(true)}
-                className="flex w-full justify-center rounded-lg border-2 border-primary bg-primary py-3 text-sm font-bold tracking-wider text-white transition-all active:opacity-70 disabled:opacity-50"
+                className="flex w-full justify-center rounded-xl border-2 border-primary bg-primary py-3.5 text-sm font-bold tracking-wider text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none disabled:opacity-50"
                 style={{ fontFamily: "var(--font-heading)" }}
               >
                 {isSubmitting ? (
@@ -204,7 +204,7 @@ export default function RsvpSection() {
               <button
                 disabled={isSubmitting}
                 onClick={() => handleRSVP(false)}
-                className="flex w-full justify-center rounded-lg border-2 border-primary text-primary bg-transparent py-3 text-sm font-bold tracking-wider transition-all active:opacity-70 disabled:opacity-50"
+                className="flex w-full justify-center rounded-xl border-2 border-primary text-primary bg-white py-3.5 text-sm font-bold tracking-wider shadow-[4px_4px_0px_0px_rgba(130,14,3,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none disabled:opacity-50"
                 style={{ fontFamily: "var(--font-heading)" }}
               >
                 {isSubmitting ? (

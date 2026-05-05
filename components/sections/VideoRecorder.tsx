@@ -250,6 +250,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
               width: 480,
               height: 640,
             }}
+            mirrored={facingMode === "user"}
             className={`w-full h-full object-cover transition-all duration-300 ${filters.find(f => f.id === filter)?.class || ""}`}
           />
         )}

@@ -340,7 +340,7 @@ export default function CommentSection() {
             {visibleCount < comments.length && (
               <button
                 onClick={() => setVisibleCount((prev) => prev + 10)}
-                className="mx-auto mt-2 flex items-center justify-center rounded-lg border-2 border-dashed border-primary/40 px-6 py-2 text-[10px] font-bold tracking-wider text-primary/60 transition-all hover:border-primary hover:text-primary active:opacity-70"
+                className="mx-auto mt-6 flex items-center justify-center rounded-xl border-2 border-primary bg-white px-8 py-2.5 text-xs font-bold tracking-wider text-primary shadow-[3px_3px_0px_0px_rgba(130,14,3,1)] transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
                 style={{ fontFamily: "var(--font-heading)" }}
               >
                 Lihat Selebihnya
@@ -350,21 +350,36 @@ export default function CommentSection() {
         )}
       </AnimatedSection>
 
-      <AnimatedSection delay={0.5}>
+      <AnimatedSection delay={0.5} className="w-full">
         <Drawer open={isOpen} onOpenChange={setIsOpen}>
-          <DrawerTrigger asChild>
-            <button
-              className="mt-5 flex items-center justify-center rounded-lg border-2 border-primary bg-primary px-6 py-3 text-sm font-bold tracking-wider text-white transition-all active:opacity-70 disabled:opacity-50"
-              style={{ fontFamily: "var(--font-heading)" }}
-              disabled={!guestRealId || isLoading}
-            >
-              <IconMessageCircle className="mr-2" size={20} />
-              Tinggalkan Pesan
-            </button>
-          </DrawerTrigger>
-          <DrawerContent className="bg-transparent border-none before:border-2 before:border-primary">
-            <div className="mx-auto w-full max-w-sm px-6 pb-6">
-              <DrawerHeader className="px-0">
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 w-full max-w-sm mx-auto">
+            <DrawerTrigger asChild>
+              <button
+                onClick={() => setMode("text")}
+                className="flex-1 flex items-center justify-center rounded-xl border-2 border-primary bg-white px-6 py-3.5 text-sm font-bold tracking-wider text-primary shadow-[4px_4px_0px_0px_rgba(130,14,3,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none disabled:opacity-50"
+                style={{ fontFamily: "var(--font-heading)" }}
+                disabled={!guestRealId || isLoading}
+              >
+                <IconMessageCircle className="mr-2" size={20} />
+                Tulis Pesan
+              </button>
+            </DrawerTrigger>
+            
+            <DrawerTrigger asChild>
+              <button
+                onClick={() => setMode("video")}
+                className="flex-1 flex items-center justify-center rounded-xl border-2 border-primary bg-primary px-6 py-3.5 text-sm font-bold tracking-wider text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none disabled:opacity-50"
+                style={{ fontFamily: "var(--font-heading)" }}
+                disabled={!guestRealId || isLoading}
+              >
+                <Video className="mr-2" size={20} />
+                Rekam Video
+              </button>
+            </DrawerTrigger>
+          </div>
+          <DrawerContent className="bg-transparent border-none before:border-2 before:border-primary max-h-[96vh]">
+            <div className="mx-auto w-full max-w-sm px-6 pb-8 overflow-y-auto custom-scrollbar">
+              <DrawerHeader className="px-0 pt-6 pb-2">
                 <DrawerTitle className="text-2xl text-primary flex justify-center items-center gap-2" style={{ fontFamily: "var(--font-heading)" }}>
                   <MessageCircle className="size-6" />
                   Kirim Pesan
@@ -431,7 +446,7 @@ export default function CommentSection() {
                     <button
                       type="submit"
                       disabled={(!message.trim() && !videoUrl) || isSubmitting}
-                      className="flex w-full items-center justify-center rounded-full border-2 border-primary bg-primary py-3 text-sm font-bold tracking-wider text-white transition-all active:opacity-70 disabled:opacity-50"
+                      className="flex w-full items-center justify-center rounded-xl border-2 border-primary bg-primary py-3.5 text-sm font-bold tracking-wider text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none disabled:opacity-50"
                       style={{ fontFamily: "var(--font-heading)" }}
                     >
                       {isSubmitting ? (
@@ -446,7 +461,7 @@ export default function CommentSection() {
                     <DrawerClose asChild>
                       <button
                         type="button"
-                        className="flex w-full items-center justify-center rounded-full border-2 border-primary bg-transparent py-3 text-sm font-bold tracking-wider text-primary transition-all active:opacity-70"
+                        className="flex w-full items-center justify-center rounded-xl border-2 border-primary bg-white py-3 text-sm font-bold tracking-wider text-primary shadow-[4px_4px_0px_0px_rgba(130,14,3,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
                         style={{ fontFamily: "var(--font-heading)" }}
                       >
                         Batal

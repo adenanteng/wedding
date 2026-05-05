@@ -152,7 +152,7 @@ export default function GiftSection() {
                       </p>
                     </div>
                     <button
-                      className="flex items-center rounded bg-primary px-3 py-1 text-xs text-white transition-opacity active:opacity-70"
+                      className="flex items-center rounded-lg border-2 border-primary bg-primary px-4 py-1.5 text-xs text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
                       style={{ fontFamily: "var(--font-heading)" }}
                       onClick={(e) => {
                         e.stopPropagation();
