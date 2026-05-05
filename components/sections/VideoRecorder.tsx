@@ -1,10 +1,10 @@
 "use client"
 
-import { IconPlayerPlay, IconRefresh, IconSparkles, IconTrash, IconUpload, IconAlertCircle, IconPlayerStopFilled, IconCircleFilled, IconPhoto } from "@tabler/icons-react"
-import { useCallback, useEffect, useRef, useState } from "react"
 import { useMusic } from "@/context/MusicContext"
+import { IconAlertCircle, IconCircleFilled, IconPhoto, IconPlayerPlay, IconPlayerStopFilled, IconRefresh, IconSparkles, IconTrash, IconUpload } from "@tabler/icons-react"
+import { AnimatePresence, motion } from "framer-motion"
+import { useCallback, useEffect, useRef, useState } from "react"
 import Webcam from "react-webcam"
-import { motion, AnimatePresence } from "framer-motion"
 
 interface VideoRecorderProps {
   onUploadComplete: (url: string) => void
@@ -13,7 +13,7 @@ interface VideoRecorderProps {
 export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) {
   const { isPlaying, setIsPlaying, setIsForcePaused } = useMusic()
   const [wasPlaying, setWasPlaying] = useState(false)
-  
+
   const webcamRef = useRef<Webcam>(null)
   const previewVideoRef = useRef<HTMLVideoElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -51,7 +51,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
     setIsRecording(true)
     setRecordingTime(0)
     setRecordedChunks([])
-    
+
     // Pause all other videos on the page
     document.querySelectorAll("video").forEach(v => {
       const videoElement = v as HTMLVideoElement
@@ -70,7 +70,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
         // Calculate crop to maintain 2:3 aspect ratio from source
         const sourceAspect = video.videoWidth / video.videoHeight
         const targetAspect = 2 / 3
-        
+
         let sx, sy, sw, sh
         if (sourceAspect > targetAspect) {
           // Source is wider than target (Landscape camera)
@@ -96,18 +96,18 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
     // Get original stream for audio
     const originalStream = video.srcObject as MediaStream
     const canvasStream = canvas.captureStream(30) // 30 FPS
-    
+
     // Combine canvas video with original audio
     const tracks = [
       ...canvasStream.getVideoTracks(),
       ...(originalStream ? originalStream.getAudioTracks() : [])
     ]
-    
+
     const combinedStream = new MediaStream(tracks)
 
     // Check supported types for better compatibility (Safari/Chrome/Firefox)
-    const mimeType = MediaRecorder.isTypeSupported("video/webm;codecs=vp9,opus") 
-      ? "video/webm;codecs=vp9,opus" 
+    const mimeType = MediaRecorder.isTypeSupported("video/webm;codecs=vp9,opus")
+      ? "video/webm;codecs=vp9,opus"
       : "video/webm"
 
     mediaRecorderRef.current = new MediaRecorder(combinedStream, { mimeType })
@@ -154,7 +154,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
       const url = URL.createObjectURL(file)
       setPreviewUrl(url)
       setRecordedChunks([file]) // Store file as a blob
-      
+
       // Resume music when moving from webcam to preview
       if (wasPlaying) setIsPlaying(true)
     }
@@ -164,7 +164,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
   useEffect(() => {
     // Force pause music while this component is active
     setIsForcePaused(true)
-    
+
     return () => {
       // Restore music when component is closed
       setIsForcePaused(false)
@@ -254,9 +254,9 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
               setIsPlayingPreview(false)
             }
           }}>
-            <video 
+            <video
               ref={previewVideoRef}
-              src={previewUrl} 
+              src={previewUrl}
               playsInline
               className="w-full h-full object-cover"
               onPlay={() => {
@@ -273,11 +273,11 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
               }}
               onPause={() => setIsPlayingPreview(false)}
             />
-            
+
             {/* Custom Play Button Overlay */}
             <AnimatePresence>
               {!isPlayingPreview && (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
@@ -319,7 +319,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
             </div>
             {/* Progress Bar */}
             <div className="w-24 h-1 bg-white/20 rounded-full overflow-hidden">
-              <motion.div 
+              <motion.div
                 className="h-full bg-red-500"
                 initial={{ width: 0 }}
                 animate={{ width: `${(recordingTime / MAX_DURATION) * 100}%` }}
@@ -338,8 +338,8 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
               <IconSparkles className="text-white/50" size={24} />
             </div>
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/50 text-[10px] font-serif">
-                Aden & Rahma Wedding
-             </div>
+              Aden & Rahma Wedding
+            </div>
           </div>
         )}
       </div>
@@ -349,7 +349,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
         {!previewUrl ? (
           <>
             {/* Filters */}
-            <div className="flex gap-2 w-full justify-center mb-2">
+            {/* <div className="flex gap-2 w-full justify-center mb-2">
               {filters.map(f => (
                 <button
                   key={f.id}
@@ -360,7 +360,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
                   {f.name}
                 </button>
               ))}
-            </div>
+            </div> */}
 
             <button
               onClick={toggleCamera}

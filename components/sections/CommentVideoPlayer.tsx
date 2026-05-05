@@ -1,16 +1,17 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { IconPlayerPlay, IconX } from "@tabler/icons-react"
-import { useMusic } from "@/context/MusicContext"
 import { Backlight } from "@/components/ui/backlight"
+import { useMusic } from "@/context/MusicContext"
+import { IconPlayerPlay, IconX } from "@tabler/icons-react"
+import { AnimatePresence, motion } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
 
 interface CommentVideoPlayerProps {
   src: string
+  hideControls?: boolean
 }
 
-export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
+export const CommentVideoPlayer = ({ src, hideControls = false }: CommentVideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const { isPlaying: isMusicPlaying, setIsPlaying: setIsMusicPlaying, setIsForcePaused } = useMusic()
   const [wasMusicPlaying, setWasMusicPlaying] = useState(false)
@@ -70,7 +71,7 @@ export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
       }
 
       window.addEventListener("popstate", handlePopState)
-      
+
       return () => {
         // Unlock scroll
         document.body.style.overflow = originalStyle;
@@ -93,8 +94,8 @@ export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
   return (
     <>
       {/* Thumbnail in Feed */}
-      <div 
-        className="relative w-full aspect-video rounded-xl overflow-hidden shadow-inner group cursor-pointer" 
+      <div
+        className="relative w-full aspect-video rounded-xl overflow-hidden shadow-inner group cursor-pointer"
         onClick={toggleModal}
       >
         <video
@@ -102,13 +103,15 @@ export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
           className="w-full h-full object-cover opacity-80"
           preload="metadata"
         />
-        
+
         {/* Play Button Overlay */}
-        <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors group-hover:bg-black/20">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full border-[3px] border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:scale-110">
-            <IconPlayerPlay size={24} />
+        {!hideControls && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors group-hover:bg-black/20">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full border-[3px] border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:scale-110">
+              <IconPlayerPlay size={24} />
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Popup Video Player */}
@@ -129,7 +132,7 @@ export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
               onClick={(e) => e.stopPropagation()}
             >
               <Backlight blur={40} className="w-full">
-                <div 
+                <div
                   className="relative w-full overflow-hidden rounded-3xl border-[3px] border-black bg-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
                   style={{ aspectRatio: aspectRatio }}
                   onClick={togglePlay}
@@ -173,7 +176,7 @@ export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
               </Backlight>
 
               {/* Decorative Text */}
-              <p 
+              <p
                 className="mt-6 text-center text-white/80 text-sm italic"
                 style={{ fontFamily: "var(--font-heading)" }}
               >
