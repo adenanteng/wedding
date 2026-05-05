@@ -192,7 +192,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
 
   return (
     <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto">
-      <div className="relative w-full aspect-3/4 rounded-3xl overflow-hidden bg-black border-4 border-primary/20 shadow-2xl">
+      <div className="relative w-full rounded-3xl overflow-hidden bg-black border-4 border-primary/20 shadow-2xl">
         {previewUrl ? (
           <div className="relative w-full h-full group cursor-pointer" onClick={() => {
             if (previewVideoRef.current?.paused) {
@@ -257,7 +257,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
 
         {/* Recording Overlay */}
         {isRecording && (
-          <div className="absolute top-4 left-4 flex flex-col gap-2">
+          <div className="absolute top-4 left-4 flex flex-col gap-2 z-30">
             <div className="flex items-center gap-2 bg-black/50 px-3 py-1 rounded-full w-fit">
               <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
               <span className="text-white text-xs font-sans">REC {recordingTime}s / {MAX_DURATION}s</span>

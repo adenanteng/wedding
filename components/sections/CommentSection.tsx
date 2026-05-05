@@ -13,7 +13,7 @@ import {
 import { FloatingElement } from "@/components/ui/floating-element"
 import { supabase } from "@/lib/supabaseClient"
 import { IconLoader2, IconMessageCircle, IconSend, IconTrash } from "@tabler/icons-react"
-import { MessageCircle, Type, Video } from "lucide-react"
+import { MessageCircle, Video } from "lucide-react"
 import Image from "next/image"
 import { useParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
@@ -45,13 +45,15 @@ export default function CommentSection() {
 
   const [visibleCount, setVisibleCount] = useState(10)
   const scrollRef = useRef<HTMLDivElement>(null)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const [mode, setMode] = useState<"text" | "video">("text")
   const [videoUrl, setVideoUrl] = useState<string | null>(null)
 
   useEffect(() => {
     if (isOpen) {
+      // Add a fake entry to history
+      window.history.pushState({ drawerOpen: true }, "")
+
       // Blur the trigger button immediately to prevent "aria-hidden" focus warnings
       if (document.activeElement instanceof HTMLElement) {
         document.activeElement.blur()
@@ -59,9 +61,19 @@ export default function CommentSection() {
 
       // Delay focus to allow drawer animation to complete before keyboard pops up
       const timer = setTimeout(() => {
-        textareaRef.current?.focus()
+        // textareaRef.current?.focus()
       }, 1000)
-      return () => clearTimeout(timer)
+
+      const handlePopState = () => {
+        setIsOpen(false)
+      }
+
+      window.addEventListener("popstate", handlePopState)
+
+      return () => {
+        clearTimeout(timer)
+        window.removeEventListener("popstate", handlePopState)
+      }
     }
   }, [isOpen])
 

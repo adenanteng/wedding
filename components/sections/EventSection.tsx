@@ -253,10 +253,20 @@ export default function EventSection() {
 
   useEffect(() => {
     if (isDrawerOpen) {
+      // Add a fake entry to history
+      window.history.pushState({ locationDrawerOpen: true }, "");
+
       // Blur the trigger button immediately to prevent "aria-hidden" focus warnings
       if (document.activeElement instanceof HTMLElement) {
         document.activeElement.blur();
       }
+
+      const handlePopState = () => {
+        setIsDrawerOpen(false);
+      };
+
+      window.addEventListener("popstate", handlePopState);
+      return () => window.removeEventListener("popstate", handlePopState);
     }
   }, [isDrawerOpen]);
 
@@ -408,7 +418,7 @@ export default function EventSection() {
       {/* See Location Drawer */}
       <AnimatedSection delay={0.6}>
         {isMounted && (
-          <Drawer onOpenChange={setIsDrawerOpen}>
+          <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
             <DrawerTrigger asChild>
               <button
                 className="mt-6 rounded-xl border-2 border-primary bg-primary text-white px-8 py-3.5 text-sm font-bold tracking-wider shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none flex items-center gap-2 group"

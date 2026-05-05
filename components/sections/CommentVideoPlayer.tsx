@@ -52,6 +52,24 @@ export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
     }
   }
 
+  // Handle back button to close modal
+  useEffect(() => {
+    if (isModalOpen) {
+      window.history.pushState({ modalOpen: true }, "")
+
+      const handlePopState = () => {
+        // Close modal and resume music
+        setIsModalOpen(false)
+        setIsPlaying(false)
+        setIsForcePaused(false)
+        if (wasMusicPlaying) setIsMusicPlaying(true)
+      }
+
+      window.addEventListener("popstate", handlePopState)
+      return () => window.removeEventListener("popstate", handlePopState)
+    }
+  }, [isModalOpen, wasMusicPlaying, setIsMusicPlaying, setIsForcePaused])
+
   // Auto play when modal opens
   useEffect(() => {
     if (isModalOpen && videoRef.current) {
@@ -101,15 +119,6 @@ export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
               className="relative w-full max-w-[90vw] md:max-w-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close Button */}
-              <button
-                onClick={toggleModal}
-                className="absolute -top-14 right-0 px-4 py-2 bg-white text-primary rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none flex items-center gap-2 font-bold"
-                style={{ fontFamily: "var(--font-heading)" }}
-              >
-                Tutup <IconX size={20} />
-              </button>
-
               <Backlight blur={40} className="w-full">
                 <div 
                   className="relative w-full overflow-hidden rounded-2xl border-[3px] border-black bg-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
@@ -126,6 +135,15 @@ export const CommentVideoPlayer = ({ src }: CommentVideoPlayerProps) => {
                     onPause={() => setIsPlaying(false)}
                     onPlay={() => setIsPlaying(true)}
                   />
+
+                  {/* Close Button - Now Inside */}
+                  <button
+                    onClick={toggleModal}
+                    className="absolute top-2 right-2 z-20 px-3 py-1.5 bg-white text-primary rounded-xl border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-none flex items-center gap-1.5 font-bold text-xs"
+                    style={{ fontFamily: "var(--font-heading)" }}
+                  >
+                    Tutup <IconX size={16} />
+                  </button>
 
                   {/* Controls Overlay */}
                   <AnimatePresence>
