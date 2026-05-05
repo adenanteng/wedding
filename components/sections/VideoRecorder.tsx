@@ -11,7 +11,7 @@ interface VideoRecorderProps {
 }
 
 export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) {
-  const { isPlaying, setIsPlaying } = useMusic()
+  const { isPlaying, setIsPlaying, setIsForcePaused } = useMusic()
   const [wasPlaying, setWasPlaying] = useState(false)
   
   const webcamRef = useRef<Webcam>(null)
@@ -46,16 +46,13 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
 
     if (webcamRef.current?.stream) {
       setRecordingTime(0)
-      // Pause music and other media
-      setWasPlaying(isPlaying)
-      setIsPlaying(false)
       
       // Pause all other videos on the page
       document.querySelectorAll("video").forEach(v => {
         if (v !== webcamRef.current?.video) v.pause()
       })
 
-      const options: MediaRecorderOptions = {
+      const options: MediaRecorderOptions = { 
         mimeType: "video/webm;codecs=vp8,opus",
         videoBitsPerSecond: 1200000 // 1.2 Mbps for compression
       }
@@ -69,7 +66,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
       mediaRecorderRef.current.addEventListener("dataavailable", handleDataAvailable)
       mediaRecorderRef.current.start()
     }
-  }, [webcamRef, handleDataAvailable, isPlaying, setIsPlaying])
+  }, [webcamRef, handleDataAvailable])
 
   // Stop recording
   const handleStopCaptureClick = useCallback(() => {
@@ -77,12 +74,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
       mediaRecorderRef.current.stop()
     }
     setIsRecording(false)
-    
-    // Resume music if it was playing before
-    if (wasPlaying) {
-      setIsPlaying(true)
-    }
-  }, [mediaRecorderRef, setIsPlaying, wasPlaying])
+  }, [mediaRecorderRef])
 
   // Timer effect
   useEffect(() => {
@@ -111,18 +103,31 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
       const url = URL.createObjectURL(file)
       setPreviewUrl(url)
       setRecordedChunks([file]) // Store file as a blob
+      
+      // Resume music when moving from webcam to preview
+      if (wasPlaying) setIsPlaying(true)
     }
   }
+
+  // Handle music pause/resume based on webcam activity
+  useEffect(() => {
+    // Force pause music while this component is active
+    setIsForcePaused(true)
+    
+    return () => {
+      // Restore music when component is closed
+      setIsForcePaused(false)
+    }
+  }, [setIsForcePaused])
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (isRecording) {
         if (mediaRecorderRef.current) mediaRecorderRef.current.stop()
-        if (wasPlaying) setIsPlaying(true)
       }
     }
-  }, [isRecording, wasPlaying, setIsPlaying])
+  }, [isRecording])
 
   // Generate preview
   useEffect(() => {
@@ -171,7 +176,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
   const resetRecording = () => {
     setRecordedChunks([])
     setPreviewUrl(null)
-    if (wasPlaying) setIsPlaying(true)
+    // Music will be paused again by the useEffect below
   }
 
   const toggleCamera = () => {
@@ -237,6 +242,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
         ) : (
           <Webcam
             audio={true}
+            muted={true}
             ref={webcamRef}
             screenshotFormat="image/jpeg"
             videoConstraints={{

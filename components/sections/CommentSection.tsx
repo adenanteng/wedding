@@ -402,20 +402,18 @@ export default function CommentSection() {
               ) : (
                 <form onSubmit={handleSubmit} className="px-0">
                   {videoUrl && (
-                    <div className="mb-4">
+                    <div className="mb-4 relative rounded-xl overflow-hidden shadow-lg border-2 border-primary/20">
                       <CommentVideoPlayer src={videoUrl} />
-                      <div className="mt-2 flex justify-between items-center">
-                        <div className="bg-primary text-white text-xs font-sans px-2 py-1 rounded-full flex items-center gap-1">
-                          <Video size={10} /> Video Terlampir
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => setVideoUrl(null)}
-                          className="bg-primary text-white p-1 rounded-full shadow-lg"
-                        >
-                          <IconTrash size={14} />
-                        </button>
+                      <div className="absolute top-3 left-3 bg-primary/90 text-white text-xs font-sans px-3 py-1 rounded-full flex items-center gap-1 shadow-lg backdrop-blur-sm">
+                        <Video size={12} /> Video Terlampir
                       </div>
+                      <button
+                        type="button"
+                        onClick={() => setVideoUrl(null)}
+                        className="absolute top-3 right-3 bg-primary text-white p-1.5 rounded-full shadow-lg transition-all active:scale-90"
+                      >
+                        <IconTrash size={16} />
+                      </button>
                     </div>
                   )}
 

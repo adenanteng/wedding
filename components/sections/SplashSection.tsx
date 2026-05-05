@@ -150,7 +150,7 @@ export default function SplashSection({ isOpen, onOpen, guestName = "", isLoadin
               <span>Tunggu Sebentar...</span>
             </>
           ) : (
-            "Open Invitation"
+            "Buka Undangan"
           )}
         </button>
       </div>
