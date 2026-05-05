@@ -1,6 +1,6 @@
 "use client"
 
-import { IconCircleFilled, IconPhoto, IconPlayerPlay, IconPlayerStopFilled, IconRefresh, IconSparkles, IconTrash, IconUpload, IconAlertCircle } from "@tabler/icons-react"
+import { IconPlayerPlay, IconRefresh, IconSparkles, IconTrash, IconUpload, IconAlertCircle, IconPlayerStopFilled, IconCircleFilled, IconPhoto } from "@tabler/icons-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useMusic } from "@/context/MusicContext"
 import Webcam from "react-webcam"
@@ -29,6 +29,8 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
   const [facingMode, setFacingMode] = useState<"user" | "environment">("user")
   const [filter, setFilter] = useState<string>("none")
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const requestRef = useRef<number | null>(null)
 
   // Handle data availability
   const handleDataAvailable = useCallback(
@@ -42,37 +44,85 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
 
   // Start recording
   const handleStartCaptureClick = useCallback(() => {
+    const video = webcamRef.current?.video
+    const canvas = canvasRef.current
+    if (!video || !canvas) return
+
     setIsRecording(true)
+    setRecordingTime(0)
     setRecordedChunks([])
+    
+    // Pause all other videos on the page
+    document.querySelectorAll("video").forEach(v => {
+      const videoElement = v as HTMLVideoElement
+      if (videoElement !== video) videoElement.pause()
+    })
 
-    if (webcamRef.current?.stream) {
-      setRecordingTime(0)
-      
-      // Pause all other videos on the page
-      document.querySelectorAll("video").forEach(v => {
-        if (v !== webcamRef.current?.video) v.pause()
-      })
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
 
-      const options: MediaRecorderOptions = { 
-        mimeType: "video/webm;codecs=vp8,opus",
-        videoBitsPerSecond: 1200000 // 1.2 Mbps for compression
+    // Set canvas size to portrait 2:3
+    canvas.width = 480
+    canvas.height = 720
+
+    const drawFrame = () => {
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        // Calculate crop to maintain 2:3 aspect ratio from source
+        const sourceAspect = video.videoWidth / video.videoHeight
+        const targetAspect = 2 / 3
+        
+        let sx, sy, sw, sh
+        if (sourceAspect > targetAspect) {
+          // Source is wider than target (Landscape camera)
+          sw = video.videoHeight * targetAspect
+          sh = video.videoHeight
+          sx = (video.videoWidth - sw) / 2
+          sy = 0
+        } else {
+          // Source is narrower than target
+          sw = video.videoWidth
+          sh = video.videoWidth / targetAspect
+          sx = 0
+          sy = (video.videoHeight - sh) / 2
+        }
+
+        ctx.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height)
       }
-
-      // Fallback for Safari/iOS
-      if (!MediaRecorder.isTypeSupported(options.mimeType!)) {
-        delete options.mimeType
-      }
-
-      mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, options)
-      mediaRecorderRef.current.addEventListener("dataavailable", handleDataAvailable)
-      mediaRecorderRef.current.start()
+      requestRef.current = requestAnimationFrame(drawFrame)
     }
+
+    drawFrame()
+
+    // Get original stream for audio
+    const originalStream = video.srcObject as MediaStream
+    const canvasStream = canvas.captureStream(30) // 30 FPS
+    
+    // Combine canvas video with original audio
+    const tracks = [
+      ...canvasStream.getVideoTracks(),
+      ...(originalStream ? originalStream.getAudioTracks() : [])
+    ]
+    
+    const combinedStream = new MediaStream(tracks)
+
+    // Check supported types for better compatibility (Safari/Chrome/Firefox)
+    const mimeType = MediaRecorder.isTypeSupported("video/webm;codecs=vp9,opus") 
+      ? "video/webm;codecs=vp9,opus" 
+      : "video/webm"
+
+    mediaRecorderRef.current = new MediaRecorder(combinedStream, { mimeType })
+    mediaRecorderRef.current.addEventListener("dataavailable", handleDataAvailable)
+    mediaRecorderRef.current.start()
   }, [webcamRef, handleDataAvailable])
 
   // Stop recording
   const handleStopCaptureClick = useCallback(() => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop()
+    }
+    if (requestRef.current !== null) {
+      cancelAnimationFrame(requestRef.current)
+      requestRef.current = null
     }
     setIsRecording(false)
   }, [mediaRecorderRef])
@@ -241,21 +291,23 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
             </AnimatePresence>
           </div>
         ) : (
-          <Webcam
-            audio={true}
-            muted={true}
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            videoConstraints={{
-              facingMode: facingMode,
-              // Memaksa resolusi Portrait 2:3
-              width: { ideal: 480 },
-              height: { ideal: 720 },
-              aspectRatio: { ideal: 0.6666 } 
-            }}
-            mirrored={facingMode === "user"}
-            className={`w-full h-full object-cover transition-all duration-300 ${filters.find(f => f.id === filter)?.class || ""}`}
-          />
+          <>
+            <Webcam
+              audio={true}
+              muted={true}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              videoConstraints={{
+                facingMode: facingMode,
+                width: { ideal: 1280 },
+                height: { ideal: 720 },
+              }}
+              mirrored={facingMode === "user"}
+              className={`w-full h-full object-cover transition-all duration-300 ${filters.find(f => f.id === filter)?.class || ""}`}
+            />
+            {/* Hidden canvas for cropping to portrait */}
+            <canvas ref={canvasRef} className="hidden" />
+          </>
         )}
 
         {/* Recording Overlay */}
