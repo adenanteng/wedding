@@ -442,7 +442,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
               className="relative w-full max-w-sm rounded-3xl border-4 border-black bg-white p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
             >
               <div className="flex flex-col items-center text-center">
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-primary bg-primary/10 text-primary">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-primary text-primary">
                   <IconAlertCircle size={32} />
                 </div>
                 <h3 className="mb-2 text-xl font-bold text-black" style={{ fontFamily: "var(--font-heading)" }}>

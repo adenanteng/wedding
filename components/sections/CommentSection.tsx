@@ -344,13 +344,13 @@ export default function CommentSection() {
                 <div className="my-3 w-full border-t border-dashed border-primary/50" />
 
                 {comment.video_url && (
-                  <div className="mt-3">
+                  <div className="mb-1">
                     <CommentVideoPlayer src={comment.video_url} />
                   </div>
                 )}
 
                 <p
-                  className="text-sm leading-relaxed whitespace-pre-wrap mt-3"
+                  className="text-sm leading-relaxed whitespace-pre-wrap"
                   style={{ fontFamily: "var(--font-heading)" }}
                 >
                   {comment.message}
