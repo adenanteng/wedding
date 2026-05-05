@@ -192,7 +192,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
 
   return (
     <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto">
-      <div className="relative w-full aspect-[9/16] rounded-3xl overflow-hidden bg-black border-4 border-primary/20 shadow-2xl">
+      <div className="relative w-full aspect-[3/4] rounded-3xl overflow-hidden bg-black border-4 border-primary/20 shadow-2xl">
         {previewUrl ? (
           <div className="relative w-full h-full group cursor-pointer" onClick={() => {
             if (previewVideoRef.current?.paused) {
@@ -247,9 +247,10 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
             screenshotFormat="image/jpeg"
             videoConstraints={{
               facingMode: facingMode,
-              width: { ideal: 720 },
-              height: { ideal: 1280 },
-              aspectRatio: 9/16
+              // Memaksa resolusi Portrait 3:4
+              width: { ideal: 480 },
+              height: { ideal: 640 },
+              aspectRatio: { ideal: 0.75 } 
             }}
             mirrored={facingMode === "user"}
             className={`w-full h-full object-cover transition-all duration-300 ${filters.find(f => f.id === filter)?.class || ""}`}
