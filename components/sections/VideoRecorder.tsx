@@ -1,6 +1,6 @@
 "use client"
 
-import { IconCircleFilled, IconPhoto, IconPlayerPlay, IconPlayerStopFilled, IconRefresh, IconSparkles, IconTrash, IconUpload } from "@tabler/icons-react"
+import { IconCircleFilled, IconPhoto, IconPlayerPlay, IconPlayerStopFilled, IconRefresh, IconSparkles, IconTrash, IconUpload, IconAlertCircle } from "@tabler/icons-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useMusic } from "@/context/MusicContext"
 import Webcam from "react-webcam"
@@ -28,6 +28,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
   const [isUploading, setIsUploading] = useState(false)
   const [facingMode, setFacingMode] = useState<"user" | "environment">("user")
   const [filter, setFilter] = useState<string>("none")
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
   // Handle data availability
   const handleDataAvailable = useCallback(
@@ -96,8 +97,8 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      if (file.size > 20 * 1024 * 1024) { // 20MB limit
-        alert("File terlalu besar. Maksimal 20MB.")
+      if (file.size > 40 * 1024 * 1024) { // 40MB limit
+        setErrorMsg("File terlalu besar. Maksimal 40MB agar kualitas tetap terjaga dan pengiriman lancar.")
         return
       }
       const url = URL.createObjectURL(file)
@@ -192,7 +193,7 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
 
   return (
     <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto">
-      <div className="relative w-full aspect-[3/4] rounded-3xl overflow-hidden bg-black border-4 border-primary/20 shadow-2xl">
+      <div className="relative w-full aspect-[2/3] rounded-3xl overflow-hidden bg-black border-4 border-primary/20 shadow-2xl">
         {previewUrl ? (
           <div className="relative w-full h-full group cursor-pointer" onClick={() => {
             if (previewVideoRef.current?.paused) {
@@ -247,10 +248,10 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
             screenshotFormat="image/jpeg"
             videoConstraints={{
               facingMode: facingMode,
-              // Memaksa resolusi Portrait 3:4
+              // Memaksa resolusi Portrait 2:3
               width: { ideal: 480 },
-              height: { ideal: 640 },
-              aspectRatio: { ideal: 0.75 } 
+              height: { ideal: 720 },
+              aspectRatio: { ideal: 0.6666 } 
             }}
             mirrored={facingMode === "user"}
             className={`w-full h-full object-cover transition-all duration-300 ${filters.find(f => f.id === filter)?.class || ""}`}
@@ -371,6 +372,45 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
           </>
         )}
       </div>
+      {/* Error Modal */}
+      <AnimatePresence>
+        {errorMsg && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setErrorMsg(null)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="relative w-full max-w-sm rounded-3xl border-4 border-black bg-white p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+            >
+              <div className="flex flex-col items-center text-center">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-primary bg-primary/10 text-primary">
+                  <IconAlertCircle size={32} />
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-black" style={{ fontFamily: "var(--font-heading)" }}>
+                  Waduh, Maaf Ya!
+                </h3>
+                <p className="mb-6 text-sm leading-relaxed text-gray-600" style={{ fontFamily: "var(--font-heading)" }}>
+                  {errorMsg}
+                </p>
+                <button
+                  onClick={() => setErrorMsg(null)}
+                  className="w-full rounded-xl border-2 border-primary bg-primary py-3 text-sm font-bold tracking-wider text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+                  style={{ fontFamily: "var(--font-heading)" }}
+                >
+                  Siap, Mengerti!
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

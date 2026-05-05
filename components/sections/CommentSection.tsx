@@ -12,7 +12,8 @@ import {
 } from "@/components/ui/drawer"
 import { FloatingElement } from "@/components/ui/floating-element"
 import { supabase } from "@/lib/supabaseClient"
-import { IconLoader2, IconMessageCircle, IconSend, IconTrash } from "@tabler/icons-react"
+import { IconLoader2, IconMessageCircle, IconSend, IconTrash, IconAlertCircle } from "@tabler/icons-react"
+import { motion, AnimatePresence } from "framer-motion"
 import { MessageCircle, Video } from "lucide-react"
 import Image from "next/image"
 import { useParams } from "next/navigation"
@@ -41,6 +42,8 @@ export default function CommentSection() {
 
   const [isOpen, setIsOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [deleteConfirm, setDeleteConfirm] = useState<{ id: string, videoUrl: string | null } | null>(null)
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [message, setMessage] = useState("")
 
   const [visibleCount, setVisibleCount] = useState(10)
@@ -181,14 +184,20 @@ export default function CommentSection() {
       setIsOpen(false)
     } catch (error) {
       console.error("Failed to submit comment:", error)
-      alert("Gagal mengirim pesan. Silakan coba lagi.")
+      setErrorMsg("Gagal mengirim pesan. Silakan coba lagi nanti ya.")
     } finally {
       setIsSubmitting(false)
     }
   }
 
   const handleDeleteComment = async (id: string, videoUrl?: string | null) => {
-    if (!confirm("Apakah Anda yakin ingin menghapus pesan ini?")) return
+    setDeleteConfirm({ id, videoUrl: videoUrl || null })
+  }
+
+  const confirmDelete = async () => {
+    if (!deleteConfirm) return
+    const { id, videoUrl } = deleteConfirm
+    setDeleteConfirm(null)
 
     try {
       const { error } = await supabase
@@ -212,7 +221,7 @@ export default function CommentSection() {
       setComments((prev) => prev.filter((c) => c.id !== id))
     } catch (error) {
       console.error("Error deleting comment:", error)
-      alert("Gagal menghapus pesan.")
+      setErrorMsg("Gagal menghapus pesan. Coba lagi nanti ya.")
     }
   }
 
@@ -448,7 +457,7 @@ export default function CommentSection() {
                     // ref={textareaRef}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder={videoUrl ? "Tambahkan pesan untuk video Anda (opsional)..." : "Tulis pesan atau harapan baik Anda..."}
+                    placeholder={videoUrl ? "Tambahkan pesan untuk video Anda..." : "Tulis pesan atau harapan baik Anda..."}
                     className="min-h-[120px] w-full resize-none rounded-xl border-2 border-dashed border-primary p-4 text-sm focus:border-primary focus:outline-none"
                     style={{ fontFamily: "var(--font-heading)" }}
                     disabled={isSubmitting}
@@ -486,6 +495,94 @@ export default function CommentSection() {
           </DrawerContent>
         </Drawer>
       </AnimatedSection>
+      {/* Custom Delete Confirmation Modal */}
+      <AnimatePresence>
+        {deleteConfirm && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setDeleteConfirm(null)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="relative w-full max-w-sm rounded-3xl border-4 border-black bg-white p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+            >
+              <div className="flex flex-col items-center text-center">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-primary bg-primary/10 text-primary">
+                  <IconTrash size={32} />
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-black" style={{ fontFamily: "var(--font-heading)" }}>
+                  Hapus Pesan?
+                </h3>
+                <p className="mb-6 text-sm leading-relaxed text-gray-600" style={{ fontFamily: "var(--font-heading)" }}>
+                  Pesan Anda akan hilang selamanya. Benar-benar ingin menghapusnya?
+                </p>
+                <div className="flex w-full flex-col gap-3">
+                  <button
+                    onClick={confirmDelete}
+                    className="w-full rounded-xl border-2 border-primary bg-primary py-3 text-sm font-bold tracking-wider text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+                    style={{ fontFamily: "var(--font-heading)" }}
+                  >
+                    Ya, Hapus Saja
+                  </button>
+                  <button
+                    onClick={() => setDeleteConfirm(null)}
+                    className="w-full rounded-xl border-2 border-primary bg-white py-3 text-sm font-bold tracking-wider text-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+                    style={{ fontFamily: "var(--font-heading)" }}
+                  >
+                    Batal
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Error Alert Modal */}
+      <AnimatePresence>
+        {errorMsg && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setErrorMsg(null)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="relative w-full max-w-sm rounded-3xl border-4 border-black bg-white p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+            >
+              <div className="flex flex-col items-center text-center">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-primary bg-primary/10 text-primary">
+                  <IconAlertCircle size={32} />
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-black" style={{ fontFamily: "var(--font-heading)" }}>
+                  Waduh, Ada Error!
+                </h3>
+                <p className="mb-6 text-sm leading-relaxed text-gray-600" style={{ fontFamily: "var(--font-heading)" }}>
+                  {errorMsg}
+                </p>
+                <button
+                  onClick={() => setErrorMsg(null)}
+                  className="w-full rounded-xl border-2 border-primary bg-primary py-3 text-sm font-bold tracking-wider text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+                  style={{ fontFamily: "var(--font-heading)" }}
+                >
+                  Siap, Mengerti!
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
