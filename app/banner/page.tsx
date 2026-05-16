@@ -1,20 +1,13 @@
+"use client"
+
 import Image from "next/image"
 import { FloatingElement } from "@/components/ui/floating-element"
-import { Loader2 } from "lucide-react"
-import { EndlessBouncingText } from "../ui/endless-bouncing-text"
+import { EndlessBouncingText } from "@/components/ui/endless-bouncing-text"
 
-interface SplashSectionProps {
-  isOpen: boolean
-  onOpen: () => void
-  guestName?: string
-  isLoadingGuest?: boolean
-}
-
-export default function SplashSection({ isOpen, onOpen, guestName = "", isLoadingGuest = false }: SplashSectionProps) {
+export default function BannerPage() {
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-white transition-all duration-700 ${isOpen ? "pointer-events-none -translate-y-full opacity-0" : "translate-y-0 opacity-100"
-        }`}
+      className="min-h-screen flex flex-col items-center justify-center bg-white"
     >
       <div className="relative flex w-full max-w-md flex-col items-center px-6">
         {/* Ring decoration - top left */}
@@ -116,16 +109,13 @@ export default function SplashSection({ isOpen, onOpen, guestName = "", isLoadin
 
         {/* Names */}
         <div className="mt-6 flex h-8 items-center justify-center">
-          {isLoadingGuest ? (
-            <div className="h-6 w-40 animate-pulse rounded-md bg-primary/20"></div>
-          ) : (
+
             <h2
               className="text-center text-2xl tracking-wide"
               style={{ fontFamily: "var(--font-heading)" }}
             >
-              {guestName}
+              Aden & Rahma
             </h2>
-          )}
         </div>
 
         {/* Date */}
@@ -137,7 +127,7 @@ export default function SplashSection({ isOpen, onOpen, guestName = "", isLoadin
         </p>
 
         {/* Open Invitation Button */}
-        <button
+        {/* <button
           onClick={onOpen}
           disabled={isLoadingGuest}
           className="mt-8 flex items-center justify-center gap-2 rounded-xl border-2 border-primary bg-primary text-white px-10 py-3.5 text-base font-bold tracking-wider shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all enabled:active:translate-x-[2px] enabled:active:translate-y-[2px] enabled:active:shadow-none disabled:opacity-70 disabled:cursor-not-allowed"
@@ -151,7 +141,7 @@ export default function SplashSection({ isOpen, onOpen, guestName = "", isLoadin
           ) : (
             "Buka Undangan"
           )}
-        </button>
+        </button> */}
       </div>
     </div>
   )

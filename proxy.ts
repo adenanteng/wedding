@@ -8,6 +8,7 @@ export async function proxy(request: NextRequest) {
   // Exclude static assets and reserved paths explicitly just in case
   if (
     pathname === '/' ||
+    pathname.startsWith('/banner') ||
     pathname.startsWith('/not-found') ||
     pathname.startsWith('/rsvp') ||
     pathname.startsWith('/api') ||
@@ -61,7 +62,8 @@ export const config = {
      * - favicon.ico (favicon file)
      * - img (images)
      * - audio (audio files)
+     * - banner (banner page)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|not-found|img|audio).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|not-found|img|audio|banner).*)',
   ],
 }
