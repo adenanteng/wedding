@@ -110,21 +110,30 @@ export default function BannerPage() {
         {/* Names */}
         <div className="mt-6 flex h-8 items-center justify-center">
 
-            <h2
-              className="text-center text-2xl tracking-wide"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              Aden & Rahma
-            </h2>
+          <h2
+            className="text-center text-2xl tracking-wide"
+            style={{ fontFamily: "var(--font-heading)" }}
+          >
+            Aden & Rahma
+          </h2>
         </div>
 
         {/* Date */}
         <p
-          className="mt-1 text-center text-xl tracking-widest"
+          className="mt-1 text-center text-lg tracking-widest"
           style={{ fontFamily: "var(--font-heading)" }}
         >
-          15.06.26
+          Senin, 15 Juni 2026
         </p>
+
+        <div className="mt-10 flex items-center justify-center">
+          <h2
+            className="text-center font-bold tracking-wide text-primary"
+            style={{ fontFamily: "var(--font-heading)" }}
+          >
+            "To love laughter and happily ever after"
+          </h2>
+        </div>
 
         {/* Open Invitation Button */}
         {/* <button
