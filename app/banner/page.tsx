@@ -1,8 +1,8 @@
 "use client"
 
-import Image from "next/image"
-import { FloatingElement } from "@/components/ui/floating-element"
 import { EndlessBouncingText } from "@/components/ui/endless-bouncing-text"
+import { FloatingElement } from "@/components/ui/floating-element"
+import Image from "next/image"
 
 export default function BannerPage() {
   return (
@@ -11,7 +11,7 @@ export default function BannerPage() {
     >
       <div className="relative flex w-full max-w-md flex-col items-center px-6">
         {/* Ring decoration - top left */}
-        <FloatingElement className="absolute top-0 left-16 -rotate-20" duration={3}>
+        <FloatingElement className="absolute -top-10 left-16 -rotate-20" duration={3}>
           <Image
             src="/img/ring.png"
             alt="Ring"
@@ -32,7 +32,7 @@ export default function BannerPage() {
         </FloatingElement>
 
         {/* Confetti decoration */}
-        <FloatingElement className="absolute top-40" duration={5} yOffset={8}>
+        <FloatingElement className="absolute top-35" duration={5} yOffset={8}>
           <Image
             src="/img/2.png"
             alt="Confetti"
@@ -43,14 +43,27 @@ export default function BannerPage() {
         </FloatingElement>
 
         <div className="-rotate-5">
-          <FloatingElement yOffset={10} duration={3}>
+          {/* <FloatingElement yOffset={10} duration={3}>
             <EndlessBouncingText
               as="h1"
-              text={"These Kids\nAre Getting\nMarried"}
-              className="font-chewy font-bold text-4xl text-center leading-[1.2] tracking-widest text-primary uppercase"
+              text={"Welcome to Our\nWedding"}
+              className="font-alex-brush font-bold text-4xl text-center leading-[1.2] tracking-widest text-primary"
             />
-          </FloatingElement>
+          </FloatingElement> */}
+          <h1
+            className="font-great-vibes text-5xl text-center text-primary"
+          >
+            Welcome to Our <br /> Wedding
+          </h1>
         </div>
+
+        {/* <div className="">
+          <h1
+            className="font-chewy text-2xl text-center text-primary"
+          >
+            These Kids are Getting Married
+          </h1>
+        </div> */}
 
         {/* Couple Photo */}
         <div className="relative mt-20">
@@ -111,7 +124,7 @@ export default function BannerPage() {
         <div className="mt-6 flex h-8 items-center justify-center">
 
           <h2
-            className="text-center text-2xl tracking-wide"
+            className="text-center font-bold text-2xl tracking-wide text-primary"
             style={{ fontFamily: "var(--font-heading)" }}
           >
             Aden & Rahma
@@ -119,19 +132,24 @@ export default function BannerPage() {
         </div>
 
         {/* Date */}
-        <p
+        {/* <p
           className="mt-1 text-center text-lg tracking-widest"
           style={{ fontFamily: "var(--font-heading)" }}
         >
           Senin, 15 Juni 2026
-        </p>
+        </p> */}
 
         <div className="mt-10 flex items-center justify-center">
           <h2
-            className="text-center font-bold tracking-wide text-primary"
+            className="text-center tracking-wide text-primary leading-tight"
             style={{ fontFamily: "var(--font-heading)" }}
           >
-            "To love laughter and happily ever after"
+            Hari ini bukan sekedar perayaan, <br />
+            melainkan awal dari perjalanan baru. <br />
+            Dua hati yang di pertemukan, dan <br />
+            dua keluarga yang disatukan. <br />
+            <br />
+            Dalam ikatan suci yang penuh do'a dan harapan.
           </h2>
         </div>
 

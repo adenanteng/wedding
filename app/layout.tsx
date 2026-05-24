@@ -1,4 +1,4 @@
-import { Chewy, Gloria_Hallelujah, Patrick_Hand } from "next/font/google";
+import { Chewy, Gloria_Hallelujah, Great_Vibes, Patrick_Hand } from "next/font/google";
 
 import { ConsoleGreeting } from "@/components/console-greeting";
 import { Toaster } from "@/components/ui/sonner";
@@ -25,6 +25,12 @@ const fontSans = Patrick_Hand({
   variable: "--font-sans-next",
 })
 
+const great_vibes = Great_Vibes({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-great-vibes-next',
+})
+
 export const metadata: Metadata = {
   title: "Aden & Rahma",
   description: "Invitation to our wedding",
@@ -43,7 +49,8 @@ export default function RootLayout({
         "antialiased",
         fontSans.variable,
         gloriaHallelujah.variable,
-        chewy.variable
+        chewy.variable,
+        great_vibes.variable
       )}
     >
       <body>
