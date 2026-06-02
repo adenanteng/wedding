@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle2, XCircle, MoreHorizontal } from "lucide-react"
+import { CheckCircle2, XCircle, MoreHorizontal, ArrowUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -32,7 +32,18 @@ export type RSVP = {
 export const columns: ColumnDef<RSVP>[] = [
   {
     accessorKey: "name",
-    header: "Nama",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="font-semibold px-2 py-1 -ml-2 h-8 text-sm"
+        >
+          Nama
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const name = row.getValue("name") as string
       return <div className="font-medium">{name}</div>
@@ -40,7 +51,18 @@ export const columns: ColumnDef<RSVP>[] = [
   },
   {
     accessorKey: "phone",
-    header: "Telepon",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="font-semibold px-2 py-1 -ml-2 h-8 text-sm"
+        >
+          Telepon
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const phone = row.getValue("phone") as string
       return <div className="font-medium">{phone}</div>
@@ -48,7 +70,18 @@ export const columns: ColumnDef<RSVP>[] = [
   },
   {
     accessorKey: "presence",
-    header: "Kehadiran",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="font-semibold px-2 py-1 -ml-2 h-8 text-sm"
+        >
+          Kehadiran
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const presence = row.getValue("presence")
 
@@ -77,10 +110,29 @@ export const columns: ColumnDef<RSVP>[] = [
         </Badge>
       )
     },
+    filterFn: (row, columnId, filterValue) => {
+      if (!filterValue || filterValue === "all") return true
+      const presence = row.getValue(columnId)
+      if (filterValue === "hadir") return presence === true
+      if (filterValue === "tidak_hadir") return presence === false
+      if (filterValue === "belum_tahu") return presence === null || presence === undefined
+      return true
+    },
   },
   {
     accessorKey: "invited",
-    header: "Diundang",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="font-semibold px-2 py-1 -ml-2 h-8 text-sm"
+        >
+          Diundang
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const invited = row.getValue("invited")
 
@@ -109,15 +161,58 @@ export const columns: ColumnDef<RSVP>[] = [
         </Badge>
       )
     },
+    filterFn: (row, columnId, filterValue) => {
+      if (!filterValue || filterValue === "all") return true
+      const invited = row.getValue(columnId)
+      if (filterValue === "terundang") return invited === true
+      if (filterValue === "belum") return invited === false
+      if (filterValue === "tidak_tahu") return invited === null || invited === undefined
+      return true
+    },
   },
   {
     accessorKey: "source",
-    header: "Sumber",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="font-semibold px-2 py-1 -ml-2 h-8 text-sm"
+        >
+          Sumber
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const source = row.getValue("source") as string
       return <div className="font-medium">{source}</div>
     },
+    filterFn: (row, columnId, filterValue) => {
+      if (!filterValue || filterValue === "all") return true
+      const source = row.getValue(columnId) as string
+      return source === filterValue
+    },
   },
+  // {
+  //   accessorKey: "total_guest",
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button
+  //         variant="ghost"
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //         className="hover:bg-accent hover:text-accent-foreground font-semibold px-2 py-1 -ml-2 h-8 text-sm"
+  //       >
+  //         Tamu
+  //         <ArrowUpDown className="ml-2 h-4 w-4" />
+  //       </Button>
+  //     )
+  //   },
+  //   cell: ({ row }) => {
+  //     const total = row.getValue("total_guest") as number
+  //     return <div className="font-medium">{total ?? 1}</div>
+  //   },
+  // },
   {
     id: "actions",
     cell: ({ row, table }) => {
@@ -140,6 +235,7 @@ export const columns: ColumnDef<RSVP>[] = [
             source: rsvp.source,
             number: rsvp.phone,
             text: messageText,
+            attachBanner: true,
           });
 
           if (!result.success) throw new Error(result.error);

@@ -75,6 +75,7 @@ export function BulkInviteSheet({ onSuccess }: BulkInviteSheetProps) {
             source: guest.source,
             number: guest.phone,
             text: messageText,
+            attachBanner: true,
           });
 
           if (!result.success) throw new Error(result.error);

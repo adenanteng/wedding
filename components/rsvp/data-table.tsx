@@ -16,6 +16,7 @@ import {
 import { ChevronDown, RefreshCw } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { Combobox } from "@/components/ui/combobox"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -75,18 +76,64 @@ export function DataTable<TData, TValue>({
     }
   })
 
+  const uniqueSources = React.useMemo(() => {
+    const sources = data
+      .map((item: any) => item.source)
+      .filter(Boolean)
+    return Array.from(new Set(sources)) as string[]
+  }, [data])
+
   return (
     <div className="w-full">
-      <div className="flex items-center py-4 gap-2">
-        <Input
-          placeholder="Filter..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <div className="ml-auto flex items-center gap-2">
+      <div className="flex flex-col md:flex-row gap-2 py-4 justify-between items-stretch md:items-center">
+        <div className="flex flex-wrap items-center gap-2 flex-1">
+          <Input
+            placeholder="Cari nama..."
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("name")?.setFilterValue(event.target.value)
+            }
+            className="w-full md:w-64 text-sm"
+          />
+          <Combobox
+            options={[
+              { value: "all", label: "Semua Kehadiran" },
+              { value: "hadir", label: "Hadir" },
+              { value: "tidak_hadir", label: "Tidak Hadir" },
+              { value: "belum_tahu", label: "Belum Tahu" },
+            ]}
+            value={(table.getColumn("presence")?.getFilterValue() as string) ?? "all"}
+            onChange={(val) => table.getColumn("presence")?.setFilterValue(val || "all")}
+            placeholder="Filter Kehadiran"
+            searchPlaceholder="Cari..."
+            className="w-full md:w-[160px]"
+          />
+          <Combobox
+            options={[
+              { value: "all", label: "Semua Status Undangan" },
+              { value: "terundang", label: "Terundang" },
+              { value: "belum", label: "Belum" },
+              { value: "tidak_tahu", label: "Tidak Tahu" },
+            ]}
+            value={(table.getColumn("invited")?.getFilterValue() as string) ?? "all"}
+            onChange={(val) => table.getColumn("invited")?.setFilterValue(val || "all")}
+            placeholder="Filter Status"
+            searchPlaceholder="Cari..."
+            className="w-full md:w-[160px]"
+          />
+          <Combobox
+            options={[
+              { value: "all", label: "Semua Sumber" },
+              ...uniqueSources.map(src => ({ value: src, label: src })),
+            ]}
+            value={(table.getColumn("source")?.getFilterValue() as string) ?? "all"}
+            onChange={(val) => table.getColumn("source")?.setFilterValue(val || "all")}
+            placeholder="Filter Sumber"
+            searchPlaceholder="Cari..."
+            className="w-full md:w-[160px]"
+          />
+        </div>
+        <div className="flex items-center gap-2 justify-end">
             <Button
                 variant="outline"
                 size="icon"
