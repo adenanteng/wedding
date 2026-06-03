@@ -18,8 +18,8 @@ export default function DressCodeSection() {
 
       <AnimatedSection delay={0.2}>
         <AnimatedText
-          className="mt-6 max-w-xs text-center text-sm leading-relaxed"
-          style={{ fontFamily: "var(--font-heading)" }}
+          className="mt-6 max-w-xs text-center text-base leading-relaxed"
+          style={{ fontFamily: "var(--font-sans)" }}
           text="Kami meminta Anda untuk mengenakan warna-warna berikut di acara spesial kami"
         />
       </AnimatedSection>
@@ -66,8 +66,8 @@ export default function DressCodeSection() {
 
       <AnimatedSection delay={0.2}>
         <AnimatedText
-          className="max-w-xs text-center text-sm leading-relaxed"
-          style={{ fontFamily: "var(--font-heading)" }}
+          className="max-w-xs text-center text-base leading-relaxed"
+          style={{ fontFamily: "var(--font-sans)" }}
           text="Anda bisa memadupadankan warna-warna ini atau memilih satu warna saja."
         />
       </AnimatedSection>

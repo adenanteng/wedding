@@ -324,8 +324,8 @@ export default function EventSection() {
         {/* Saturday */}
         <div className="flex flex-1 flex-col items-center border-y-2 border-l-2 border-primary">
           <span
-            className="text-sm font-bold text-primary border-b-2 border-primary w-full text-center pb-1 mb-5"
-            style={{ fontFamily: "var(--font-heading)" }}
+            className="text-base font-bold text-primary border-b-2 border-primary w-full text-center pb-1 mb-5"
+            style={{ fontFamily: "var(--font-sans)" }}
           >
             Minggu
           </span>
@@ -340,8 +340,8 @@ export default function EventSection() {
         {/* Sunday (D-day) */}
         <div className="relative flex flex-1 flex-col items-center border-2 border-r-2 border-primary pb-5">
           <span
-            className="text-sm font-bold text-primary border-b-2 border-primary w-full text-center pb-1 mb-5"
-            style={{ fontFamily: "var(--font-heading)" }}
+            className="text-base font-bold text-primary border-b-2 border-primary w-full text-center pb-1 mb-5"
+            style={{ fontFamily: "var(--font-sans)" }}
           >
             Senin
           </span>
@@ -372,8 +372,8 @@ export default function EventSection() {
         {/* Monday */}
         <div className="flex flex-1 flex-col items-center border-y-2 border-r-2 border-primary">
           <span
-            className="text-sm font-bold text-primary border-b-2 border-primary w-full text-center pb-1 mb-5"
-            style={{ fontFamily: "var(--font-heading)" }}
+            className="text-base font-bold text-primary border-b-2 border-primary w-full text-center pb-1 mb-5"
+            style={{ fontFamily: "var(--font-sans)" }}
           >
             Selasa
           </span>
@@ -400,12 +400,12 @@ export default function EventSection() {
       {/* Event Details */}
       <AnimatedSection delay={0.4}>
         <div
-          className="mt-5 text-center text-sm leading-relaxed"
-          style={{ fontFamily: "var(--font-heading)" }}
+          className="mt-5 text-center text-base leading-relaxed"
+          style={{ fontFamily: "var(--font-sans)" }}
         >
           <AnimatedText text="Senin, 15 Juni 2026" />
           <AnimatedText text="09.00 WIB" />
-          <AnimatedText text="Kediaman Mempelai Wanita" className="mt-2" />
+          <AnimatedText text="Kediaman Mempelai Wanita" className="mt-2 font-bold text-lg" />
           <AnimatedText text="Jl. Kencana Indah No.42, Margorejo," />
           <AnimatedText text="Metro Selatan, Kota Metro, Lampung." />
         </div>

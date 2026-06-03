@@ -1,7 +1,9 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
   Sheet,
   SheetContent,
@@ -28,9 +30,34 @@ export function BulkInviteSheet({ onSuccess }: BulkInviteSheetProps) {
   useBackToClose(open, () => setOpen(false))
   const [progress, setProgress] = useState(0)
   const [stats, setStats] = useState({ total: 0, sent: 0, failed: 0 })
+  const [limitInput, setLimitInput] = useState("30")
+  const [totalUninvited, setTotalUninvited] = useState<number | null>(null)
   const stopRef = useRef(false)
 
+  const fetchUninvitedCount = async () => {
+    const { count, error } = await supabase
+      .from('rsvps')
+      .select('*', { count: 'exact', head: true })
+      .or('invited.eq.false,invited.is.null')
+
+    if (!error && count !== null) {
+      setTotalUninvited(count)
+    }
+  }
+
+  useEffect(() => {
+    if (open) {
+      fetchUninvitedCount()
+    }
+  }, [open])
+
   const handleBulkInvite = async () => {
+    const limitVal = Number(limitInput)
+    if (isNaN(limitVal) || limitVal < 1 || limitVal > 50) {
+      toast.error("Limit undangan harus antara 1 dan 50")
+      return
+    }
+
     setIsProcessing(true)
     stopRef.current = false
 
@@ -52,20 +79,24 @@ export function BulkInviteSheet({ onSuccess }: BulkInviteSheetProps) {
       return
     }
 
-    const total = guests.length
+    // Limit to user input
+    const guestsToInvite = guests.slice(0, limitVal)
+
+    const total = guestsToInvite.length
     setStats({ total, sent: 0, failed: 0 })
     setProgress(0)
 
     const origin = window.location.origin
 
     toast.promise(async () => {
-      for (let i = 0; i < guests.length; i++) {
+      for (let i = 0; i < guestsToInvite.length; i++) {
         if (stopRef.current) {
           setIsProcessing(false)
+          fetchUninvitedCount()
           return "Bulk invite dihentikan"
         }
 
-        const guest = guests[i]
+        const guest = guestsToInvite[i]
         const messageText = `Kpd Yth. *${guest.name}*\n\nBismillah Ar-Rahman Ar-Rahim.\n\nDi hari yang berbahagia nanti, kami sangat mengharapkan kehadiran Bapak/Ibu/Saudara/i untuk ikut merayakan babak baru kehidupan kami.\n\nDetail Undangan:\n${origin}/${guest.short_id}\n\nTerima kasih telah menjadi bagian dari perjalanan kami. Sampai jumpa di hari bahagia!`;
 
 
@@ -92,20 +123,23 @@ export function BulkInviteSheet({ onSuccess }: BulkInviteSheetProps) {
         setProgress(Math.round(((i + 1) / total) * 100))
 
         // Delay (e.g., 5-8 seconds between messages)
-        if (i < guests.length - 1 && !stopRef.current) {
+        if (i < guestsToInvite.length - 1 && !stopRef.current) {
           await new Promise(resolve => setTimeout(resolve, i % 5 === 0 ? 8000 : 5000))
         }
       }
 
       setIsProcessing(false)
+      fetchUninvitedCount()
       if (onSuccess) onSuccess()
       return "Bulk invite selesai"
     }, {
-      loading: "Mengirim undangan bulk...",
+      loading: `Mengirim ${total} undangan bulk...`,
       success: (msg) => msg,
       error: "Terjadi kesalahan saat bulk invite",
     })
   }
+
+  const isLimitInvalid = isNaN(Number(limitInput)) || Number(limitInput) < 1 || Number(limitInput) > 50
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -123,15 +157,58 @@ export function BulkInviteSheet({ onSuccess }: BulkInviteSheetProps) {
           </SheetDescription>
         </SheetHeader>
 
-        <div className="py-8 px-6 space-y-6 text-lg">
+        <div className="py-6 px-6 space-y-6 text-base">
           {!isProcessing ? (
-            <div className="bg-secondary/30 p-4 rounded-lg flex flex-col gap-2">
-              <p className="font-medium">Informasi:</p>
-              <ul className="text-muted-foreground list-disc list-inside space-y-1">
-                <li>Hanya tamu dengan status "Belum Terundang" yang akan dikirim.</li>
-                <li>Ada jeda 5-8 detik antar pesan untuk keamanan akun WhatsApp.</li>
-                <li>Jangan tutup tab browser ini selama proses berjalan.</li>
-              </ul>
+            <div className="space-y-6">
+              {/* Info Tamu */}
+              <div className="bg-secondary/20 p-4 rounded-xl border border-secondary/50 flex flex-col gap-2">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-muted-foreground font-medium">Total Tamu Belum Diundang:</span>
+                  <span className="font-bold text-base">
+                    {totalUninvited !== null ? `${totalUninvited} orang` : "Memuat..."}
+                  </span>
+                </div>
+              </div>
+
+              {/* Input Limit */}
+              <div className="space-y-2">
+                <Label htmlFor="limit-input" className="text-sm font-medium flex justify-between">
+                  <span>Limit Undangan per Sesi:</span>
+                  <span className="text-xs text-muted-foreground">(Maksimal 50)</span>
+                </Label>
+                <Input
+                  id="limit-input"
+                  type="number"
+                  min={1}
+                  max={50}
+                  value={limitInput}
+                  onChange={(e) => setLimitInput(e.target.value)}
+                  className="w-full focus-visible:ring-primary"
+                />
+                
+                {/* Warning / Error messages */}
+                {Number(limitInput) > 30 && Number(limitInput) <= 50 && (
+                  <div className="text-xs text-amber-600 bg-amber-500/10 border border-amber-500/20 p-2.5 rounded-lg flex flex-col gap-1">
+                    <span className="font-bold">⚠️ Peringatan Anti-Spam:</span>
+                    <span>Mengirim lebih dari 30 undangan sekaligus meningkatkan risiko nomor WhatsApp diblokir atau ditandai sebagai spam oleh WhatsApp.</span>
+                  </div>
+                )}
+                {(Number(limitInput) > 50 || Number(limitInput) < 1 || isLimitInvalid) && (
+                  <div className="text-xs text-red-600 bg-red-500/10 border border-red-500/20 p-2.5 rounded-lg flex flex-col gap-1">
+                    <span className="font-bold">❌ Input Tidak Valid:</span>
+                    <span>Masukkan jumlah limit undangan antara 1 sampai 50.</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="bg-secondary/30 p-4 rounded-lg flex flex-col gap-2 text-sm">
+                <p className="font-semibold text-muted-foreground uppercase text-xs tracking-wider">Informasi Prosedur:</p>
+                <ul className="text-muted-foreground list-disc list-inside space-y-1.5 text-xs">
+                  <li>Hanya tamu dengan status "Belum Terundang" yang akan diproses.</li>
+                  <li>Ada jeda 5-8 detik antar pesan untuk mengurangi risiko spam.</li>
+                  <li>Jangan tutup tab browser ini selama proses pengiriman berlangsung.</li>
+                </ul>
+              </div>
             </div>
           ) : (
             <div className="space-y-4">
@@ -156,12 +233,16 @@ export function BulkInviteSheet({ onSuccess }: BulkInviteSheetProps) {
 
         <div className="px-6">
           {!isProcessing ? (
-            <Button className="w-full text-lg" onClick={handleBulkInvite}>
+            <Button 
+              className="w-full text-lg font-medium" 
+              onClick={handleBulkInvite}
+              disabled={isLimitInvalid || totalUninvited === 0}
+            >
               <IconPlayerPlay className="mr-2 h-4 w-4" />
               Mulai Bulk Invite
             </Button>
           ) : (
-            <Button variant="destructive" className="w-full text-lg" onClick={() => stopRef.current = true}>
+            <Button variant="destructive" className="w-full text-lg font-medium" onClick={() => stopRef.current = true}>
               <IconPlayerStop className="mr-2 h-4 w-4" />
               Stop Proses
             </Button>

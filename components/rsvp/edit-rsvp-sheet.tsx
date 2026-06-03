@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select"
 import { supabase } from "@/lib/supabaseClient"
 import { IconLoader2 } from "@tabler/icons-react"
-import { RSVP } from "./columns"
+import { RSVP } from "./types"
 import { useBackToClose } from "@/hooks/useBackToClose"
 
 interface EditRsvpSheetProps {

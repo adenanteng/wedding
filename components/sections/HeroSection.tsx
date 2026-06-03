@@ -45,14 +45,14 @@ export default function HeroSection() {
       <div className="mt-6 max-w-xs px-6 text-center">
         <AnimatedText
           text='"Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."'
-          className="text-sm leading-relaxed"
-          style={{ fontFamily: "var(--font-heading)" }}
+          className="text-base leading-relaxed"
+          style={{ fontFamily: "var(--font-sans)" }}
           delay={0.4}
         />
         <AnimatedText
           text="QS. Ar-Rum: 21"
-          className="mt-4 text-xs tracking-wider"
-          style={{ fontFamily: "var(--font-heading)" }}
+          className="mt-4 text-sm tracking-wider"
+          style={{ fontFamily: "var(--font-sans)" }}
           delay={1.5}
         />
       </div>

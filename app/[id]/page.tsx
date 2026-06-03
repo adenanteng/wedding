@@ -84,8 +84,8 @@ export default function Page() {
 
         {/* ===== FOOTER TEXT ===== */}
         <p
-          className="mt-6 mb-10 text-center text-xs"
-          style={{ fontFamily: "var(--font-heading)" }}
+          className="mt-6 mb-10 text-center text-sm"
+          style={{ fontFamily: "var(--font-sans)" }}
         >
           Sebuah melodi yang merangkum seluruh cerita dan doa kami...
         </p>

@@ -2,7 +2,8 @@
 
 import { useEffect, useState, useCallback } from "react"
 import { DataTable } from "@/components/rsvp/data-table"
-import { columns, RSVP } from "@/components/rsvp/columns"
+import { columns } from "@/components/rsvp/columns"
+import { RSVP } from "@/components/rsvp/types"
 import { supabase } from "@/lib/supabaseClient"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { AddRsvpSheet } from "@/components/rsvp/add-rsvp-sheet"

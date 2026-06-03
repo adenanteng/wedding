@@ -79,8 +79,8 @@ export default function GiftSection() {
       {/* Gift message paragraph 1 */}
       <AnimatedSection delay={0.3}>
         <AnimatedText
-          className="mt-6 max-w-xs text-center text-sm leading-relaxed"
-          style={{ fontFamily: "var(--font-heading)" }}
+          className="mt-6 max-w-xs text-center text-base leading-relaxed"
+          style={{ fontFamily: "var(--font-sans)" }}
           text="Datang bawa doa itu mulia, tambah saldo itu luar biasa."
         />
       </AnimatedSection>
@@ -88,7 +88,7 @@ export default function GiftSection() {
       {/* Bank Card - Ticket style */}
       {/* <AnimatedSection className="w-full flex justify-center" delay={0.4}> */}
         <DraggableCardContainer className="relative mt-8 flex h-[220px] w-full max-w-[260px] items-center justify-center">
-          <p className="absolute top-1/2 mx-auto max-w-sm -translate-y-3/4 text-center text-2xl font-black font-dancing">
+          <p className="absolute top-1/2 mx-auto max-w-sm -translate-y-3/4 text-center text-2xl font-black font-sans">
             Pilih salah satu aja ya..
           </p>
 
@@ -139,8 +139,8 @@ export default function GiftSection() {
                   <div className="flex items-end justify-between">
                     <div>
                       <p
-                        className="text-xs text-gray-600 select-none"
-                        style={{ fontFamily: "var(--font-heading)" }}
+                        className="text-base text-gray-600 select-none"
+                        style={{ fontFamily: "var(--font-sans)" }}
                       >
                         Account name:
                       </p>
@@ -153,7 +153,7 @@ export default function GiftSection() {
                     </div>
                     <button
                       className="flex items-center rounded-lg border-2 border-primary bg-primary px-4 py-1.5 text-xs text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
-                      style={{ fontFamily: "var(--font-heading)" }}
+                      style={{ fontFamily: "var(--font-sans)" }}
                       onClick={(e) => {
                         e.stopPropagation();
                         handleCopy(card.accountNumber);
@@ -174,8 +174,8 @@ export default function GiftSection() {
       {/* WhatsApp message */}
       <AnimatedSection delay={0.5}>
         <AnimatedText
-          className="mt-6 max-w-xs text-center text-sm leading-relaxed"
-          style={{ fontFamily: "var(--font-heading)" }}
+          className="mt-6 max-w-xs text-center text-base leading-relaxed"
+          style={{ fontFamily: "var(--font-sans)" }}
           text="Terima kasih telah ikut mendanai petualangan hidup Kami selanjutnya."
         />
       </AnimatedSection>

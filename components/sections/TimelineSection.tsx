@@ -24,14 +24,14 @@ export default function TimelineSection() {
         <div className="border-b border-black py-3">
           <div className="flex items-baseline gap-6">
             <span
-              className="w-[90px] text-right text-sm"
-              style={{ fontFamily: "var(--font-heading)" }}
+              className="w-[90px] text-right text-base"
+              style={{ fontFamily: "var(--font-sans)" }}
             >
               09:00
             </span>
             <span
-              className="text-base"
-              style={{ fontFamily: "var(--font-heading)" }}
+              className="text-lg"
+              style={{ fontFamily: "var(--font-sans)" }}
             >
               Akad Nikah
             </span>
@@ -42,55 +42,19 @@ export default function TimelineSection() {
         <div className="border-b border-black py-3">
           <div className="flex items-baseline gap-6">
             <span
-              className="w-[90px] text-right text-sm"
-              style={{ fontFamily: "var(--font-heading)" }}
+              className="w-[90px] text-right text-base"
+              style={{ fontFamily: "var(--font-sans)" }}
             >
               10:00
             </span>
             <span
-              className="text-base"
-              style={{ fontFamily: "var(--font-heading)" }}
+              className="text-lg"
+              style={{ fontFamily: "var(--font-sans)" }}
             >
               Resepsi
             </span>
           </div>
         </div>
-
-        {/* Row 3 */}
-        {/* <div className="border-b border-black py-3">
-          <div className="flex items-baseline gap-6">
-            <span
-              className="w-[90px] text-right text-sm"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              11:00
-            </span>
-            <span
-              className="text-base"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              Jadwal Belum Pasti
-            </span>
-          </div>
-        </div> */}
-
-        {/* Row 4 */}
-        {/* <div className="border-b border-black py-3">
-          <div className="flex items-baseline gap-6">
-            <span
-              className="w-[90px] text-right text-sm"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              12:00
-            </span>
-            <span
-              className="text-base"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              Jadwal Belum Pasti
-            </span>
-          </div>
-        </div> */}
       </AnimatedSection>
 
       {/* Shoes/Heels Illustration - bottom right */}

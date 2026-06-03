@@ -166,8 +166,8 @@ export default function RsvpSection() {
               Terima Kasih, {guestName}!
             </h3>
             <p
-              className="text-sm leading-relaxed"
-              style={{ fontFamily: "var(--font-heading)" }}
+              className="text-base leading-relaxed"
+              style={{ fontFamily: "var(--font-sans)" }}
             >
               {currentUserPresence === false
                 ? "Gak apa-apa, we totally understand. Makasih ya udah sempetin ngabarin. Sending love from here! 🤍"
@@ -192,8 +192,8 @@ export default function RsvpSection() {
               {isChangingMind ? "Revisi Kehadiran" : "Apakah kamu akan hadir?"}
             </p>
             <p
-              className="mb-8 text-sm leading-relaxed"
-              style={{ fontFamily: "var(--font-heading)" }}
+              className="mb-8 text-base leading-relaxed"
+              style={{ fontFamily: "var(--font-sans)" }}
             >
               {isChangingMind
                 ? "Silakan perbarui status kehadiran Anda di bawah ini."

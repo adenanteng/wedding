@@ -16,18 +16,7 @@ import { supabase } from "@/lib/supabaseClient"
 import { IconConfetti, IconCopy, IconPencil, IconTrash } from "@tabler/icons-react"
 import { EditRsvpSheet } from "./edit-rsvp-sheet"
 import { sendWhatsAppMessage } from "@/lib/actions/invite"
-
-export type RSVP = {
-  id: string
-  name: string
-  phone: string
-  source: string
-  short_id: string
-  invited: boolean | null
-  presence: boolean | null
-  total_guest: number
-  created_at: string
-}
+import { RSVP } from "./types"
 
 export const columns: ColumnDef<RSVP>[] = [
   {

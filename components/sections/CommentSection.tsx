@@ -313,8 +313,8 @@ export default function CommentSection() {
       </AnimatedSection>
       <AnimatedSection delay={0.2}>
         <span
-          className="text-primary/60 text-xs"
-          style={{ fontFamily: "var(--font-heading)" }}
+          className="text-primary/60 text-base"
+          style={{ fontFamily: "var(--font-sans)" }}
         >
           {comments.length} Komentar
         </span>
@@ -383,7 +383,7 @@ export default function CommentSection() {
                   {comment.rsvps?.name || ""}
                 </h3>
                 <p
-                  className="mt-1 text-xs"
+                  className="mt-1 text-sm"
                   style={{ fontFamily: "var(--font-sans)" }}
                 >
                   {formatDate(comment.created_at)}
@@ -398,8 +398,8 @@ export default function CommentSection() {
                 )}
 
                 <p
-                  className="text-sm leading-relaxed whitespace-pre-wrap"
-                  style={{ fontFamily: "var(--font-heading)" }}
+                  className="text-base leading-relaxed whitespace-pre-wrap"
+                  style={{ fontFamily: "var(--font-sans)" }}
                 >
                   {comment.message}
                 </p>
@@ -510,8 +510,8 @@ export default function CommentSection() {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder={videoUrl ? "Tambahkan pesan untuk video Anda..." : "Tulis pesan atau harapan baik Anda..."}
-                    className="min-h-[120px] w-full resize-none rounded-xl border-2 border-dashed border-primary p-4 text-sm focus:border-primary focus:outline-none"
-                    style={{ fontFamily: "var(--font-heading)" }}
+                    className="min-h-[120px] w-full resize-none rounded-xl border-2 border-dashed border-primary p-4 text-base focus:border-primary focus:outline-none"
+                    style={{ fontFamily: "var(--font-sans)" }}
                     disabled={isSubmitting}
                   />
 
@@ -571,7 +571,7 @@ export default function CommentSection() {
                 <h3 className="mb-2 text-xl font-bold text-black" style={{ fontFamily: "var(--font-heading)" }}>
                   Hapus Pesan?
                 </h3>
-                <p className="mb-6 text-sm leading-relaxed text-gray-600" style={{ fontFamily: "var(--font-heading)" }}>
+                <p className="mb-6 text-base leading-relaxed text-gray-600" style={{ fontFamily: "var(--font-sans)" }}>
                   Pesan Anda akan hilang selamanya. Benar-benar ingin menghapusnya?
                 </p>
                 <div className="flex w-full flex-col gap-3">
