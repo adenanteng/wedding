@@ -13,10 +13,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { supabase } from "@/lib/supabaseClient"
-import { IconConfetti, IconCopy, IconPencil, IconTrash } from "@tabler/icons-react"
+import { IconConfetti, IconCopy, IconPencil, IconTrash, IconClipboard } from "@tabler/icons-react"
 import { EditRsvpSheet } from "./edit-rsvp-sheet"
 import { sendWhatsAppMessage } from "@/lib/actions/invite"
 import { RSVP } from "./types"
+import { toast } from "sonner"
+import { getInvitationMessage } from "@/lib/invite-utils"
 
 export const columns: ColumnDef<RSVP>[] = [
   {
@@ -218,36 +220,7 @@ export const columns: ColumnDef<RSVP>[] = [
           if (updateError) throw updateError;
 
           const origin = window.location.origin;
-          const messageText = `Kepada Yth. 
-*Bapak/Ibu/Saudara/i ${rsvp.name}*
-
-_Assalamu’alaikum Warahmatullahi Wabarakatuh_
-
-_Bismillahirahmanirrahim_
-
-Selamat Pagi/Siang/Malam.
-
-Tanpa mengurangi rasa hormat, karena keterbatasan jarak, melalui pesan digital ini kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada acara pernikahan kami.
-Berikut detail informasi acara beserta link undangan digital kami:
-
-*Rahma Cahya Malinda, S.H* 
-                       & 
-*Aden Anteng Anugrah, S.Kom*
-
-🗓️ Hari/Tanggal: *Senin, 15 Juni 2026*
-📍 Lokasi: *Kediaman mempelai wanita*
-🔗 Link Undangan: 
-*${origin}/${rsvp.short_id}*
-
-Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir di hari istimewa kami.
-
-Terima kasih banyak atas perhatian dan doa restunya.
-
-Wassalamu’alaikum Warahmatullahi Wabarakatuh
-
-
-Kami yang berbahagia,
-Rahma & Aden`;
+          const messageText = getInvitationMessage(rsvp, origin);
 
           const result = await sendWhatsAppMessage({
             source: rsvp.source,
@@ -313,10 +286,24 @@ Rahma & Aden`;
                 Edit
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(`${window.location.origin}/${rsvp.short_id}`)}
+                onClick={() => {
+                  navigator.clipboard.writeText(`${window.location.origin}/${rsvp.short_id}`)
+                  toast.success("Link undangan berhasil disalin!")
+                }}
               >
                 <IconCopy className="mr-2 h-4 w-4" />
                 Copy Link
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  const origin = window.location.origin
+                  const message = getInvitationMessage(rsvp, origin)
+                  navigator.clipboard.writeText(message)
+                  toast.success(`Pesan undangan untuk ${rsvp.name} berhasil disalin!`)
+                }}
+              >
+                <IconClipboard className="mr-2 h-4 w-4" />
+                Copy Undangan
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-destructive" onClick={deleteRsvp}>
