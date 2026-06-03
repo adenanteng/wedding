@@ -59,7 +59,7 @@ export async function sendWhatsAppMessage({
   }
 
   if (attachBanner) {
-    const filePath = path.join(process.cwd(), 'public', 'img', 'couple1.jpeg')
+    const filePath = path.join(process.cwd(), 'public', 'img', 'couple0.jpeg')
     if (!fs.existsSync(filePath)) {
       throw new Error(`Banner photo not found at path: ${filePath}`)
     }

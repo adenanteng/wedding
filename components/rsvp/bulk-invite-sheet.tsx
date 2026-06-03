@@ -97,7 +97,36 @@ export function BulkInviteSheet({ onSuccess }: BulkInviteSheetProps) {
         }
 
         const guest = guestsToInvite[i]
-        const messageText = `Kpd Yth. *${guest.name}*\n\nBismillah Ar-Rahman Ar-Rahim.\n\nDi hari yang berbahagia nanti, kami sangat mengharapkan kehadiran Bapak/Ibu/Saudara/i untuk ikut merayakan babak baru kehidupan kami.\n\nDetail Undangan:\n${origin}/${guest.short_id}\n\nTerima kasih telah menjadi bagian dari perjalanan kami. Sampai jumpa di hari bahagia!`;
+        const messageText = `Kepada Yth. 
+Bapak/Ibu/Saudara/i *${guest.name}*
+
+Assalamu’alaikum Warahmatullahi Wabarakatuh 
+
+Bismillahirahmanirrahim
+
+Selamat Pagi/Siang/Malam.
+
+Tanpa mengurangi rasa hormat, karena keterbatasan jarak, melalui pesan digital ini kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada acara pernikahan kami.
+Berikut detail informasi acara beserta link undangan digital kami:
+
+*Rahma Cahya Malinda, S.H* 
+                       & 
+*Aden Anteng Anugrah, S.Kom*
+
+🗓️ Hari/Tanggal: *Senin, 15 Juni 2026*
+📍 Lokasi: *Kediaman mempelai wanita*
+🔗 Link Undangan: 
+*${origin}/${guest.short_id}*
+
+Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir di hari istimewa kami.
+
+Terima kasih banyak atas perhatian dan doa restunya.
+
+Wassalamu’alaikum Warahmatullahi Wabarakatuh
+
+
+Kami yang berbahagia,
+Rahma & Aden`;
 
 
         try {
