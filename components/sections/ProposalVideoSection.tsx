@@ -10,9 +10,12 @@ import { useEffect, useRef, useState } from "react"
 export default function ProposalVideoSection() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const { setIsForcePaused } = useMusic()
+  const { 
+    isEngagementPlaying: isPlaying, 
+    setIsEngagementPlaying: setIsPlaying, 
+    setIsForcePaused 
+  } = useMusic()
 
-  const [isPlaying, setIsPlaying] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [showControls, setShowControls] = useState(true)
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -51,6 +54,23 @@ export default function ProposalVideoSection() {
       return () => clearInterval(interval)
     }
   }, [isPlaying])
+
+  // Sync the HTML video element play/pause state with context isPlaying value
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    if (isPlaying) {
+      if (video.paused) {
+        video.play().catch(err => console.warn("Video play prevented:", err))
+        setIsForcePaused(true)
+      }
+    } else {
+      if (!video.paused) {
+        video.pause()
+      }
+    }
+  }, [isPlaying, setIsForcePaused])
 
   const togglePlay = (e?: React.MouseEvent) => {
     e?.stopPropagation()

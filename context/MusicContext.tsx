@@ -7,6 +7,8 @@ interface MusicContextType {
   setIsPlaying: (playing: boolean) => void
   isForcePaused: boolean
   setIsForcePaused: (paused: boolean) => void
+  isEngagementPlaying: boolean
+  setIsEngagementPlaying: (playing: boolean) => void
 }
 
 const MusicContext = createContext<MusicContextType | undefined>(undefined)
@@ -14,9 +16,17 @@ const MusicContext = createContext<MusicContextType | undefined>(undefined)
 export function MusicProvider({ children }: { children: ReactNode }) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isForcePaused, setIsForcePaused] = useState(false)
+  const [isEngagementPlaying, setIsEngagementPlaying] = useState(false)
 
   return (
-    <MusicContext.Provider value={{ isPlaying, setIsPlaying, isForcePaused, setIsForcePaused }}>
+    <MusicContext.Provider value={{
+      isPlaying,
+      setIsPlaying,
+      isForcePaused,
+      setIsForcePaused,
+      isEngagementPlaying,
+      setIsEngagementPlaying
+    }}>
       {children}
     </MusicContext.Provider>
   )

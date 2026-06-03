@@ -20,6 +20,7 @@ import { useParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import VideoRecorder from "./VideoRecorder"
 import { CommentVideoPlayer } from "./CommentVideoPlayer"
+import { useMusic } from "@/context/MusicContext"
 
 export default function CommentSection() {
   const params = useParams()
@@ -52,6 +53,19 @@ export default function CommentSection() {
   const [mode, setMode] = useState<"text" | "video">("text")
   const [videoUrl, setVideoUrl] = useState<string | null>(null)
 
+  const { 
+    isPlaying: isMusicPlaying, 
+    setIsPlaying: setIsMusicPlaying, 
+    isForcePaused, 
+    setIsForcePaused, 
+    isEngagementPlaying, 
+    setIsEngagementPlaying 
+  } = useMusic()
+
+  const wasMusicPlayingRef = useRef(false)
+  const wasEngagementPlayingRef = useRef(false)
+  const hasCapturedRef = useRef(false)
+
   useEffect(() => {
     if (isOpen) {
       // Add a fake entry to history
@@ -79,6 +93,40 @@ export default function CommentSection() {
       }
     }
   }, [isOpen])
+
+  // Handle pausing media when sheet is opened, and resuming when it's closed
+  useEffect(() => {
+    if (isOpen && mode === "video") {
+      if (!hasCapturedRef.current) {
+        const musicActive = isMusicPlaying && !isForcePaused
+        const engagementActive = isEngagementPlaying
+
+        wasMusicPlayingRef.current = musicActive
+        wasEngagementPlayingRef.current = engagementActive
+        hasCapturedRef.current = true
+
+        if (engagementActive) {
+          setIsEngagementPlaying(false)
+        }
+        setIsForcePaused(true)
+      }
+    } else if (!isOpen) {
+      if (hasCapturedRef.current) {
+        const wasEngagementActive = wasEngagementPlayingRef.current
+        const wasMusicActive = wasMusicPlayingRef.current
+
+        if (wasEngagementActive) {
+          setIsEngagementPlaying(true)
+          setIsForcePaused(true)
+        } else if (wasMusicActive) {
+          setIsForcePaused(false)
+        } else {
+          setIsForcePaused(false)
+        }
+        hasCapturedRef.current = false
+      }
+    }
+  }, [isOpen, mode, isMusicPlaying, isForcePaused, isEngagementPlaying, setIsEngagementPlaying, setIsForcePaused])
 
   useEffect(() => {
     const init = async () => {
@@ -376,7 +424,10 @@ export default function CommentSection() {
           <div className="mt-3 flex flex-col sm:flex-row gap-3 w-full max-w-sm mx-auto px-2">
             <DrawerTrigger asChild>
               <button
-                onClick={() => setMode("text")}
+                onClick={() => {
+                  setMode("text")
+                  setIsOpen(true)
+                }}
                 className="flex-1 flex items-center justify-center rounded-xl border-2 border-primary bg-white px-6 py-3.5 text-sm font-bold tracking-wider text-primary shadow-[4px_4px_0px_0px_rgba(130,14,3,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none disabled:opacity-50"
                 style={{ fontFamily: "var(--font-heading)" }}
                 disabled={!guestRealId || isLoading}
@@ -388,7 +439,10 @@ export default function CommentSection() {
             
             <DrawerTrigger asChild>
               <button
-                onClick={() => setMode("video")}
+                onClick={() => {
+                  setMode("video")
+                  setIsOpen(true)
+                }}
                 className="flex-1 flex items-center justify-center rounded-xl border-2 border-primary bg-primary px-6 py-3.5 text-sm font-bold tracking-wider text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none disabled:opacity-50"
                 style={{ fontFamily: "var(--font-heading)" }}
                 disabled={!guestRealId || isLoading}
@@ -396,8 +450,7 @@ export default function CommentSection() {
                 <Video className="mr-2" size={20} />
                 Rekam Video
               </button>
-            </DrawerTrigger>
-          </div>
+            </DrawerTrigger>          </div>
           <DrawerContent className="bg-transparent border-none before:border-2 before:border-primary max-h-[96vh]">
             <div className="mx-auto w-full max-w-sm px-6 pb-8 overflow-y-auto custom-scrollbar">
               <DrawerHeader className="px-0 pt-6 pb-2">
@@ -430,8 +483,7 @@ export default function CommentSection() {
                   Video Ucapan
                 </button>
               </div> */}
-
-              {mode === "video" ? (
+              {isOpen && mode === "video" ? (
                 <VideoRecorder
                   onUploadComplete={handleVideoUpload}
                 />

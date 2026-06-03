@@ -1,6 +1,6 @@
+import Image from "next/image"
 import { AnimatedSection } from "@/components/ui/animated-section"
 import { AnimatedText } from "@/components/ui/animated-text"
-import Image from "next/image"
 
 export default function BrideGroomSection() {
   return (
@@ -36,7 +36,7 @@ export default function BrideGroomSection() {
         />
         {/* Couple Photo inside frame */}
         <div className="absolute inset-0 z-0 flex items-center justify-center">
-          <div className="overflow-hidden mt-5">
+          <div className="mt-2 p-3 overflow-hidden">
             <Image
               src="/img/couple0.jpeg"
               alt="Couple photo"

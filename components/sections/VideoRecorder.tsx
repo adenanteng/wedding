@@ -11,7 +11,14 @@ interface VideoRecorderProps {
 }
 
 export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) {
-  const { isPlaying, setIsPlaying, setIsForcePaused } = useMusic()
+  const { 
+    isPlaying: isMusicPlaying, 
+    setIsPlaying: setIsMusicPlaying, 
+    isForcePaused, 
+    setIsForcePaused, 
+    isEngagementPlaying, 
+    setIsEngagementPlaying 
+  } = useMusic()
   const [wasPlaying, setWasPlaying] = useState(false)
 
   const webcamRef = useRef<Webcam>(null)
@@ -156,20 +163,9 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
       setRecordedChunks([file]) // Store file as a blob
 
       // Resume music when moving from webcam to preview
-      if (wasPlaying) setIsPlaying(true)
+      if (wasPlaying) setIsMusicPlaying(true)
     }
   }
-
-  // Handle music pause/resume based on webcam activity
-  useEffect(() => {
-    // Force pause music while this component is active
-    setIsForcePaused(true)
-
-    return () => {
-      // Restore music when component is closed
-      setIsForcePaused(false)
-    }
-  }, [setIsForcePaused])
 
   // Cleanup on unmount
   useEffect(() => {
@@ -260,15 +256,15 @@ export default function VideoRecorder({ onUploadComplete }: VideoRecorderProps) 
               playsInline
               className="w-full h-full object-cover"
               onPlay={() => {
-                setWasPlaying(isPlaying)
-                setIsPlaying(false)
+                setWasPlaying(isMusicPlaying)
+                setIsMusicPlaying(false)
                 document.querySelectorAll("video").forEach(v => {
                   const videoElement = v as HTMLVideoElement
                   if (videoElement !== previewVideoRef.current) videoElement.pause()
                 })
               }}
               onEnded={() => {
-                if (wasPlaying) setIsPlaying(true)
+                if (wasPlaying) setIsMusicPlaying(true)
                 setIsPlayingPreview(false)
               }}
               onPause={() => setIsPlayingPreview(false)}
