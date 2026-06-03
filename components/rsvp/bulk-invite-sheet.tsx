@@ -98,11 +98,11 @@ export function BulkInviteSheet({ onSuccess }: BulkInviteSheetProps) {
 
         const guest = guestsToInvite[i]
         const messageText = `Kepada Yth. 
-Bapak/Ibu/Saudara/i *${guest.name}*
+*Bapak/Ibu/Saudara/i ${guest.name}*
 
-Assalamu’alaikum Warahmatullahi Wabarakatuh 
+_Assalamu’alaikum Warahmatullahi Wabarakatuh_
 
-Bismillahirahmanirrahim
+_Bismillahirahmanirrahim_
 
 Selamat Pagi/Siang/Malam.
 

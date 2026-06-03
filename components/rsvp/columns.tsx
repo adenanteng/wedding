@@ -219,11 +219,11 @@ export const columns: ColumnDef<RSVP>[] = [
 
           const origin = window.location.origin;
           const messageText = `Kepada Yth. 
-Bapak/Ibu/Saudara/i *${rsvp.name}*
+*Bapak/Ibu/Saudara/i ${rsvp.name}*
 
-Assalamu’alaikum Warahmatullahi Wabarakatuh 
+_Assalamu’alaikum Warahmatullahi Wabarakatuh_
 
-Bismillahirahmanirrahim
+_Bismillahirahmanirrahim_
 
 Selamat Pagi/Siang/Malam.
 
