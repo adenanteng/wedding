@@ -13,13 +13,14 @@ import SplashSection from "@/components/sections/SplashSection"
 import TimelineSection from "@/components/sections/TimelineSection"
 import ProposalVideoSection from "@/components/sections/ProposalVideoSection"
 import { supabase } from "@/lib/supabaseClient"
-import { useParams } from "next/navigation"
+import { useParams, notFound } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false)
   const [guestName, setGuestName] = useState("")
   const [isLoadingGuest, setIsLoadingGuest] = useState(true)
+  const [isNotFound, setIsNotFound] = useState(false)
   const params = useParams()
   const guestId = params?.id as string
 
@@ -40,12 +41,18 @@ export default function Page() {
 
       if (data && !error) {
         setGuestName(data.name)
+      } else {
+        setIsNotFound(true)
       }
       setIsLoadingGuest(false)
     }
 
     fetchGuest()
   }, [guestId])
+
+  if (isNotFound) {
+    notFound()
+  }
 
   // Lock body scroll while splash/cover modal is visible
   useEffect(() => {

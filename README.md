@@ -56,8 +56,11 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 PASSWORD_RSVP=your_secret_password_for_dashboard
 
 # Notification/Other APIs (Optional)
-EVO_API_URL=your_evo_api_url
-EVO_API_KEY=your_evo_api_key
+VALO_API_URL=your_valo_api_url
+VALO_API_KEY=your_valo_api_key
+VALO_SENDER_ADEN=your_sender_number_for_aden
+VALO_SENDER_RAHMA=your_sender_number_for_rahma
+VALO_SENDER_ENOLA=your_sender_number_for_enola
 ```
 
 ## 🏃 Cara Menjalankan

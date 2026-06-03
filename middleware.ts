@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Exclude static assets and reserved paths explicitly just in case
@@ -41,11 +41,11 @@ export async function proxy(request: NextRequest) {
       .single()
 
     if (error || !data) {
-      console.log(`Proxy: Guest ${shortId} not found, redirecting...`)
+      console.log(`Middleware: Guest ${shortId} not found, redirecting...`)
       return NextResponse.redirect(new URL('/not-found', request.url))
     }
   } catch (err) {
-    console.error('Proxy error:', err)
+    console.error('Middleware error:', err)
     return NextResponse.redirect(new URL('/not-found', request.url))
   }
 
