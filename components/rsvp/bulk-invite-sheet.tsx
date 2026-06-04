@@ -40,6 +40,8 @@ export function BulkInviteSheet({ onSuccess }: BulkInviteSheetProps) {
       .from('rsvps')
       .select('*', { count: 'exact', head: true })
       .or('invited.eq.false,invited.is.null')
+      .not('phone', 'is', null)
+      .neq('phone', '')
 
     if (!error && count !== null) {
       setTotalUninvited(count)
@@ -67,6 +69,8 @@ export function BulkInviteSheet({ onSuccess }: BulkInviteSheetProps) {
       .from('rsvps')
       .select('*')
       .or('invited.eq.false,invited.is.null')
+      .not('phone', 'is', null)
+      .neq('phone', '')
 
     if (error) {
       toast.error("Gagal mengambil data tamu")
