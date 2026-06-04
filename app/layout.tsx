@@ -32,8 +32,27 @@ const great_vibes = Great_Vibes({
 })
 
 export const metadata: Metadata = {
-  title: "Aden & Rahma",
-  description: "Invitation to our wedding",
+  title: "Undangan Pernikahan Aden & Rahma",
+  description: "Tanpa mengurangi rasa hormat, kami mengundang Anda untuk menghadiri acara pernikahan kami.",
+  openGraph: {
+    title: "Undangan Pernikahan Aden & Rahma",
+    description: "Tanpa mengurangi rasa hormat, kami mengundang Anda untuk menghadiri acara pernikahan kami.",
+    images: [
+      {
+        url: "/img/couple0.jpeg",
+        width: 800,
+        height: 600,
+        alt: "Aden & Rahma",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Undangan Pernikahan Aden & Rahma",
+    description: "Tanpa mengurangi rasa hormat, kami mengundang Anda untuk menghadiri acara pernikahan kami.",
+    images: ["/img/couple0.jpeg"],
+  },
 };
 
 export default function RootLayout({
