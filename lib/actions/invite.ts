@@ -53,8 +53,10 @@ export async function sendWhatsAppMessage({
   }
 
   // 2. Build the request body
+  const cleanedNumber = number ? number.trim().replace(/\D/g, '') : ""
+
   let body: any = {
-    to: number,
+    to: cleanedNumber,
     sender_number: senderNumber
   }
 

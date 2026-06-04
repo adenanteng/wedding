@@ -61,7 +61,7 @@ export function AddRsvpSheet({ onSuccess }: AddRsvpSheetProps) {
       const { error } = await supabase.from('rsvps').insert([
         {
           name: formData.name,
-          phone: formData.phone,
+          phone: formData.phone.trim().replace(/\D/g, ''),
           source: formData.source,
           short_id: finalShortId,
           invited: false,

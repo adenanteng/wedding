@@ -62,7 +62,7 @@ export function EditRsvpSheet({ rsvp, open, onOpenChange, onSuccess }: EditRsvpS
         .from('rsvps')
         .update({
           name: formData.name,
-          phone: formData.phone,
+          phone: formData.phone.trim().replace(/\D/g, ''),
           source: formData.source,
           short_id: formData.short_id,
         })
