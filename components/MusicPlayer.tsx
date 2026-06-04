@@ -106,8 +106,8 @@ export default function MusicPlayer({ isOpened }: MusicPlayerProps) {
         <div className="relative flex items-center gap-3 p-3">
           <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-gray-900">
             <Image
-              src="/img/kid-square-rahma.jpeg"
-              alt="Couple photo"
+              src="/img/dino.jpeg"
+              alt="Dino"
               width={64}
               height={64}
               className={`h-auto w-full object-cover ${isPlaying ? "animate-spin-slow" : ""}`}
