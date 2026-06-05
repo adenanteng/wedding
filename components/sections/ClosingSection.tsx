@@ -3,7 +3,7 @@ import { FloatingElement } from "@/components/ui/floating-element"
 import { useCountdown } from "@/hooks/useCountdown"
 import Image from "next/image"
 
-const WEDDING_TIMESTAMP = new Date("2026-06-15T08:00:00+07:00").getTime()
+const WEDDING_TIMESTAMP = new Date("2026-06-15T09:00:00+07:00").getTime()
 
 export default function ClosingSection() {
   const { days, hours, minutes, seconds } = useCountdown(WEDDING_TIMESTAMP)

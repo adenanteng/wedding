@@ -111,3 +111,6 @@ erDiagram
 
 ## 📄 Lisensi
 Proyek ini dibuat untuk keperluan pribadi (Pernikahan Aden & Rahma). Kamu boleh pakai tapi nikahannya jangan mendahului kami ya.
+
+### Note
+Valo api adalah layanan internal Enola, kamu bisa menggunakan whatsapp gateway lain sebagai penggantinya.
